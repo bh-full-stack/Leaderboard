@@ -3938,6 +3938,7 @@
       <Position>1</Position>
       <DataType>varchar(20)|0</DataType>
       <ColumnKind>normal</ColumnKind>
+      <Collation>utf8_general_ci</Collation>
     </column>
   </database-model>
 </dataSource>
