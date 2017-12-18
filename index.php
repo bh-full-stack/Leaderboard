@@ -8,15 +8,19 @@
     <form method="POST" action="save_data.php">
         <label>
             Name:
-            <input type="text" name="nick">
+            <input type="text" name="nick" required>
         </label>
         <label>
-            Male:
-            <input type="radio" name="gender" value="male">
+            Score:
+            <input type="number" name="score" min="0" max="65535" required>
         </label>
         <label>
-            Female:
-            <input type="radio" name="gender" value="female">
+            Game:
+            <select name="game" required>
+                <option disabled selected value></option>
+                <option value="Tetris">Tetris</option>
+                <option value="Mario">Mario</option>
+            </select>
         </label>
         <input type="submit">
     </form>
