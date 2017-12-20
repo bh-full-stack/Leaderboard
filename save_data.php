@@ -26,7 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header('Location: index.php?message=' . $message);
     } else if (strpos($_SERVER["HTTP_ACCEPT"], "application/json") !== false) {
         header("Access-Control-Allow-Origin: *");
-        echo json_encode(["success" => $status]);
+        if (!$status) {
+            header("HTTP/1.0 400 Bad Request");
+            echo json_encode(["error" => true]);
+        } else {
+            echo json_encode(["success" => $status]);
+        }
     } else {
         die("error");
     }
