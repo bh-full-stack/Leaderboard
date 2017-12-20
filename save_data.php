@@ -15,7 +15,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $player->country = $jsonObject->country;
     $player->city = $jsonObject->city;
-    $message = $player->save();
+    $status = $player->save();
 
-    header('Location: index.php?message=' . $message);
+    if (strpos($_SERVER["HTTP_ACCEPT"], "text/html") !== false) {
+        if ($status) {
+            $message = "New record created successfully";
+        } else {
+            $message = "Invalid input or system failure";
+        }
+        header('Location: index.php?message=' . $message);
+    } else if (strpos($_SERVER["HTTP_ACCEPT"], "application/json") !== false) {
+        header("Access-Control-Allow-Origin: *");
+        echo json_encode(["success" => $status]);
+    } else {
+        die("error");
+    }
 }
