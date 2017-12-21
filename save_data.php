@@ -1,38 +1,36 @@
 <?php
 
 require 'model/Player.php';
+require 'service/GeolocationService.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $player = new Player;
-    $player->nick = $_POST['nick'];
-    $player->game = $_POST['game'];
-    $player->score = $_POST['score'];
+    try {
+        $player = new Player;
+        $player->nick = $_POST['nick'];
+        $player->game = $_POST['game'];
+        $player->score = $_POST['score'];
+        $player->setLocation(GeolocationService::getLocation());
+        $player->save();
 
-    $clientIp = $_SERVER['REMOTE_ADDR'];
-    $clientIp = '89.135.190.25';
-    $jsonString = file_get_contents("http://ip-api.com/json/$clientIp");
-    $jsonObject = json_decode($jsonString);
-
-    $player->country = $jsonObject->country;
-    $player->city = $jsonObject->city;
-    $status = $player->save();
-
-    if (strpos($_SERVER["HTTP_ACCEPT"], "text/html") !== false) {
-        if ($status) {
+        if (strpos($_SERVER["HTTP_ACCEPT"], "text/html") !== false) {
             $message = "New record created successfully";
+            header('Location: index.php?message=' . $message);
+        } else if (strpos($_SERVER["HTTP_ACCEPT"], "application/json") !== false) {
+            header("Access-Control-Allow-Origin: *");
+            echo json_encode(["success" => true]);
         } else {
-            $message = "Invalid input or system failure";
+            throw (new UserException)->setCode(UserException::COMMUNICATION_ERROR);
         }
-        header('Location: index.php?message=' . $message);
-    } else if (strpos($_SERVER["HTTP_ACCEPT"], "application/json") !== false) {
-        header("Access-Control-Allow-Origin: *");
-        if (!$status) {
-            header("HTTP/1.0 400 Bad Request");
-            echo json_encode(["error" => true]);
+    } catch (UserException $e) {
+        header($e->getHttpHeader());
+        if (strpos($_SERVER["HTTP_ACCEPT"], "text/html") !== false) {
+            $message = $e->getMessage();
+            header('Location: index.php?message=' . $message);
+        } else if (strpos($_SERVER["HTTP_ACCEPT"], "application/json") !== false) {
+            header("Access-Control-Allow-Origin: *");
+            echo json_encode(["code" => $e->getCode(), "message" => $e->getMessage()]);
         } else {
-            echo json_encode(["success" => $status]);
+            die($e->getMessage());
         }
-    } else {
-        die("error");
     }
 }
