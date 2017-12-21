@@ -3,6 +3,7 @@
 class UserException extends Exception
 {
     const DATABASE_ERROR = 10;
+    const CONNECTION_FAILED = 11;
     const INVALID_NICK = 20;
     const INVALID_GAME = 21;
     const INVALID_SCORE = 22;
@@ -12,6 +13,7 @@ class UserException extends Exception
     public function setCode(int $code) {
         $messages = [
             self::DATABASE_ERROR => "Database error",
+            self::CONNECTION_FAILED => "Connection failed",
             self::INVALID_NICK => "Invalid nick",
             self::INVALID_GAME => "Invalid game",
             self::INVALID_SCORE => "Invalid score",
