@@ -5,7 +5,7 @@
     <title>Leaderboard</title>
 </head>
 <body>
-    <form method="POST" action="save_data.php">
+    <form method="POST" action="ScoreController.php">
         <label>
             Name:
             <input type="text" name="nick" required>
@@ -27,5 +27,6 @@
     <div>
         <?php echo $_GET["message"]; ?>
     </div>
+    <a href="https://leaderboard14.docs.apiary.io" target="_blank">API Documentation</a>
 </body>
 </html>
