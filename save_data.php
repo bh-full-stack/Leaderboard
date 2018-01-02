@@ -1,7 +1,9 @@
 <?php
-
-require 'model/Player.php';
 require 'service/GeolocationService.php';
+
+spl_autoload_register(function ($class_name) {
+    include "model/$class_name.php";
+});
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
@@ -17,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header('Location: index.php?message=' . $message);
         } else if (strpos($_SERVER["HTTP_ACCEPT"], "application/json") !== false) {
             header("Access-Control-Allow-Origin: *");
-            echo json_encode(["success" => true]);
+            echo json_encode($player->getAttributes());
         } else {
             throw (new UserException)->setCode(UserException::COMMUNICATION_ERROR);
         }

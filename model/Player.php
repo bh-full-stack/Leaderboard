@@ -1,5 +1,4 @@
 <?php
-require "UserException.php";
 
 class Player
 {
@@ -17,7 +16,7 @@ class Player
         if ($name == "game" && empty($value)) {
             throw (new UserException)->setCode(UserException::INVALID_GAME);
         }
-        if ($name == "score" && empty($value)) {
+        if ($name == "score" && $value == "") {
             throw (new UserException)->setCode(UserException::INVALID_SCORE);
         }
         $this->$name = $value;
@@ -29,6 +28,16 @@ class Player
         }
         $this->country = $location->country;
         $this->city = $location->city;
+    }
+
+    public function getAttributes() {
+        return [
+            "nick" => $this->nick,
+            "score" => $this->score,
+            "game" => $this->game,
+            "country" => $this->country,
+            "city" => $this->city
+        ];
     }
 
     public function save() {
