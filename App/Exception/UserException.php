@@ -1,6 +1,8 @@
 <?php
 
-class UserException extends Exception
+namespace App\Exception;
+
+class UserException extends \Exception
 {
     const DATABASE_ERROR = 10;
     const CONNECTION_FAILED = 11;

@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Model;
+
+use App\Exception\UserException;
+use App\Service\DatabaseService;
+
 class Player
 {
     private $nick;
@@ -41,14 +46,8 @@ class Player
     }
 
     public function save() {
-        $servername = "localhost";
-        $username = "root";
-        $password = "mob";
-        $dbname = "leaderboard";
-
         try {
-            $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = DatabaseService::getInstance()->getConnection();
             $sql = "INSERT INTO players (nick, game, score, country, city) 
                 VALUES (:nick, :game, :score, :country, :city)";
             $stmt = $conn->prepare($sql);
@@ -58,23 +57,17 @@ class Player
             $stmt->bindParam(':country', $this->country);
             $stmt->bindParam(':city', $this->city);
             $stmt->execute();
-        } catch(PDOException $e) {
+        } catch(\PDOException $e) {
             throw (new UserException)->setCode(UserException::DATABASE_ERROR);
         }
     }
 
     public static function list() {
-        $servername = "localhost";
-        $username = "root";
-        $password = "mob";
-        $dbname = "leaderboard";
-
         try {
-            $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = DatabaseService::getInstance()->getConnection();
             $sql = "SELECT * FROM players";
-            return $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-        } catch(PDOException $e) {
+            return $conn->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+        } catch(\PDOException $e) {
             throw (new UserException)->setCode(UserException::DATABASE_ERROR);
         }
     }

@@ -1,5 +1,7 @@
 <?php
-require 'model/Location.php';
+namespace App\Service;
+use App\Exception\UserException;
+use App\Model\Location;
 
 class GeolocationService
 {
