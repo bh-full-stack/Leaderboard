@@ -62,4 +62,20 @@ class Player
             throw (new UserException)->setCode(UserException::DATABASE_ERROR);
         }
     }
+
+    public static function list() {
+        $servername = "localhost";
+        $username = "root";
+        $password = "mob";
+        $dbname = "leaderboard";
+
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "SELECT * FROM players";
+            return $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            throw (new UserException)->setCode(UserException::DATABASE_ERROR);
+        }
+    }
 }
