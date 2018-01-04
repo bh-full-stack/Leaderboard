@@ -14,26 +14,34 @@ class Player
     private $country;
     private $city;
 
-    public function __set($name, $value)
-    {
-        if ($name == "nick" && empty($value)) {
+    public function set($values) {
+        if (empty($values["nick"])) {
             throw (new UserException)->setCode(UserException::INVALID_NICK);
         }
-        if ($name == "game" && empty($value)) {
+        if (empty($values["game"])) {
             throw (new UserException)->setCode(UserException::INVALID_GAME);
         }
-        if ($name == "score" && $value == "") {
+        if ((!isset($values["score"])) || ($values["score"] == "")) {
             throw (new UserException)->setCode(UserException::INVALID_SCORE);
         }
-        $this->$name = $value;
-    }
-
-    public function setLocation(Location $location) {
-        if (!$location->isValid()) {
-            throw (new UserException)->setCode(UserException::LOCATION_FAILED);
+        if (empty($values["country"])) {
+            $values["country"] = NULL;
         }
-        $this->country = $location->country;
-        $this->city = $location->city;
+        if (empty($values["city"])) {
+            $values["city"] = NULL;
+        }
+        if (empty($values["email"])) {
+            $values["email"] = NULL;
+        }
+
+        $this->nick = $values["nick"];
+        $this->game = $values["game"];
+        $this->score = $values["score"];
+        $this->country = $values["country"];
+        $this->city = $values["city"];
+        $this->email = $values["email"];
+
+        return $this;
     }
 
     public function getAttributes() {

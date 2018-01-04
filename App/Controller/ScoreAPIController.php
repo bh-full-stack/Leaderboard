@@ -10,10 +10,14 @@ class ScoreAPIController {
     public function create() {
         try {
             $player = new Player;
-            $player->nick = $_POST['nick'];
-            $player->game = $_POST['game'];
-            $player->score = $_POST['score'];
-            $player->setLocation(GeolocationService::getLocation());
+            $locationData = $this->setLocation(GeolocationService::getLocation());
+            $player->set([
+                "nick" => $_POST['nick'],
+                "game" => $_POST['game'],
+                "score"=> $_POST['score'],
+                "country" => $locationData["country"],
+                "city" => $locationData["city"]
+            ]);
             $player->save();
 
             if (strpos($_SERVER["HTTP_ACCEPT"], "application/json") !== false) {
@@ -35,4 +39,11 @@ class ScoreAPIController {
     public function update() {}
     public function delete() {}
     public function list() {}
+
+    private function setLocation(Location $location) {
+        if (!$location->isValid()) {
+            throw (new UserException)->setCode(UserException::LOCATION_FAILED);
+        }
+        return ["country"=>$location->country, "city"=>$location->city];
+    }
 }
