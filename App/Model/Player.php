@@ -14,16 +14,6 @@ class Player
     private $country;
     private $city;
 
-    public function __construct($playerData)
-    {
-        if (isset($playerData)) {
-            foreach ($playerData as $name => $value) {
-                $this->__set($name, $value);
-            }
-        }
-    }
-
-
     public function __set($name, $value)
     {
         if ($name == "nick" && empty($value)) {
@@ -55,6 +45,14 @@ class Player
             "country" => $this->country,
             "city" => $this->city
         ];
+    }
+
+    public function fillAttributes(Array $playerData){
+        foreach ($playerData as $name => $value) {
+            $this->$name = $value;
+        }
+
+        return $this;
     }
 
     public function save() {
