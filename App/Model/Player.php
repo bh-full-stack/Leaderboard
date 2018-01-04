@@ -7,6 +7,7 @@ use App\Service\DatabaseService;
 
 class Player
 {
+    private $email;
     private $nick;
     private $game;
     private $score;
@@ -48,9 +49,10 @@ class Player
     public function save() {
         try {
             $conn = DatabaseService::getInstance()->getConnection();
-            $sql = "INSERT INTO players (nick, game, score, country, city) 
-                VALUES (:nick, :game, :score, :country, :city)";
+            $sql = "INSERT INTO players (email, nick, game, score, country, city) 
+                VALUES (:email, :nick, :game, :score, :country, :city)";
             $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':email', $this->email);
             $stmt->bindParam(':nick', $this->nick);
             $stmt->bindParam(':game', $this->game);
             $stmt->bindParam(':score', $this->score);
@@ -58,6 +60,7 @@ class Player
             $stmt->bindParam(':city', $this->city);
             $stmt->execute();
         } catch(\PDOException $e) {
+            error_log($e->getMessage());
             throw (new UserException)->setCode(UserException::DATABASE_ERROR);
         }
     }
@@ -67,6 +70,17 @@ class Player
             $conn = DatabaseService::getInstance()->getConnection();
             $sql = "SELECT * FROM players";
             return $conn->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+        } catch(\PDOException $e) {
+            throw (new UserException)->setCode(UserException::DATABASE_ERROR);
+        }
+    }
+
+    public static function deleteAll() {
+        try {
+            $conn = DatabaseService::getInstance()->getConnection();
+            $sql = "DELETE FROM players";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
         } catch(\PDOException $e) {
             throw (new UserException)->setCode(UserException::DATABASE_ERROR);
         }
