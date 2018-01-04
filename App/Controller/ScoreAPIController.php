@@ -9,11 +9,16 @@ class ScoreAPIController {
     public function show() {}
     public function create() {
         try {
+            $location = GeolocationService::getLocation();
             $player = new Player;
-            $player->nick = $_POST['nick'];
-            $player->game = $_POST['game'];
-            $player->score = $_POST['score'];
-            $player->setLocation(GeolocationService::getLocation());
+            $player->fillAttributes([
+                "email" => $_POST['email'],
+                "nick" => $_POST['nick'],
+                "game" => $_POST['game'],
+                "score" => $_POST['score'],
+                "country" => $location->country,
+                "city" => $location->city
+            ]);
             $player->save();
 
             if (strpos($_SERVER["HTTP_ACCEPT"], "application/json") !== false) {
