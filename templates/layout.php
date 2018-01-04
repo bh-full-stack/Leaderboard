@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>Leaderboard</title>
+    <base href="//<?=$_SERVER["SERVER_NAME"]?>/">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
@@ -13,10 +14,10 @@
 </head>
 
 <body id="topScores">
-<?php include "templates/navigation.php"; ?>
+<?php include "../templates/navigation.php"; ?>
 
 <div class="container">
-    <?php include "templates/top-scores.php"; ?>
+    <?php include "../templates/top-scores.php"; ?>
 </div>
 
 <footer class="text-center">

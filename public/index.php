@@ -1,7 +1,7 @@
 <?php
 
 spl_autoload_register(function ($className) {
-    include str_replace("\\", "/", $className) . ".php";
+    include "../" . str_replace("\\", "/", $className) . ".php";
 });
 
 if ($_SERVER["REQUEST_URI"] == "/scores") {

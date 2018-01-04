@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-
 class DatabaseService
 {
     private $servername = "localhost";
@@ -10,6 +9,8 @@ class DatabaseService
     private $password = "mob";
     private $dbname = "leaderboard";
     private $connection;
+
+    private function __construct() {}
 
     public function getConnection() {
         if (empty($this->connection)) {
