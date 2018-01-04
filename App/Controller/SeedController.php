@@ -13,7 +13,6 @@ class SeedController
         foreach ($playersData as $playerData) {
             $player = new Player();
             $player->fillAttributes($playerData)->save();
-            var_dump($player);
         }
     }
 }

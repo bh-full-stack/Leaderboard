@@ -49,7 +49,7 @@ class Player
 
     public function fillAttributes(Array $playerData){
         foreach ($playerData as $name => $value) {
-            $this->$name = $value;
+            $this->__set($name, $value);
         }
 
         return $this;
