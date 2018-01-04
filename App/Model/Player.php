@@ -14,6 +14,16 @@ class Player
     private $country;
     private $city;
 
+    public function __construct($playerData)
+    {
+        if (isset($playerData)) {
+            foreach ($playerData as $name => $value) {
+                $this->__set($name, $value);
+            }
+        }
+    }
+
+
     public function __set($name, $value)
     {
         if ($name == "nick" && empty($value)) {
@@ -38,6 +48,7 @@ class Player
 
     public function getAttributes() {
         return [
+            "email" => $this->email,
             "nick" => $this->nick,
             "score" => $this->score,
             "game" => $this->game,
@@ -47,17 +58,15 @@ class Player
     }
 
     public function save() {
+        $columnNames = array_keys($this->getAttributes());
         try {
             $conn = DatabaseService::getInstance()->getConnection();
-            $sql = "INSERT INTO players (email, nick, game, score, country, city) 
-                VALUES (:email, :nick, :game, :score, :country, :city)";
+            $sql = "INSERT INTO players (" . implode(", ", $columnNames) . ") 
+                    VALUES (:" . implode(", :", $columnNames) . ");";
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':email', $this->email);
-            $stmt->bindParam(':nick', $this->nick);
-            $stmt->bindParam(':game', $this->game);
-            $stmt->bindParam(':score', $this->score);
-            $stmt->bindParam(':country', $this->country);
-            $stmt->bindParam(':city', $this->city);
+            foreach ($columnNames as $columnName) {
+                $stmt->bindValue(":$columnName", $this->$columnName);
+            }
             $stmt->execute();
         } catch(\PDOException $e) {
             error_log($e->getMessage());
