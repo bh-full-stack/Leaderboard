@@ -1,4 +1,10 @@
-<h3>Top Scores</h3>
+<h3 class="pull-left">Top Scores</h3>
+<div class="pull-right">
+    Sort by:
+    <button class="btn">Nick</button>
+    <button class="btn">Score</button>
+    <button class="btn">Activity</button>
+</div>
 <table class="table table-striped table-hover">
     <thead>
     <tr>
