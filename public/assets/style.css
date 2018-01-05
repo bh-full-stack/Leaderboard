@@ -110,6 +110,9 @@ h3, h4 {
 .navbar-default .navbar-toggle {
     border-color: transparent;
 }
+th {
+    cursor: pointer;
+}
 .open .dropdown-toggle {
     color: #fff;
     background-color: #555 !important;
