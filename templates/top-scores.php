@@ -5,14 +5,14 @@
     <button class="btn">Score</button>
     <button class="btn">Activity</button>
 </div>
-<table class="table table-striped table-hover">
+<table class="table table-striped table-hover" id="top-scores">
     <thead>
     <tr>
-        <th>Nick</th>
-        <th>Game</th>
-        <th>Score</th>
-        <th>Country</th>
-        <th>City</th>
+        <th data-sort="string">Nick</th>
+        <th data-sort="string">Game</th>
+        <th data-sort="int">Score</th>
+        <th data-sort="string">Country</th>
+        <th data-sort="string">City</th>
     </tr>
     </thead>
     <tbody>
