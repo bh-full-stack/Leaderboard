@@ -34,5 +34,8 @@ class ScoreAPIController {
     }
     public function update() {}
     public function delete() {}
-    public function list() {}
+    public function list() {
+        $playersData = Player::list();
+        include "../templates/layout.php";
+    }
 }

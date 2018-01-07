@@ -1,12 +1,13 @@
 body {
-    font: 400 15px/1.8 Lato, sans-serif;
+    font: 400 12px/1.8 Montserrat, sans-serif;
     color: #777;
+    letter-spacing: 2px;
 }
 h3, h4 {
     margin: 10px 0 30px 0;
-    letter-spacing: 10px;
+    letter-spacing: 4px;
     font-size: 20px;
-    color: #111;
+    color: #2d2d30;
 }
 .container {
     padding: 80px 120px;
@@ -59,11 +60,13 @@ h3, h4 {
     color: #555;
 }
 .btn {
-    padding: 10px 20px;
-    background-color: #333;
-    color: #f1f1f1;
+    font-family: Montserrat, sans-serif;
+    padding: 5px 10px;
+    background-color: #2d2d30;
+    color: #d5d5d5;
     border-radius: 0;
     transition: .2s;
+    letter-spacing: 2px;
 }
 .btn:hover, .btn:focus {
     border: 1px solid #333;
@@ -137,4 +140,19 @@ footer a:hover {
 }
 textarea {
     resize: none;
+}
+.sort {
+    display: inline-block;
+    margin-right: 5px;
+    color: #2d2d30;
+    letter-spacing: 2px;
+    font-size: 14px;
+}
+
+th {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

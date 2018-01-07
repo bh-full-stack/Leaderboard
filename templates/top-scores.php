@@ -1,18 +1,12 @@
 <h3 class="pull-left">Top Scores</h3>
-<div class="pull-right">
-    Sort by:
-    <button class="btn">Nick</button>
-    <button class="btn">Score</button>
-    <button class="btn">Activity</button>
-</div>
 <table class="table table-striped table-hover" id="top-scores">
     <thead>
-    <tr>
-        <th data-sort="string">Nick</th>
-        <th data-sort="string">Game</th>
-        <th data-sort="int">Score</th>
-        <th data-sort="string">Country</th>
-        <th data-sort="string">City</th>
+    <tr class="table-header">
+        <th class="nick">Nick</th>
+        <th class="game">Game</th>
+        <th class="score">Score</th>
+        <th class="country">Country</th>
+        <th class="city">City</th>
     </tr>
     </thead>
     <tbody>

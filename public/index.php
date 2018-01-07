@@ -31,7 +31,7 @@ if (php_sapi_name() == "cli") {
             default:
                 $controller->list();
         }
-    } else {
+      } else {
         $controller = new \App\Controller\TopScoresController();
         $controller->index();
     }

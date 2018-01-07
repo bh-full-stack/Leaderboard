@@ -8,6 +8,10 @@ class TopScoresController
 {
     public function index() {
         $playersData = Player::list();
-        include "../templates/layout.php";
+        if (Player::$sort) {
+            include "../templates/top-scores.php";
+        } else {
+            include "../templates/layout.php";
+        }
     }
 }
