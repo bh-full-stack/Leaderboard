@@ -34,5 +34,10 @@ class ScoreAPIController {
     }
     public function update() {}
     public function delete() {}
-    public function list() {}
+    public function list() {
+        if (isset($_GET['sort-by'])) Player::setListSorting($_GET['sort-by']);
+        if (isset($_GET['sort-direction'])) Player::setListSorting(null, $_GET['sort-direction']);
+        $playersData = Player::list();
+        include "../templates/layout.php";
+    }
 }
