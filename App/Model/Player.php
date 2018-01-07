@@ -77,23 +77,14 @@ class Player
                     $_GET["by"] == "country" ||
                     $_GET["by"] == "city" ||
                     $_GET["by"] == "score") &&
-                ($_GET["direction"] == "ASC" || $_GET["direction"] == "DESC"))
+                ($_GET["direction"] == "ASC" ||
+                    $_GET["direction"] == "DESC"))
             {
                     $by = $_GET["by"];
                     $direction = $_GET["direction"];
                     $sql = "SELECT * FROM players ORDER BY $by $direction";
                     self::$sort = true;
             }
-            return $conn->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
-        } catch(\PDOException $e) {
-            throw (new UserException)->setCode(UserException::DATABASE_ERROR);
-        }
-    }
-
-    public static function sort($by, $direction) {
-        try {
-            $conn = DatabaseService::getInstance()->getConnection();
-            $sql = "SELECT * FROM players ORDER BY $by $direction";
             return $conn->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
         } catch(\PDOException $e) {
             throw (new UserException)->setCode(UserException::DATABASE_ERROR);
