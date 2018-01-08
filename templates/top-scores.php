@@ -2,20 +2,22 @@
 <form class="form-inline pull-right" id="sort-by-form">
     Sort by:
     <select class="form-control" name="sort-by" id="sort-by-menu">
-        <option value="nick"
-            <?php if (!isset($_GET['sort-by']) ||
-                (isset($_GET['sort-by']) && $_GET['sort-by'] == 'nick')) echo 'selected'; ?>>Nick</option>
-        <option value="game"
-            <?php if (isset($_GET['sort-by']) && $_GET['sort-by'] == 'game') echo 'selected'; ?>>Game</option>
-        <option value="score"
-            <?php if (isset($_GET['sort-by']) && $_GET['sort-by'] == 'score') echo 'selected'; ?>>Score</option>
+        <?php foreach (['nick', 'game', 'score', 'country', 'city'] as $optValue): ?>
+        <option value="<?=$optValue?>"
+            <?php if (isset($_GET['sort-by']) && $_GET['sort-by'] == $optValue) echo 'selected'; ?>>
+            <?=ucfirst($optValue)?>
+        </option>
+        <?php endforeach;?>
     </select>
-    <select class="form-control" name="sort-direction" id="sort-direction-menu">
+    <select class="form-control" name="sort-dir" id="sort-dir-menu">
         <option value="ASC"
-            <?php if (!isset($_GET['sort-direction']) ||
-                (isset($_GET['sort-direction']) && $_GET['sort-direction'] == 'ASC')) echo 'selected'; ?>>&uarr; Ascending</option>
+            <?php if (!isset($_GET['sort-dir']) || $_GET['sort-dir'] == 'ASC') echo 'selected'; ?>>
+            &uarr; Ascending
+        </option>
         <option value="DESC"
-            <?php if (isset($_GET['sort-direction']) && $_GET['sort-direction'] == 'DESC') echo 'selected'; ?>>&darr; Descending</option>
+            <?php if (isset($_GET['sort-dir']) && $_GET['sort-dir'] == 'DESC') echo 'selected'; ?>>
+            &darr; Descending
+        </option>
     </select>
 </form>
 <table class="table table-striped table-hover" id="top-scores">

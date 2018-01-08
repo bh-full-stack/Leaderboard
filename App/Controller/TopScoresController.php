@@ -7,9 +7,9 @@ use App\Model\Player;
 class TopScoresController
 {
     public function index() {
-        if (isset($_GET['sort-by'])) Player::setListSorting($_GET['sort-by']);
-        if (isset($_GET['sort-direction'])) Player::setListSorting(null, $_GET['sort-direction']);
-        $playersData = Player::list();
+        $sortBy = isset($_GET['sort-by']) ? $_GET['sort-by'] : null;
+        $sortDir = isset($_GET['sort-dir']) ? $_GET['sort-dir'] : null;
+        $playersData = Player::list($sortBy, $sortDir);
         include "../templates/layout.php";
     }
 }

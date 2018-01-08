@@ -68,24 +68,16 @@ class Player
         }
     }
 
-    public static function setListSorting($sort = null, $direction = null) {
-        if (!is_null($sort)) self::$listOrderBy = $sort;
-        if (!is_null($direction) && ($direction == "ASC" || $direction == "DESC"))
-            self::$listOrderDirection = $direction;
-    }
+    public static function list($sortBy, $sortDir) {
+        $columnNames = ["nick", "game", "score", "country", "city"];
+        $orderDirs = ["ASC", "DESC"];
+        if (!in_array($sortBy, $columnNames)) $sortBy = $columnNames[0];
+        if (!in_array($sortDir, $orderDirs)) $sortDir = $orderDirs[0];
 
-    public static function list() {
         try {
             $conn = DatabaseService::getInstance()->getConnection();
-            $sql = "SELECT * FROM players ORDER BY
-                      CASE :sort WHEN 'nick' THEN nick
-                                 WHEN 'game' THEN game 
-                                 WHEN 'score' THEN LENGTH(score)
-                                 else nick END " . self::$listOrderDirection . ",
-                      CASE :sort WHEN 'score' THEN score END " . self::$listOrderDirection;
+            $sql = "SELECT * FROM players ORDER BY $sortBy $sortDir";
             $stmt = $conn->prepare($sql);
-            $stmt->bindValue(':sort', self::$listOrderBy, \PDO::PARAM_STR);
-            //$stmt->bindValue(':dir', self::$listOrderDirection, \PDO::PARAM_STR);
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         } catch(\PDOException $e) {
