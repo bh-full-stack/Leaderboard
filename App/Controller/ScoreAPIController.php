@@ -36,6 +36,10 @@ class ScoreAPIController {
     public function delete() {}
     public function list() {
         $playersData = Player::list();
-        include "../templates/layout.php";
+        if (empty(explode("?", $_SERVER["REQUEST_URI"])[1])) {
+            include "../templates/layout.php";
+        } else {
+            echo json_encode($playersData);
+        }
     }
 }

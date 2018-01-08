@@ -12,7 +12,7 @@ if (php_sapi_name() == "cli") {
         echo "Please add valid arguments\n";
     }
 } else {
-    if ($_SERVER["REQUEST_URI"] == "/scores") {
+    if (explode("?", $_SERVER["REQUEST_URI"])[0] == "/scores") {
         $controller = new \App\Controller\ScoreAPIController();
         switch ($_SERVER["REQUEST_METHOD"]) {
             case "GET":

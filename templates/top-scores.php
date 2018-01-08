@@ -1,7 +1,7 @@
 <h3 class="pull-left">Top Scores</h3>
 <table class="table table-striped table-hover" id="top-scores">
     <thead>
-    <tr class="table-header">
+    <tr class="table-header-row">
         <th class="nick">Nick</th>
         <th class="game">Game</th>
         <th class="score">Score</th>
@@ -11,7 +11,7 @@
     </thead>
     <tbody>
     <?php foreach ($playersData as $playerData): ?>
-        <tr>
+        <tr class="table-data-row">
             <td><?=$playerData["nick"]?></td>
             <td><?=$playerData["game"]?></td>
             <td><?=$playerData["score"]?></td>

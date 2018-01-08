@@ -1,54 +1,47 @@
 window.onload = function () {
 
-    var nickDirection, scoreDirection, gameDirection, cityDirection, countryDirection, sortBy, sortDirection;
-    var nickClickCounter = 1;
-    var gameClickCounter = 1;
-    var cityClickCounter = 1;
-    var countryClickCounter = 1;
-    var scoreClickCounter = 2;
+    var sortBy;
+    var directions = {
+        nick: "DESC",
+        game: "DESC",
+        city: "DESC",
+        country: "DESC",
+        score: "ASC"
+    };
 
-    $(document).on("click", ".table-header", function (event) {
+    $(document).on("click", ".table-header-row", function (event) {
 
         sortBy = event.target.className;
-
-        nickClickCounter % 2 !== 0 ? nickDirection = "ASC" : nickDirection = "DESC";
-        gameClickCounter % 2 !== 0 ? gameDirection = "ASC" : gameDirection = "DESC";
-        cityClickCounter % 2 !== 0 ? cityDirection = "ASC" : cityDirection = "DESC";
-        countryClickCounter % 2 !== 0 ? countryDirection = "ASC" : countryDirection = "DESC";
-        scoreClickCounter % 2 !== 0 ? scoreDirection = "ASC" : scoreDirection = "DESC";
-
-        switch (sortBy) {
-            case "nick":
-                sortDirection = nickDirection;
-                nickClickCounter++;
-                break;
-            case "game":
-                sortDirection = gameDirection;
-                gameClickCounter++;
-                break;
-            case "city":
-                sortDirection = cityDirection;
-                cityClickCounter++;
-                break;
-            case "country":
-                sortDirection = countryDirection;
-                countryClickCounter++;
-                break;
-            case "score":
-                sortDirection = scoreDirection;
-                scoreClickCounter++;
-                break;
-        }
+        directions[sortBy] = (directions[sortBy] === "ASC" ? "DESC" : "ASC");
 
         $.get(
-            "http://leaderboard.local",
+            "http://leaderboard.local/scores",
             {
                 by: sortBy,
-                direction: sortDirection
+                direction: directions[sortBy]
             },
             function (response) {
-                document.querySelector(".container").innerHTML = response;
-            });
 
+                var tableData = JSON.parse(response);
+                var tableLength = tableData.length;
+                var columnMapping = ["nick", "game", "score", "country", "city"];
+                var tableBody = document.querySelector("tbody");
+
+                $(".table-data-row").remove();
+
+                for (var i = 0; i < tableLength; i++){
+                    var tableRow = tableBody.insertRow();
+                    tableRow.classList.add("table-data-row");
+                    for (var j = 0; j < 5; j++){
+                        if(i === tableLength && j === 4){
+                            break;
+                        } else {
+                            var tableCell = tableRow.insertCell();
+                            var column = columnMapping[j];
+                            tableCell.appendChild(document.createTextNode(tableData[i][column]));
+                        }
+                    }
+                }
+            });
     });
 };

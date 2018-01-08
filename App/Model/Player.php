@@ -13,7 +13,6 @@ class Player
     private $score;
     private $country;
     private $city;
-    public static $sort = false;
 
     public function __set($name, $value)
     {
@@ -68,22 +67,19 @@ class Player
 
     public static function list() {
         try {
+
+            $tableColumns = ["nick", "game", "country", "city", "score"];
             $conn = DatabaseService::getInstance()->getConnection();
+
             if (!isset($_GET["by"]) && !isset($_GET["direction"])) {
                 $sql = "SELECT * FROM players";
-                self::$sort = false;
-            } elseif (($_GET["by"] == "nick" ||
-                    $_GET["by"] == "game" ||
-                    $_GET["by"] == "country" ||
-                    $_GET["by"] == "city" ||
-                    $_GET["by"] == "score") &&
-                ($_GET["direction"] == "ASC" ||
-                    $_GET["direction"] == "DESC"))
-            {
-                    $by = $_GET["by"];
-                    $direction = $_GET["direction"];
-                    $sql = "SELECT * FROM players ORDER BY $by $direction";
-                    self::$sort = true;
+
+            } elseif (array_intersect($tableColumns, $_GET) &&
+                     ($_GET["direction"] == "ASC" || $_GET["direction"] == "DESC")) {
+
+                        $by = $_GET["by"];
+                        $direction = $_GET["direction"];
+                        $sql = "SELECT * FROM players ORDER BY $by $direction";
             }
             return $conn->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
         } catch(\PDOException $e) {
