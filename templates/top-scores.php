@@ -1,5 +1,5 @@
 <h3 class="pull-left">Top Scores</h3>
-<table class="table table-striped table-hover" id="top-scores">
+<table class="table table-striped table-hover">
     <thead>
     <tr class="table-header-row">
         <th class="nick">Nick</th>
