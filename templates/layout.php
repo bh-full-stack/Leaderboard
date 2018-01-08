@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="assets/style.css">
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="node_modules/stupid-table-plugin/stupidtable.min.js"></script>
     <script src="assets/script.js"></script>
 </head>
 
