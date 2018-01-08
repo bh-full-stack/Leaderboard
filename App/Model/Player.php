@@ -5,64 +5,69 @@ namespace App\Model;
 use App\Exception\UserException;
 use App\Service\DatabaseService;
 
-class Player
+class Player extends Model
 {
-    private $email;
-    private $nick;
-    private $game;
-    private $score;
-    private $country;
-    private $city;
+    public $id;
+    public $nick;
+    public $email;
+
 
     public function __set($name, $value)
     {
         if ($name == "nick" && empty($value)) {
             throw (new UserException)->setCode(UserException::INVALID_NICK);
         }
-        if ($name == "game" && empty($value)) {
-            throw (new UserException)->setCode(UserException::INVALID_GAME);
-        }
-        if ($name == "score" && $value == "") {
-            throw (new UserException)->setCode(UserException::INVALID_SCORE);
-        }
         $this->$name = $value;
     }
 
-    public function setLocation(Location $location) {
-        if (!$location->isValid()) {
-            throw (new UserException)->setCode(UserException::LOCATION_FAILED);
-        }
-        $this->country = $location->country;
-        $this->city = $location->city;
+    public function isValid() {
+        return !empty($this->nick);
     }
 
-    public function getAttributes() {
-        return [
-            "nick" => $this->nick,
-            "score" => $this->score,
-            "game" => $this->game,
-            "country" => $this->country,
-            "city" => $this->city
-        ];
+    private function loadByNick() {
+        $conn = DatabaseService::getInstance()->getConnection();
+        $sql = "SELECT * FROM players WHERE nick=:nick";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':nick', $this->nick);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        if (!isset($rows[0])) {
+            throw new \Exception("Cannot load player by nick");
+        }
+        $this->fill($rows[0]);
+        return $this;
+    }
+
+    public function load() {
+        $conn = DatabaseService::getInstance()->getConnection();
+        $sql = "SELECT * FROM players WHERE id=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $this->id);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        if (!isset($rows[0])) {
+            throw new \Exception("Cannot load player by id");
+        }
+        $this->fill($rows[0]);
+        return $this;
     }
 
     public function save() {
-        try {
-            $conn = DatabaseService::getInstance()->getConnection();
-            $sql = "INSERT INTO players (email, nick, game, score, country, city) 
-                VALUES (:email, :nick, :game, :score, :country, :city)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':email', $this->email);
-            $stmt->bindParam(':nick', $this->nick);
-            $stmt->bindParam(':game', $this->game);
-            $stmt->bindParam(':score', $this->score);
-            $stmt->bindParam(':country', $this->country);
-            $stmt->bindParam(':city', $this->city);
-            $stmt->execute();
-        } catch(\PDOException $e) {
-            error_log($e->getMessage());
-            throw (new UserException)->setCode(UserException::DATABASE_ERROR);
+        if (!$this->isValid()) {
+            throw new \Exception("Cannot save invalid player");
         }
+        try {
+            $this->loadByNick();
+        } catch (\Exception $e) {
+            $conn = DatabaseService::getInstance()->getConnection();
+            $sql = "INSERT INTO players (nick, email) VALUES (:nick, :email)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':nick', $this->nick);
+            $stmt->bindParam(':email', $this->email);
+            $stmt->execute();
+            $this->id = $conn->lastInsertId();
+        }
+        return $this;
     }
 
     public static function list() {

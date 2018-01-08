@@ -37,3 +37,5 @@ CREATE TABLE locations (
   country VARCHAR(48) NOT NULL,
   city VARCHAR(85) NOT NULL
 );
+
+ALTER TABLE locations ADD UNIQUE INDEX(country, city);

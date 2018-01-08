@@ -1,9 +1,7 @@
 <?php
 
-spl_autoload_register(function ($className) {
-    include "../" . str_replace("\\", "/", $className) . ".php";
-});
-echo "<pre>";
+require "../autoload.php";
+
 if (php_sapi_name() == "cli") {
     if (isset($argv[1]) && $argv[1] == "seed") {
         $controller = new \App\Controller\SeedController();
@@ -13,7 +11,7 @@ if (php_sapi_name() == "cli") {
     }
 } else {
     if ($_SERVER["REQUEST_URI"] == "/scores") {
-        $controller = new \App\Controller\ScoreAPIController();
+        $controller = new \App\Controller\RoundController();
         switch ($_SERVER["REQUEST_METHOD"]) {
             case "GET":
                 $controller->list();

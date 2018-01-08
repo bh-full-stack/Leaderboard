@@ -3,12 +3,30 @@
 namespace App\Controller;
 use App\Exception\UserException;
 use App\Model\Player;
+use App\Model\Round;
 use App\Service\GeolocationService;
 
-class ScoreAPIController {
+class RoundController {
     public function show() {}
     public function create() {
         try {
+            $location = GeolocationService::getLocation();
+
+            $player = new Player();
+            $player->nick = $_POST['nick'];
+            $player->save();
+
+            $round = new Round();
+            $round->game = $_POST['game'];
+            $round->score = $_POST['score'];
+            $round->location_id = $location->id;
+            $round->player_id = $player->id;
+            $round->save();
+        } catch (\Exception $e) {
+            // @todo
+        }
+
+      /*  try {
             $player = new Player;
             $player->nick = $_POST['nick'];
             $player->game = $_POST['game'];
@@ -30,7 +48,7 @@ class ScoreAPIController {
             } else {
                 die($e->getMessage());
             }
-        }
+        }*/
     }
     public function update() {}
     public function delete() {}

@@ -12,6 +12,6 @@ class GeolocationService
         if ($jsonString === false) {
             throw (new UserException)->setCode(UserException::CONNECTION_FAILED);
         }
-        return (new Location())->fill(json_decode($jsonString, true));
+        return (new Location())->fill(json_decode($jsonString, true))->save();
     }
 }
