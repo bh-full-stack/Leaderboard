@@ -67,18 +67,17 @@ class Player
 
     public static function list() {
         try {
-            $sortDirection = ["ASC", "DESC"];
-            $sortBy = ["nick", "game", "country", "city", "score"];
+            $tableDirections = ["ASC", "DESC"];
+            $tableColumns = ["nick", "game", "country", "city", "score"];
+
+            $sortBy = isset($_GET["by"]) && in_array($_GET["by"], $tableColumns) ?
+                $_GET["by"] : $tableColumns[0];
+            $sortDirection = isset($_GET["direction"]) && in_array($_GET["direction"], $tableDirections) ?
+                $_GET["direction"] : $tableDirections[0];
+
             $conn = DatabaseService::getInstance()->getConnection();
+            $sql = "SELECT * FROM players ORDER BY $sortBy $sortDirection";
 
-            if (!isset($_GET["by"]) && !isset($_GET["direction"])) {
-                $sql = "SELECT * FROM players";
-
-            } elseif (array_intersect($sortBy, $_GET) && array_intersect($sortDirection, $_GET)) {
-                $by = $_GET["by"];
-                $direction = $_GET["direction"];
-                $sql = "SELECT * FROM players ORDER BY $by $direction";
-            }
             return $conn->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
         } catch(\PDOException $e) {
             throw (new UserException)->setCode(UserException::DATABASE_ERROR);

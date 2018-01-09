@@ -25,6 +25,7 @@ window.onload = function () {
                 var tableData = JSON.parse(response);
                 var tableLength = tableData.length;
                 var columnMapping = ["nick", "game", "score", "country", "city"];
+                var columnLength = columnMapping.length;
                 var tableBody = document.querySelector("tbody");
 
                 $(".table-data-row").remove();
@@ -32,14 +33,10 @@ window.onload = function () {
                 for (var i = 0; i < tableLength; i++){
                     var tableRow = tableBody.insertRow();
                     tableRow.classList.add("table-data-row");
-                    for (var j = 0; j < 5; j++){
-                        if(i === tableLength && j === 4){
-                            break;
-                        } else {
-                            var tableCell = tableRow.insertCell();
-                            var column = columnMapping[j];
-                            tableCell.appendChild(document.createTextNode(tableData[i][column]));
-                        }
+                    for (var j = 0; j < columnLength; j++){
+                        var tableCell = tableRow.insertCell();
+                        var column = columnMapping[j];
+                        tableCell.appendChild(document.createTextNode(tableData[i][column]));
                     }
                 }
             });
