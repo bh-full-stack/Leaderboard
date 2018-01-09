@@ -26,16 +26,7 @@ class Round extends Model
     }
 
     public function save() {
-        $conn = DatabaseService::getInstance()->getConnection();
-        $sql = "INSERT INTO rounds (game, score, location_id, player_id) 
-                VALUES (:game, :score, :location_id, :player_id)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':game', $this->game);
-        $stmt->bindParam(':score', $this->score);
-        $stmt->bindParam(':location_id', $this->location_id);
-        $stmt->bindParam(':player_id', $this->player_id);
-        $stmt->execute();
-        $this->id = $conn->lastInsertId();
+        $this->saveData('rounds', ['game', 'score', 'location_id', 'player_id']);
         return $this;
     }
 }

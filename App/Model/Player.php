@@ -59,13 +59,7 @@ class Player extends Model
         try {
             $this->loadByNick();
         } catch (\Exception $e) {
-            $conn = DatabaseService::getInstance()->getConnection();
-            $sql = "INSERT INTO players (nick, email) VALUES (:nick, :email)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':nick', $this->nick);
-            $stmt->bindParam(':email', $this->email);
-            $stmt->execute();
-            $this->id = $conn->lastInsertId();
+            $this->saveData('players', ['nick']);
         }
         return $this;
     }

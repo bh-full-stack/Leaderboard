@@ -57,13 +57,7 @@ class Location extends Model
         try {
             $this->loadByCountryAndCity();
         } catch (\Exception $e) {
-            $conn = DatabaseService::getInstance()->getConnection();
-            $sql = "INSERT INTO locations (country, city) VALUES (:country, :city)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':country', $this->country);
-            $stmt->bindParam(':city', $this->city);
-            $stmt->execute();
-            $this->id = $conn->lastInsertId();
+            $this->saveData('locations', ['country', 'city']);
         }
         return $this;
     }

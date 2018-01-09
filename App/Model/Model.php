@@ -28,6 +28,20 @@ class Model
         return get_object_vars($this);
     }
 
+    public function saveData($table, $columns) {
+        $conn = DatabaseService::getInstance()->getConnection();
+        $givenColumns = implode(",", $columns);
+        $givenColumnValues = ":";
+        $givenColumnValues .= implode(",:", $columns);
+        $sql = "INSERT INTO $table ($givenColumns) VALUES ($givenColumnValues)";
+        $stmt = $conn->prepare($sql);
+        foreach ($columns as $column) {
+            $stmt->bindParam(":$column", $this->$column);
+        }
+        $stmt->execute();
+        $this->id = $conn->lastInsertId();
+    }
+
     public static function deleteAll($table) {
         try {
             $conn = DatabaseService::getInstance()->getConnection();
