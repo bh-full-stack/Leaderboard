@@ -3,19 +3,18 @@
 namespace App\Model;
 
 use App\Service\DatabaseService;
+use App\Service\GeolocationService;
 
 class Location extends Model
 {
-    public $id;
-    public $city;
-    public $country;
+    protected $id;
+    protected $city;
+    protected $country;
 
-    public function setLocation(Location $location) {
-        if (!$location->isValid()) {
-            throw (new UserException)->setCode(UserException::LOCATION_FAILED);
-        }
-        $this->country = $location->country;
-        $this->city = $location->city;
+
+
+    public function fillByIp($clientIp) {
+        $this->fill(GeolocationService::resolveIp($clientIp));
     }
 
     private function loadByCountryAndCity() {

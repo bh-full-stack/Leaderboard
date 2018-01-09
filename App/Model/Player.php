@@ -7,9 +7,9 @@ use App\Service\DatabaseService;
 
 class Player extends Model
 {
-    public $id;
-    public $nick;
-    public $email;
+    protected $id;
+    protected $nick;
+    protected $email;
 
 
     public function __set($name, $value)
@@ -75,17 +75,6 @@ class Player extends Model
             $conn = DatabaseService::getInstance()->getConnection();
             $sql = "SELECT * FROM players";
             return $conn->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
-        } catch(\PDOException $e) {
-            throw (new UserException)->setCode(UserException::DATABASE_ERROR);
-        }
-    }
-
-    public static function deleteAll() {
-        try {
-            $conn = DatabaseService::getInstance()->getConnection();
-            $sql = "DELETE FROM players";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
         } catch(\PDOException $e) {
             throw (new UserException)->setCode(UserException::DATABASE_ERROR);
         }

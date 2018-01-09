@@ -7,12 +7,12 @@ use App\Service\DatabaseService;
 
 class Round extends Model
 {
-    private $id;
-    private $game;
-    private $score;
-    private $location_id;
-    private $player_id;
-    private $time;
+    protected $id;
+    protected $game;
+    protected $score;
+    protected $location_id;
+    protected $player_id;
+    protected $time;
 
     public function __set($name, $value)
     {
@@ -22,6 +22,7 @@ class Round extends Model
         if ($name == "score" && $value == "") {
             throw (new UserException)->setCode(UserException::INVALID_SCORE);
         }
+        $this->$name = $value;
     }
 
     public function save() {

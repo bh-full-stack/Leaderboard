@@ -35,7 +35,7 @@ class LocationTest extends \PHPUnit\Framework\TestCase
     public function it_rejects_invalid_parameters(){
         $location = new \App\Model\Location();
         $location->fill(["nonExistent"=>16]);
-        $this->assertObjectHasAttribute("nonExistent", $location);
+        $this->assertObjectNotHasAttribute("nonExistent", $location);
     }
 
     /**
