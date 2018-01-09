@@ -36,7 +36,7 @@ window.onload = function () {
                     for (var j = 0; j < columnLength; j++){
                         var tableCell = tableRow.insertCell();
                         var column = columnMapping[j];
-                        tableCell.appendChild(document.createTextNode(tableData[i][column]));
+                        tableCell.textContent(tableData[i][column]);
                     }
                 }
             });
