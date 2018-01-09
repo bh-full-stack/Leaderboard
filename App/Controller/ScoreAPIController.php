@@ -34,10 +34,5 @@ class ScoreAPIController {
     }
     public function update() {}
     public function delete() {}
-    public function list() {
-        $sortBy = isset($_GET['sort-by']) ? $_GET['sort-by'] : null;
-        $sortDir = isset($_GET['sort-dir']) ? $_GET['sort-dir'] : null;
-        $playersData = Player::list($sortBy, $sortDir);
-        include "../templates/layout.php";
-    }
+    public function list() {}
 }
