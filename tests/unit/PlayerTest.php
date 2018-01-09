@@ -6,6 +6,16 @@ class PlayerTest extends \PHPUnit\Framework\TestCase
         require "../autoload.php";
     }
 
+
+    /**
+     * @test
+     */
+    public function its_non_public_properties_can_be_set() {
+    $player = new \App\Model\Player();
+    $player->nick = "Peter";
+    $this->assertEquals("Peter", $player->nick);
+    }
+
     /**
      * @test
      */
@@ -90,7 +100,7 @@ class PlayerTest extends \PHPUnit\Framework\TestCase
      */
     public function it_can_list_all_records() {
         $seedController = new \App\Controller\SeedController();
-        $seedController->seed();
+        $seedController->seed(); // 50 record
 
         $playersData = \App\Model\Player::list();
         $numberOfRecords = count($playersData);
