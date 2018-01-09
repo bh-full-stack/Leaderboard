@@ -6,11 +6,15 @@ use App\Model\Location;
 class GeolocationService
 {
     public static function resolveIp($clientIp): array {
-        $jsonString = file_get_contents("http://ip-api.com/json/$clientIp");
-        if ($jsonString === false) {
+        try {
+            $jsonString = file_get_contents("http://ip-api.com/json/$clientIp");
+            $response = json_decode($jsonString, true);
+            if (is_null($response) || $response["status"] == "fail") {
+                throw new \Exception();
+            }
+        } catch (\Exception $e) {
             throw (new UserException)->setCode(UserException::CONNECTION_FAILED);
         }
-        $response = json_decode($jsonString, true);
         return ["country"=>$response["country"], "city"=>$response["city"]];
     }
 }
