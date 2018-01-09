@@ -12,7 +12,7 @@ class RoundController {
     public function create() {
         header("Access-Control-Allow-Origin: *");
         try {
-            $clientIp = $_SERVER['REMOTE_ADDR'];
+            $clientIp = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
             $clientIp = '89.135.190.25';
             $location = new Location();
             $location->fillByIp($clientIp);
