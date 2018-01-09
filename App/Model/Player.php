@@ -14,9 +14,6 @@ class Player
     private $country;
     private $city;
 
-    private static $listOrderBy = "nick";
-    private static $listOrderDirection = "ASC";
-
     public function __set($name, $value)
     {
         if ($name == "nick" && empty($value)) {
@@ -49,6 +46,10 @@ class Player
         ];
     }
 
+    public static function getAttributeNames() {
+        return array_keys(get_class_vars(self::class));
+    }
+
     public function save() {
         try {
             $conn = DatabaseService::getInstance()->getConnection();
@@ -69,7 +70,7 @@ class Player
     }
 
     public static function list($sortBy, $sortDir) {
-        $columnNames = ["nick", "game", "score", "country", "city"];
+        $columnNames = self::getAttributeNames();
         $orderDirs = ["ASC", "DESC"];
         if (!in_array($sortBy, $columnNames)) $sortBy = $columnNames[0];
         if (!in_array($sortDir, $orderDirs)) $sortDir = $orderDirs[0];

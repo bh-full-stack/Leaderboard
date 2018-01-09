@@ -2,7 +2,7 @@
 <form class="form-inline pull-right" id="sort-by-form">
     Sort by:
     <select class="form-control" name="sort-by" id="sort-by-menu">
-        <?php foreach (['nick', 'game', 'score', 'country', 'city'] as $optValue): ?>
+        <?php foreach ($playerAttributeNames as $optValue): ?>
         <option value="<?=$optValue?>"
             <?php if (isset($_GET['sort-by']) && $_GET['sort-by'] == $optValue) echo 'selected'; ?>>
             <?=ucfirst($optValue)?>
