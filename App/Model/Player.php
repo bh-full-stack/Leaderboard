@@ -10,6 +10,7 @@ class Player extends Model
     protected $id;
     protected $nick;
     protected $email;
+    protected $password_hash;
 
     public function __set($name, $value)
     {
@@ -59,10 +60,11 @@ class Player extends Model
             $this->loadByNick();
         } catch (\Exception $e) {
             $conn = DatabaseService::getInstance()->getConnection();
-            $sql = "INSERT INTO players (nick, email) VALUES (:nick, :email)";
+            $sql = "INSERT INTO players (nick, email, password_hash) VALUES (:nick, :email, :password_hash)";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':nick', $this->nick);
             $stmt->bindParam(':email', $this->email);
+            $stmt->bindParam(':password_hash', $this->password_hash);
             $stmt->execute();
             $this->id = $conn->lastInsertId();
         }

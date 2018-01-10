@@ -145,3 +145,8 @@ footer a:hover {
 textarea {
     resize: none;
 }
+
+.sign-up-form input, label {
+    display: block;
+    max-width: 500px;
+}

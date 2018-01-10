@@ -10,6 +10,7 @@ class TopScoresController
     public function index() {
         $playersData = Player::listTopPlayersByGame();
         $listOfGames = Round::getListOfGames();
+        $page = "top-scores";
         include "../templates/layout.php";
     }
 }
