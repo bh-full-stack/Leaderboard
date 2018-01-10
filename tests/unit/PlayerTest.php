@@ -1,6 +1,6 @@
 <?php
 
-class PlayerTest extends MyTest
+class PlayerTest extends ATest
 {
     /**
      * @test

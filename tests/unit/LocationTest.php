@@ -1,6 +1,6 @@
 <?php
 
-class LocationTest extends MyTest
+class LocationTest extends ATest
 {
     /**
      * @test

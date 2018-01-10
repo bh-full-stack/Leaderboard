@@ -1,6 +1,6 @@
 <?php
 
-class MyTest extends \PHPUnit\Framework\TestCase
+class ATest extends \PHPUnit\Framework\TestCase
 {
     public function setUp() {
         require "../autoload.php";
