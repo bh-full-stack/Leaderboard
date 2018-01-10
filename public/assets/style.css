@@ -138,6 +138,10 @@ footer a:hover {
 .form-control {
     border-radius: 0;
 }
+#game-list {
+    display: inline-block;
+    width: 100px;
+}
 textarea {
     resize: none;
 }

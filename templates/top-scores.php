@@ -1,5 +1,12 @@
 <h3 class="pull-left">Top Scores</h3>
-<table class="table table-striped table-hover" id="top-scores">
+<select class="form-control pull-right" id="game-list">
+    <option value="">All</option>
+    <?php foreach ($listOfGames as $game): ?>
+        <option><?=$game?></option>
+    <?php endforeach; ?>
+</select>
+
+<table class="table table-hover" id="top-scores">
     <thead>
     <tr>
         <th data-sort="string">Nick</th>
