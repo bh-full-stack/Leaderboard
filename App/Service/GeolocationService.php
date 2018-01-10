@@ -9,7 +9,7 @@ class GeolocationService
         try {
             $jsonString = file_get_contents("http://ip-api.com/json/$clientIp");
             $response = json_decode($jsonString, true);
-            if (is_null($response) || $response["status"] == "fail") {
+            if ($response["status"] == "fail") {
                 throw new \Exception();
             }
         } catch (\Exception $e) {
