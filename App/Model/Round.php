@@ -36,6 +36,7 @@ class Round extends Model
         $stmt->bindParam(':player_id', $this->player_id);
         $stmt->execute();
         $this->id = $conn->lastInsertId();
+        //$this->time = $conn->;
         return $this;
     }
 }
