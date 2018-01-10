@@ -20,9 +20,12 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
 
         $roundController = new \App\Controller\RoundController();
 
+        ob_start();
         $roundController->create();
+        $outputBuffer = ob_get_contents();
+        ob_end_clean();
 
-        $result = json_decode($this->getActualOutput(), true);
+        $result = json_decode($outputBuffer, true);
 
         $this->assertNotNull($result);
 
@@ -40,7 +43,9 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
     public function it_rejects_invalid_parameter_with_http_code_400() {
         $roundController = new \App\Controller\RoundController();
 
+        ob_start();
         $roundController->create();
+        ob_end_clean();
 
         $this->assertEquals(400, http_response_code());
     }
@@ -54,9 +59,12 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
 
         $roundController = new \App\Controller\RoundController();
 
+        ob_start();
         $roundController->create();
+        $outputBuffer = ob_get_contents();
+        ob_end_clean();
 
-        $result = json_decode($this->getActualOutput(), true);
+        $result = json_decode($outputBuffer, true);
 
         $this->assertEquals(20, $result['code']);
         $this->assertNotEmpty($result['message']);
@@ -72,9 +80,12 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
 
         $roundController = new \App\Controller\RoundController();
 
+        ob_start();
         $roundController->create();
+        $outputBuffer = ob_get_contents();
+        ob_end_clean();
 
-        $result = json_decode($this->getActualOutput(), true);
+        $result = json_decode($outputBuffer, true);
 
         $this->assertEquals(21, $result['code']);
         $this->assertNotEmpty($result['message']);
@@ -91,9 +102,12 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
 
         $roundController = new \App\Controller\RoundController();
 
+        ob_start();
         $roundController->create();
+        $outputBuffer = ob_get_contents();
+        ob_end_clean();
 
-        $result = json_decode($this->getActualOutput(), true);
+        $result = json_decode($outputBuffer, true);
 
         $this->assertEquals(22, $result['code']);
         $this->assertNotEmpty($result['message']);
