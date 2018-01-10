@@ -1,13 +1,17 @@
 <?php
 namespace App\Service;
 use App\Exception\UserException;
-use App\Model\Location;
 
 class GeolocationService
 {
-    public static function resolveIp($clientIp): array {
+    private static $clientIp;
+    private static $ApiUrl;
+
+    public static function resolveIp($clientIp, $ApiUrl = "http://ip-api.com/json/"): array {
         try {
-            $jsonString = file_get_contents("http://ip-api.com/json/$clientIp");
+            self::$clientIp = $clientIp;
+            self::$ApiUrl = $ApiUrl;
+            $jsonString = file_get_contents(self::$ApiUrl . self::$clientIp);
             $response = json_decode($jsonString, true);
             if ($response["status"] == "fail") {
                 throw new \Exception();
