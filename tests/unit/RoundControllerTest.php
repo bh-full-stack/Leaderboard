@@ -24,14 +24,8 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
 
         $result = json_decode($this->getActualOutput(), true);
 
-        $this->assertArrayHasKey('id', $result);
-        $this->assertArrayHasKey('game', $result);
-        $this->assertArrayHasKey('score', $result);
-        $this->assertArrayHasKey('location_id', $result);
-        $this->assertArrayHasKey('player_id', $result);
-        $this->assertArrayHasKey('time', $result);
+        $this->assertNotNull($result);
 
-        //$this->assertEquals($_POST['nick'], $result['nick']);
         $this->assertNotEmpty($result['id']);
         $this->assertEquals($_POST['game'], $result['game']);
         $this->assertEquals($_POST['score'], $result['score']);
@@ -43,7 +37,7 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_reject_invalid_parameter_with_Http_code_400() {
+    public function it_rejects_invalid_parameter_with_http_code_400() {
         $roundController = new \App\Controller\RoundController();
 
         $roundController->create();
@@ -53,7 +47,6 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @test
-     * @expectedException
      */
     public function it_rejects_invalid_nick() {
         $_POST['game'] = 'Yoyo';
@@ -65,15 +58,14 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
 
         $result = json_decode($this->getActualOutput(), true);
 
-        $this->assertArrayHasKey('code', $result);
-        $this->assertArrayHasKey('message', $result);
-
         $this->assertEquals(20, $result['code']);
+        $this->assertNotEmpty($result['message']);
+
         $this->assertEquals(400, http_response_code());
     }
+
     /**
      * @test
-     * @expectedException
      */
     public function it_rejects_invalid_game() {
         $_POST['nick'] = 'Jumbo';
@@ -84,15 +76,14 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
 
         $result = json_decode($this->getActualOutput(), true);
 
-        $this->assertArrayHasKey('code', $result);
-        $this->assertArrayHasKey('message', $result);
-
         $this->assertEquals(21, $result['code']);
+        $this->assertNotEmpty($result['message']);
+
         $this->assertEquals(400, http_response_code());
     }
+
     /**
      * @test
-     * @expectedException
      */
     public function it_rejects_invalid_score() {
         $_POST['nick'] = 'Jumbo';
@@ -104,10 +95,9 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
 
         $result = json_decode($this->getActualOutput(), true);
 
-        $this->assertArrayHasKey('code', $result);
-        $this->assertArrayHasKey('message', $result);
-
         $this->assertEquals(22, $result['code']);
+        $this->assertNotEmpty($result['message']);
+
         $this->assertEquals(400, http_response_code());
     }
 }
