@@ -8,6 +8,7 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp() {
         require "../autoload.php";
+        \App\Service\DatabaseService::getInstance()->setDbName("leaderboard_test");
     }
 
     /**
@@ -99,5 +100,12 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($result['message']);
 
         $this->assertEquals(400, http_response_code());
+    }
+
+    public function tearDown()
+    {
+        \App\Model\Model::deleteAll("players");
+        \App\Model\Model::deleteAll("locations");
+        \App\Model\Model::deleteAll("rounds");
     }
 }

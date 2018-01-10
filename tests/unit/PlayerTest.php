@@ -1,12 +1,7 @@
 <?php
 
-class PlayerTest extends \PHPUnit\Framework\TestCase
+class PlayerTest extends MyTest
 {
-    public function setUp() {
-        require "../autoload.php";
-        \App\Service\DatabaseService::getInstance()->setDbName("leaderboard_test");
-    }
-
     /**
      * @test
      */
@@ -63,7 +58,7 @@ class PlayerTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_can_save_and_load_itself_by_id_and_nick(){
+    public function it_can_save_and_load_itself_by_id(){
         $player = new \App\Model\Player();
         $player->fill(["id"=>10, "nick"=>"Thomas", "email"=>"thomas@gmail.com"]);
         $result = $player->save();
@@ -77,6 +72,17 @@ class PlayerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($player->nick, $newPlayer->nick);
         $this->assertEquals($player->email, $newPlayer->email);
         $this->assertEquals($newPlayer, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_save_and_load_itself_by_nick(){
+        $player = new \App\Model\Player();
+        $player->fill(["id"=>10, "nick"=>"Thomas", "email"=>"thomas@gmail.com"]);
+        $result = $player->save();
+        $this->assertEquals($player, $result);
+        $this->assertNotEmpty($player->id);
 
         $newPlayer = new \App\Model\Player();
         $newPlayer->nick = $player->nick;
@@ -106,12 +112,5 @@ class PlayerTest extends \PHPUnit\Framework\TestCase
         $playersData = \App\Model\Player::list();
         $numberOfRecords = count($playersData);
         $this->assertEquals( 50, $numberOfRecords);
-    }
-
-    public function tearDown()
-    {
-        \App\Model\Model::deleteAll("players");
-        \App\Model\Model::deleteAll("locations");
-        \App\Model\Model::deleteAll("rounds");
     }
 }

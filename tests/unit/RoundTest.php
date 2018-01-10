@@ -4,6 +4,7 @@ class RoundTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp() {
         require "../autoload.php";
+        \App\Service\DatabaseService::getInstance()->setDbName("leaderboard_test");
     }
 
     /**
@@ -137,5 +138,12 @@ class RoundTest extends \PHPUnit\Framework\TestCase
     public function it_throws_exception_on_loading_by_invalid_id() {
         $round = new \App\Model\Round();
         $round->load();
+    }
+
+    public function tearDown()
+    {
+        \App\Model\Model::deleteAll("players");
+        \App\Model\Model::deleteAll("locations");
+        \App\Model\Model::deleteAll("rounds");;
     }
 }

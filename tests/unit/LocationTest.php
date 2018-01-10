@@ -1,11 +1,7 @@
 <?php
 
-class LocationTest extends \PHPUnit\Framework\TestCase
+class LocationTest extends MyTest
 {
-    public function setUp() {
-        require "../autoload.php";
-    }
-
     /**
      * @test
      */
