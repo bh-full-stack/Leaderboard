@@ -4,16 +4,18 @@ class PlayerTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp() {
         require "../autoload.php";
+        \App\Service\DatabaseService::getInstance()->setDBName("leaderboard_test");
     }
-
 
     /**
      * @test
      */
     public function its_non_public_properties_can_be_set() {
-    $player = new \App\Model\Player();
-    $player->nick = "Peter";
-    $this->assertEquals("Peter", $player->nick);
+        $player = new \App\Model\Player();
+        $player->nick = "Thomas";
+        $player->email = "thomas@gmail.com";
+        $this->assertEquals("Thomas", $player->nick);
+        $this->assertEquals("thomas@gmail.com", $player->email);
     }
 
     /**
@@ -21,10 +23,10 @@ class PlayerTest extends \PHPUnit\Framework\TestCase
      */
     public function it_can_fill_itself() {
         $player = new \App\Model\Player();
-        $result = $player->fill(["id"=>10, "nick"=>"Peter", "email"=>"peter@gmail.com"]);
+        $result = $player->fill(["id"=>10, "nick"=>"Thomas", "email"=>"thomas@gmail.com"]);
         $this->assertEquals(10, $player->id);
-        $this->assertEquals("Peter", $player->nick);
-        $this->assertEquals("peter@gmail.com", $player->email);
+        $this->assertEquals("Thomas", $player->nick);
+        $this->assertEquals("thomas@gmail.com", $player->email);
         $this->assertEquals($player, $result);
     }
 
@@ -33,9 +35,9 @@ class PlayerTest extends \PHPUnit\Framework\TestCase
      */
     public function it_fills_the_given_attributes_only() {
         $player = new \App\Model\Player();
-        $player->fill(["id"=>10, "nick"=>"Peter"]);
+        $player->fill(["id"=>10, "nick"=>"Thomas"]);
         $this->assertEquals(10, $player->id);
-        $this->assertEquals("Peter", $player->nick);
+        $this->assertEquals("Thomas", $player->nick);
         $this->assertNull($player->email);
     }
 
@@ -54,7 +56,7 @@ class PlayerTest extends \PHPUnit\Framework\TestCase
     public function it_can_validate_itself(){
         $player = new \App\Model\Player();
         $this->assertFalse($player->isValid());
-        $player->nick = "Peter";
+        $player->nick = "Thomas";
         $this->assertTrue($player->isValid());
     }
 
@@ -63,7 +65,7 @@ class PlayerTest extends \PHPUnit\Framework\TestCase
      */
     public function it_can_save_and_load_itself_by_id_and_nick(){
         $player = new \App\Model\Player();
-        $player->fill(["id"=>10, "nick"=>"Peter", "email"=>"peter@gmail.com"]);
+        $player->fill(["id"=>10, "nick"=>"Thomas", "email"=>"thomas@gmail.com"]);
         $result = $player->save();
         $this->assertEquals($player, $result);
         $this->assertNotEmpty($player->id);
@@ -96,7 +98,6 @@ class PlayerTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @test
-     * WARNING: Do not use on live DB, deletes all records!
      */
     public function it_can_list_all_records() {
         $seedController = new \App\Controller\SeedController();
@@ -105,5 +106,12 @@ class PlayerTest extends \PHPUnit\Framework\TestCase
         $playersData = \App\Model\Player::list();
         $numberOfRecords = count($playersData);
         $this->assertEquals( 50, $numberOfRecords);
+    }
+
+    public function tearDown()
+    {
+        \App\Model\Model::deleteAll("players");
+        \App\Model\Model::deleteAll("locations");
+        \App\Model\Model::deleteAll("rounds");
     }
 }

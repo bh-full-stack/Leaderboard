@@ -12,6 +12,10 @@ class DatabaseService
 
     private function __construct() {}
 
+    public function setDBName($dbname) {
+        $this->dbname = $dbname;
+    }
+
     public function getConnection() {
         if (empty($this->connection)) {
             $this->connection = new \PDO(
