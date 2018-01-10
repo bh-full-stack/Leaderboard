@@ -4,9 +4,8 @@
     <tr>
         <th data-sort="string">Nick</th>
         <th data-sort="string">Game</th>
-        <th data-sort="int">Score</th>
-        <th data-sort="string">Country</th>
-        <th data-sort="string">City</th>
+        <th data-sort="int">Top score</th>
+        <th data-sort="int">Number of rounds</th>
     </tr>
     </thead>
     <tbody>
@@ -14,9 +13,8 @@
         <tr>
             <td><?=$playerData["nick"]?></td>
             <td><?=$playerData["game"]?></td>
-            <td><?=$playerData["score"]?></td>
-            <td><?=$playerData["country"]?></td>
-            <td><?=$playerData["city"]?></td>
+            <td><?=$playerData["top_score"]?></td>
+            <td><?=$playerData["number_of_rounds"]?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>

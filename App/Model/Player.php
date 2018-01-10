@@ -11,7 +11,6 @@ class Player extends Model
     protected $nick;
     protected $email;
 
-
     public function __set($name, $value)
     {
         if ($name == "nick" && empty($value)) {
@@ -84,23 +83,14 @@ class Player extends Model
         try {
             $conn = DatabaseService::getInstance()->getConnection();
             $sql = "SELECT
-                      players.nick,
-                      current.game,
-                      current.score,
-                      locations.country,
-                      locations.city
-                    FROM rounds AS current
-                      INNER JOIN players ON current.player_id = players.id
-                      INNER JOIN locations ON current.location_id = locations.id
-                    WHERE NOT EXISTS(
-                      SELECT *
-                      FROM rounds AS high
-                      WHERE
-                        high.game = current.game AND
-                        high.player_id = current.player_id AND
-                        high.score > current.score
-                    )
-            ";
+                        players.nick, 
+                        rounds.game, 
+                        MAX(rounds.score) AS top_score, 
+                        COUNT(rounds.id) AS number_of_rounds
+                    FROM rounds
+                    JOIN players
+                        ON rounds.player_id = players.id
+                    GROUP BY rounds.player_id, rounds.game";
             return $conn->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
         } catch(\PDOException $e) {
             throw (new UserException)->setCode(UserException::DATABASE_ERROR);

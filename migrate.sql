@@ -39,3 +39,17 @@ CREATE TABLE locations (
 );
 
 ALTER TABLE locations ADD UNIQUE INDEX(country, city);
+
+ALTER TABLE rounds
+  ADD FOREIGN KEY
+  (player_id)
+REFERENCES players (id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE rounds
+  ADD FOREIGN KEY
+  (location_id)
+REFERENCES locations (id)
+  ON DELETE RESTRICT
+  ON UPDATE CASCADE;
