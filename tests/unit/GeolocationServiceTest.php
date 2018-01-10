@@ -2,9 +2,6 @@
 
 class GeolocationServiceTest extends \PHPUnit\Framework\TestCase
 {
-    public $clientIp;
-    public $country;
-    public $city;
 
     public function setUp()
     {
@@ -16,12 +13,9 @@ class GeolocationServiceTest extends \PHPUnit\Framework\TestCase
      */
     public function it_can_resolve_an_ip_to_country_and_city()
     {
-        $this->clientIp = "89.135.190.25";
-        $this->country = "Hungary";
-        $this->city = "Budapest";
-        $result = \App\Service\GeolocationService::resolveIp($this->clientIp);
-        $this->assertEquals($this->country, $result["country"]);
-        $this->assertEquals($this->city, $result["city"]);
+        $result = \App\Service\GeolocationService::resolveIp("89.135.190.25");
+        $this->assertEquals("Hungary", $result["country"]);
+        $this->assertEquals("Budapest", $result["city"]);
     }
 
     /**
@@ -40,6 +34,6 @@ class GeolocationServiceTest extends \PHPUnit\Framework\TestCase
     public function it_throws_exception_on_failed_API_connection()
     {
         $this->clientIp = "89.135.190.25";
-        \App\Service\GeolocationService::resolveIp("$this->clientIp", "invalidApiUrl");
+        \App\Service\GeolocationService::resolveIp("89.135.190.25", "invalidApiUrl");
     }
 }
