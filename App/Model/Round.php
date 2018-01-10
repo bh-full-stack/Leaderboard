@@ -26,9 +26,4 @@ class Round extends Model
         }
         $this->$name = $value;
     }
-
-    public function save() {
-        parent::save();
-        return $this;
-    }
 }
