@@ -4,7 +4,7 @@ class PlayerTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp() {
         require "../autoload.php";
-        \App\Service\DatabaseService::getInstance()->setDBName("leaderboard_test");
+        \App\Service\DatabaseService::getInstance()->setDbName("leaderboard_test");
     }
 
     /**

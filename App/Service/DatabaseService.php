@@ -12,7 +12,7 @@ class DatabaseService
 
     private function __construct() {}
 
-    public function setDBName($dbname) {
+    public function setDbName($dbname) {
         $this->dbname = $dbname;
     }
 
