@@ -79,4 +79,31 @@ class Player extends Model
             throw (new UserException)->setCode(UserException::DATABASE_ERROR);
         }
     }
+
+    public static function listTopPlayersByGame() {
+        try {
+            $conn = DatabaseService::getInstance()->getConnection();
+            $sql = "SELECT
+                      players.nick,
+                      current.game,
+                      current.score,
+                      locations.country,
+                      locations.city
+                    FROM rounds AS current
+                      INNER JOIN players ON current.player_id = players.id
+                      INNER JOIN locations ON current.location_id = locations.id
+                    WHERE NOT EXISTS(
+                      SELECT *
+                      FROM rounds AS high
+                      WHERE
+                        high.game = current.game AND
+                        high.player_id = current.player_id AND
+                        high.score > current.score
+                    )
+            ";
+            return $conn->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+        } catch(\PDOException $e) {
+            throw (new UserException)->setCode(UserException::DATABASE_ERROR);
+        }
+    }
 }

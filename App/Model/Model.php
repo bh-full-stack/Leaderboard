@@ -31,8 +31,9 @@ class Model
     public static function deleteAll($table) {
         try {
             $conn = DatabaseService::getInstance()->getConnection();
-            $sql = "DELETE FROM $table";
-            $stmt = $conn->prepare($sql);
+            $stmt = $conn->prepare("DELETE FROM $table");
+            $stmt->execute();
+            $stmt = $conn->prepare("ALTER TABLE $table AUTO_INCREMENT = 1");
             $stmt->execute();
         } catch(\PDOException $e) {
             throw (new UserException())->setCode(UserException::DATABASE_ERROR);

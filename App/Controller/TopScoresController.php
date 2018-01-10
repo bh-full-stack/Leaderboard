@@ -7,7 +7,7 @@ use App\Model\Player;
 class TopScoresController
 {
     public function index() {
-        $playersData = Player::list();
+        $playersData = Player::listTopPlayersByGame();
         include "../templates/layout.php";
     }
 }
