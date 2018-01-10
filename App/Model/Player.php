@@ -7,6 +7,7 @@ use App\Service\DatabaseService;
 
 class Player extends Model
 {
+    const TABLE_NAME = "players";
     protected $id;
     protected $nick;
     protected $email;
@@ -59,7 +60,7 @@ class Player extends Model
         try {
             $this->loadByNick();
         } catch (\Exception $e) {
-            $this->saveData('players', ['nick']);
+            parent::save();
         }
         return $this;
     }

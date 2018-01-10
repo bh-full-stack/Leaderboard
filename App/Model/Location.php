@@ -7,10 +7,10 @@ use App\Service\GeolocationService;
 
 class Location extends Model
 {
+    const TABLE_NAME = "locations";
     protected $id;
-    protected $city;
     protected $country;
-
+    protected $city;
 
 
     public function fillByIp($clientIp) {
@@ -57,7 +57,7 @@ class Location extends Model
         try {
             $this->loadByCountryAndCity();
         } catch (\Exception $e) {
-            $this->saveData('locations', ['country', 'city']);
+            parent::save();
         }
         return $this;
     }

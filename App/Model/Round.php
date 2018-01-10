@@ -7,12 +7,14 @@ use App\Service\DatabaseService;
 
 class Round extends Model
 {
+    const TABLE_NAME = "rounds";
     protected $id;
     protected $game;
     protected $score;
     protected $location_id;
     protected $player_id;
     protected $time;
+
 
     public function __set($name, $value)
     {
@@ -26,7 +28,7 @@ class Round extends Model
     }
 
     public function save() {
-        $this->saveData('rounds', ['game', 'score', 'location_id', 'player_id']);
+        parent::save();
         return $this;
     }
 }

@@ -28,18 +28,27 @@ class Model
         return get_object_vars($this);
     }
 
-    public function saveData($table, $columns) {
-        $conn = DatabaseService::getInstance()->getConnection();
-        $givenColumns = implode(",", $columns);
-        $givenColumnValues = ":";
-        $givenColumnValues .= implode(",:", $columns);
-        $sql = "INSERT INTO $table ($givenColumns) VALUES ($givenColumnValues)";
-        $stmt = $conn->prepare($sql);
-        foreach ($columns as $column) {
-            $stmt->bindParam(":$column", $this->$column);
+    public function save() {
+        try {
+            $conn = DatabaseService::getInstance()->getConnection();
+            $columns = get_object_vars($this);
+            foreach ($columns as $column => $value) {
+                if ($value == null) {
+                    unset($columns[$column]);
+                }
+            }
+            $givenColumns = implode(", ", array_keys($columns));
+            $givenColumnValues = ":" . implode(", :", array_keys($columns));
+            $sql = "INSERT INTO " . static::TABLE_NAME . " ($givenColumns) VALUES ($givenColumnValues)";
+            $stmt = $conn->prepare($sql);
+            foreach ($columns as $column => $value) {
+                $stmt->bindValue(":$column", $value);
+            }
+            $stmt->execute();
+            $this->id = $conn->lastInsertId();
+        } catch(\PDOException $e) {
+            throw (new UserException())->setCode(UserException::DATABASE_ERROR);
         }
-        $stmt->execute();
-        $this->id = $conn->lastInsertId();
     }
 
     public static function deleteAll($table) {
