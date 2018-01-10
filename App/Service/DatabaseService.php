@@ -6,7 +6,7 @@ class DatabaseService
 {
     private $servername = "localhost";
     private $username = "root";
-    private $password = "19860116";
+    private $password = "mob";
     private $dbname = "leaderboard";
     private $connection;
 
