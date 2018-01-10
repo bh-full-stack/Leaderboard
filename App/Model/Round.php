@@ -25,6 +25,20 @@ class Round extends Model
         $this->$name = $value;
     }
 
+    public function load() {
+        $conn = DatabaseService::getInstance()->getConnection();
+        $sql = "SELECT * FROM rounds WHERE id=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $this->id);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        if (!isset($rows[0])) {
+            throw new \Exception("Cannot load round by id");
+        }
+        $this->fill($rows[0]);
+        return $this;
+    }
+
     public function save() {
         $conn = DatabaseService::getInstance()->getConnection();
         $sql = "INSERT INTO rounds (game, score, location_id, player_id) 
