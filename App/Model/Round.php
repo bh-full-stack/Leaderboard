@@ -52,4 +52,10 @@ class Round extends Model
         $this->id = $conn->lastInsertId();
         return $this;
     }
+
+    public static function getListOfGames() {
+        $conn = DatabaseService::getInstance()->getConnection();
+        $sql = "SELECT DISTINCT game FROM rounds";
+        return $conn->query($sql)->fetchAll(\PDO::FETCH_COLUMN);
+    }
 }

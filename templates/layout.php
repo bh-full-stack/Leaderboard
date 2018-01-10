@@ -19,7 +19,7 @@
 <?php include "../templates/navigation.php"; ?>
 
 <div class="container">
-    <?php include "../templates/top-scores.php"; ?>
+    <?php include "../templates/$page.php"; ?>
 </div>
 
 <footer class="text-center">

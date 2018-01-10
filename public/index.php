@@ -29,6 +29,16 @@ if (php_sapi_name() == "cli") {
             default:
                 $controller->list();
         }
+    } elseif ($_SERVER["REQUEST_URI"] == "/sign-up") {
+        $controller = new \App\Controller\SignUpController();
+        switch ($_SERVER["REQUEST_METHOD"]) {
+            case "GET":
+                $controller->index();
+                break;
+            case "POST":
+                $controller->create();
+                break;
+        }
     } elseif ($_SERVER["REQUEST_URI"] == "/test") {
 
         $location = new \App\Model\Location();

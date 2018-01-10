@@ -10,7 +10,7 @@ class Player extends Model
     protected $id;
     protected $nick;
     protected $email;
-
+    protected $password_hash;
 
     public function __set($name, $value)
     {
@@ -60,10 +60,11 @@ class Player extends Model
             $this->loadByNick();
         } catch (\Exception $e) {
             $conn = DatabaseService::getInstance()->getConnection();
-            $sql = "INSERT INTO players (nick, email) VALUES (:nick, :email)";
+            $sql = "INSERT INTO players (nick, email, password_hash) VALUES (:nick, :email, :password_hash)";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':nick', $this->nick);
             $stmt->bindParam(':email', $this->email);
+            $stmt->bindParam(':password_hash', $this->password_hash);
             $stmt->execute();
             $this->id = $conn->lastInsertId();
         }
@@ -84,23 +85,14 @@ class Player extends Model
         try {
             $conn = DatabaseService::getInstance()->getConnection();
             $sql = "SELECT
-                      players.nick,
-                      current.game,
-                      current.score,
-                      locations.country,
-                      locations.city
-                    FROM rounds AS current
-                      INNER JOIN players ON current.player_id = players.id
-                      INNER JOIN locations ON current.location_id = locations.id
-                    WHERE NOT EXISTS(
-                      SELECT *
-                      FROM rounds AS high
-                      WHERE
-                        high.game = current.game AND
-                        high.player_id = current.player_id AND
-                        high.score > current.score
-                    )
-            ";
+                        players.nick, 
+                        rounds.game, 
+                        MAX(rounds.score) AS top_score, 
+                        COUNT(rounds.id) AS number_of_rounds
+                    FROM rounds
+                    JOIN players
+                        ON rounds.player_id = players.id
+                    GROUP BY rounds.player_id, rounds.game";
             return $conn->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
         } catch(\PDOException $e) {
             throw (new UserException)->setCode(UserException::DATABASE_ERROR);
