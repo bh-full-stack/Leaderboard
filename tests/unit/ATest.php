@@ -7,6 +7,10 @@ class ATest extends \PHPUnit\Framework\TestCase
         \App\Service\DatabaseService::getInstance()->setDbName("leaderboard_test");
     }
 
+    /**
+     * @test
+     */
+
     public function tearDown()
     {
         \App\Model\Model::deleteAll("players");

@@ -1,5 +1,3 @@
-CREATE DATABASE leaderboard;
-USE leaderboard;
 CREATE TABLE players (nick VARCHAR(20));
 ALTER TABLE players ADD COLUMN (game VARCHAR(20), score SMALLINT);
 
