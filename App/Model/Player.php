@@ -24,7 +24,7 @@ class Player extends Model
         return !empty($this->nick);
     }
 
-    private function loadByNick() {
+    public function loadByNick() {
         $conn = DatabaseService::getInstance()->getConnection();
         $sql = "SELECT * FROM players WHERE nick=:nick";
         $stmt = $conn->prepare($sql);
