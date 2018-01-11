@@ -7,6 +7,7 @@ use App\Service\DatabaseService;
 
 class Player extends Model
 {
+    const TABLE_NAME = "players";
     protected $id;
     protected $nick;
     protected $email;
@@ -59,14 +60,7 @@ class Player extends Model
         try {
             $this->loadByNick();
         } catch (\Exception $e) {
-            $conn = DatabaseService::getInstance()->getConnection();
-            $sql = "INSERT INTO players (nick, email, password_hash) VALUES (:nick, :email, :password_hash)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':nick', $this->nick);
-            $stmt->bindParam(':email', $this->email);
-            $stmt->bindParam(':password_hash', $this->password_hash);
-            $stmt->execute();
-            $this->id = $conn->lastInsertId();
+            parent::save();
         }
         return $this;
     }

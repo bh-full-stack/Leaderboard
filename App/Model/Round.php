@@ -7,12 +7,14 @@ use App\Service\DatabaseService;
 
 class Round extends Model
 {
+    const TABLE_NAME = "rounds";
     protected $id;
     protected $game;
     protected $score;
     protected $location_id;
     protected $player_id;
     protected $time;
+
 
     public function __set($name, $value)
     {
