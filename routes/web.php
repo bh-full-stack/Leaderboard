@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'TopScoresController@index');
+
+Route::get('/sign-up', 'SignUpController@index');
+
+Route::post('/sign-up', 'SignUpController@create');
