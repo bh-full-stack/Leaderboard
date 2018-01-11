@@ -41,20 +41,6 @@ class Round extends Model
         return $this;
     }
 
-    public function save() {
-        $conn = DatabaseService::getInstance()->getConnection();
-        $sql = "INSERT INTO rounds (game, score, location_id, player_id) 
-                VALUES (:game, :score, :location_id, :player_id)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':game', $this->game);
-        $stmt->bindParam(':score', $this->score);
-        $stmt->bindParam(':location_id', $this->location_id);
-        $stmt->bindParam(':player_id', $this->player_id);
-        $stmt->execute();
-        $this->id = $conn->lastInsertId();
-        return $this;
-    }
-
     public static function getListOfGames() {
         $conn = DatabaseService::getInstance()->getConnection();
         $sql = "SELECT DISTINCT game FROM rounds";
