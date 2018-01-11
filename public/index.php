@@ -1,56 +1,60 @@
 <?php
 
-require "../autoload.php";
+/**
+ * Laravel - A PHP Framework For Web Artisans
+ *
+ * @package  Laravel
+ * @author   Taylor Otwell <taylor@laravel.com>
+ */
 
-if (php_sapi_name() == "cli") {
-    if (isset($argv[1]) && $argv[1] == "seed") {
-        $controller = new \App\Controller\SeedController();
-        $controller->seed();
-    } else {
-        echo "Please add valid arguments\n";
-    }
-} else {
-    if ($_SERVER["REQUEST_URI"] == "/scores") {
-        $controller = new \App\Controller\RoundController();
-        switch ($_SERVER["REQUEST_METHOD"]) {
-            case "GET":
-                $controller->list();
-                break;
-            case "POST":
-                $controller->create();
-                break;
-            case "PUT":
-            case "PATCH":
-                $controller->update();
-                break;
-            case "DELETE":
-                $controller->delete();
-                break;
-            default:
-                $controller->list();
-        }
-    } elseif ($_SERVER["REQUEST_URI"] == "/sign-up") {
-        $controller = new \App\Controller\SignUpController();
-        switch ($_SERVER["REQUEST_METHOD"]) {
-            case "GET":
-                $controller->index();
-                break;
-            case "POST":
-                $controller->create();
-                break;
-        }
-    } elseif ($_SERVER["REQUEST_URI"] == "/test") {
+define('LARAVEL_START', microtime(true));
 
-        $location = new \App\Model\Location();
-        $location->country = "Hungary";
-        $location->city = "Budapest";
-        $id = $location->save();
+/*
+|--------------------------------------------------------------------------
+| Register The Auto Loader
+|--------------------------------------------------------------------------
+|
+| Composer provides a convenient, automatically generated class loader for
+| our application. We just need to utilize it! We'll simply require it
+| into the script here so that we don't have to worry about manual
+| loading any of our classes later on. It feels great to relax.
+|
+*/
 
+require __DIR__.'/../vendor/autoload.php';
 
+/*
+|--------------------------------------------------------------------------
+| Turn On The Lights
+|--------------------------------------------------------------------------
+|
+| We need to illuminate PHP development, so let us turn on the lights.
+| This bootstraps the framework and gets it ready for use, then it
+| will load up this application so that we can run it and send
+| the responses back to the browser and delight our users.
+|
+*/
 
+$app = require_once __DIR__.'/../bootstrap/app.php';
 
-    } else {
-        $controller = new \App\Controller\TopScoresController();
-        $controller->index();
-    }
-}
+/*
+|--------------------------------------------------------------------------
+| Run The Application
+|--------------------------------------------------------------------------
+|
+| Once we have the application, we can handle the incoming request
+| through the kernel, and send the associated response back to
+| the client's browser allowing them to enjoy the creative
+| and wonderful application we have prepared for them.
+|
+*/
+
+$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+
+$response = $kernel->handle(
+    $request = Illuminate\Http\Request::capture()
+);
+
+$response->send();
+
+$kernel->terminate($request, $response);
