@@ -34,7 +34,6 @@ class SeedController
             $round->player_id = $player->id;
             $round->save();
 
-            echo $player->nick . "\n";
         }
     }
 }

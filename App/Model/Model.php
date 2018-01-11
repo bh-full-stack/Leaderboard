@@ -48,6 +48,7 @@ class Model
             $this->id = $conn->lastInsertId();
             return $this;
         } catch(\PDOException $e) {
+            error_log($e);
             throw (new UserException())->setCode(UserException::DATABASE_ERROR);
         }
     }

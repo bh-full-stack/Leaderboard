@@ -1,10 +1,9 @@
 <?php
 
-class RoundTest extends \PHPUnit\Framework\TestCase
+require_once "AbstractTest.php";
+
+class RoundTest extends AbstractTest
 {
-    public function setUp() {
-        require "../autoload.php";
-    }
 
     /**
      * @test
