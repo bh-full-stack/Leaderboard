@@ -22,10 +22,8 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
 
         ob_start();
         $roundController->create();
-        $outputBuffer = ob_get_contents();
+        $result = json_decode(ob_get_contents(), true);
         ob_end_clean();
-
-        $result = json_decode($outputBuffer, true);
 
         $this->assertNotNull($result);
 
@@ -61,10 +59,8 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
 
         ob_start();
         $roundController->create();
-        $outputBuffer = ob_get_contents();
+        $result = json_decode(ob_get_contents(), true);
         ob_end_clean();
-
-        $result = json_decode($outputBuffer, true);
 
         $this->assertEquals(20, $result['code']);
         $this->assertNotEmpty($result['message']);
@@ -82,10 +78,8 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
 
         ob_start();
         $roundController->create();
-        $outputBuffer = ob_get_contents();
+        $result = json_decode(ob_get_contents(), true);
         ob_end_clean();
-
-        $result = json_decode($outputBuffer, true);
 
         $this->assertEquals(21, $result['code']);
         $this->assertNotEmpty($result['message']);
@@ -104,10 +98,8 @@ class RoundControllerTest extends \PHPUnit\Framework\TestCase
 
         ob_start();
         $roundController->create();
-        $outputBuffer = ob_get_contents();
+        $result = json_decode(ob_get_contents(), true);
         ob_end_clean();
-
-        $result = json_decode($outputBuffer, true);
 
         $this->assertEquals(22, $result['code']);
         $this->assertNotEmpty($result['message']);
