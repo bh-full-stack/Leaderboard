@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Exception\UserException;
+use App\Exceptions\UserException;
 use App\Providers\DatabaseService;
 
 class Round extends Model
