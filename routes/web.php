@@ -16,3 +16,5 @@ Route::get('/', 'TopScoresController@index');
 Route::get('/sign-up', 'SignUpController@index');
 
 Route::post('/sign-up', 'SignUpController@create');
+
+Route::resource('rounds', 'RoundController');

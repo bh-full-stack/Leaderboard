@@ -2,8 +2,8 @@
 
 namespace App\Model;
 
-use App\Service\DatabaseService;
-use App\Service\GeolocationService;
+use App\Providers\DatabaseService;
+use App\Providers\GeolocationService;
 
 class Location extends Model
 {

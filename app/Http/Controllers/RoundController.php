@@ -1,15 +1,44 @@
 <?php
 
-namespace App\Controller;
-use App\Exception\UserException;
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Exceptions\UserException;
 use App\Model\Location;
 use App\Model\Player;
 use App\Model\Round;
-use App\Service\HttpService;
+use App\Providers\HttpService;
 
-class RoundController {
-    public function show() {}
-    public function create() {
+class RoundController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
         header("Access-Control-Allow-Origin: *");
         try {
             $clientIp = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
@@ -39,7 +68,49 @@ class RoundController {
             echo json_encode(["code" => 0, "message" => "Unknown system error"]);
         }
     }
-    public function update() {}
-    public function delete() {}
-    public function list() {}
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 }

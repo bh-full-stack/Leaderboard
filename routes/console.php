@@ -19,4 +19,4 @@ Artisan::command('inspire', function () {
 })->describe('Display an inspiring quote');
 
 //todo
-Artisan::command('seed', "SeedController@seed");
+//Artisan::command('seed', "SeedController@seed");

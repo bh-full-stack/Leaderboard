@@ -1,6 +1,6 @@
 <?php
 namespace App\Providers;
-use App\Exception\UserException;
+use App\Exceptions\UserException;
 
 class GeolocationService
 {
