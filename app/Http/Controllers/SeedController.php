@@ -1,19 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Model\Location;
-use App\Model\Model;
-use App\Model\Player;
-use App\Model\Round;
+use App\Location;
+use App\Player;
+use App\Round;
 
 class SeedController
 {
     public function seed() {
         $json = file_get_contents("http://www.json-generator.com/api/json/get/bPdyglnUoi?indent=2");
         $playersData = json_decode($json);
-        Model::deleteAll("players");
+        /*Model::deleteAll("players");
         Model::deleteAll("locations");
-        Model::deleteAll("rounds");
+        Model::deleteAll("rounds");*/
 
         foreach ($playersData as $playerData) {
 

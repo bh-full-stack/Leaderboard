@@ -7,23 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class Player extends Model
 {
+    protected $fillable = ["nick", "email"];
     protected $hidden = ["password_hash"];
 
-    public function rounds()
-    {
+    public function rounds() {
         return $this->hasMany('Round');
-
-
-        /*$sql = "SELECT
-                        players.nick,
-                        rounds.game,
-                        MAX(rounds.score) AS top_score,
-                        COUNT(rounds.id) AS number_of_rounds
-                    FROM rounds
-                    JOIN players
-                        ON rounds.player_id = players.id
-                    GROUP BY rounds.player_id, rounds.game";*/
-
     }
 
     public static function listTopPlayersByGame() {

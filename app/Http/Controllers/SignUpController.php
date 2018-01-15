@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Player;
-use App\Providers\HttpService;
+use App\Player;
+use Illuminate\Http\Request;
 
 class SignUpController extends Controller
 {
@@ -12,11 +12,17 @@ class SignUpController extends Controller
             "page" => "sign-up"
         ]);
     }
-    public function create() {
+    public function create(Request $request) {
+        $request->validate([
+            'nick' => 'required|unique:players',
+            'email' => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
         $player = new Player();
-        $player->nick = HttpService::getPostVar('nick');
-        $player->email = HttpService::getPostVar('email');
-        $player->password_hash = password_hash(HttpService::getPostVar('password'), PASSWORD_DEFAULT);
+        $player->nick = $request->input('nick');
+        $player->email = $request->input('email');
+        $player->password_hash = Hash::make($request->input('password'));
         $player->save();
         return view('layout', [
             "page" => "sign-up"

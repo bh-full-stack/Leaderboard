@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Exceptions\UserException;
-use App\Model\Location;
-use App\Model\Player;
-use App\Model\Round;
+use App\Location;
+use App\Player;
+use App\Round;
 use App\Providers\HttpService;
 
 class RoundController extends Controller
@@ -39,6 +39,12 @@ class RoundController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nick' => 'required|unique:players',
+            'game' => 'required',
+            'score' => 'required|integer'
+        ]);
+
         header("Access-Control-Allow-Origin: *");
         try {
             $clientIp = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;

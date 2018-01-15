@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Player;
-use App\Model\Round;
+use App\Player;
+use App\Round;
 
 class TopScoresController
 {
