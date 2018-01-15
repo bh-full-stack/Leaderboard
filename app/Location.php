@@ -13,8 +13,9 @@ class Location extends Model
         return $this->hasMany('Round');
     }
 
-    public function fillByIp($clientIp) {
-        $this->fill(GeolocationService::resolveIp($clientIp));
+    public static function getByIp($clientIp) {
+        $locationData = GeolocationService::resolveIp($clientIp);
+        return self::getByCountryAndCity($locationData['country'], $locationData['city']);
     }
 
     public static function getByCountryAndCity($country, $city) {

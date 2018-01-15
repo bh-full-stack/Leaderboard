@@ -14,6 +14,10 @@ class Player extends Model
         return $this->hasMany('Round');
     }
 
+    public static function getByNick($nick) {
+        return self::firstOrNew(['nick' => $nick]);
+    }
+
     public static function listTopPlayersByGame() {
         return DB::table("rounds")
             ->join("players", "rounds.player_id", "=", "players.id")

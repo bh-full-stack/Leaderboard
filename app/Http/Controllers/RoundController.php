@@ -40,39 +40,30 @@ class RoundController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nick' => 'required|unique:players',
+            'nick' => 'required',
             'game' => 'required',
             'score' => 'required|integer'
         ]);
 
-        header("Access-Control-Allow-Origin: *");
-        try {
-            $clientIp = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
-            $clientIp = '89.135.190.25';
-            $location = new Location();
-            $location->fillByIp($clientIp);
-            $location->save();
+        //header("Access-Control-Allow-Origin: *");
 
-            $player = new Player();
-            $player->nick = HttpService::getPostVar('nick');
-            $player->save();
+        $clientIp = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
+        $clientIp = '89.135.190.25';
+        $location = Location::getByIp($clientIp);
+        $location->saveOrFail();
 
-            $round = new Round();
-            $round->game = HttpService::getPostVar('game');
-            $round->score = HttpService::getPostVar('score');
-            $round->location_id = $location->id;
-            $round->player_id = $player->id;
-            $round->save();
+        $player = Player::getByNick($request->post('nick'));
+        $player->saveOrFail();
 
-            echo json_encode($round->getAttributes());
-        } catch (UserException $e) {
-            header($e->getHttpHeader());
-            echo json_encode(["code" => $e->getCode(), "message" => $e->getMessage()]);
-        } catch (\Exception $e) {
-            header("HTTP/1.0 500 Internal Server Error");
-            error_log($e);
-            echo json_encode(["code" => 0, "message" => "Unknown system error"]);
-        }
+        $round = new Round();
+        $round->game = $request->post('game');
+        $round->score = $request->post('score');
+        $round->location_id = $location->id;
+        $round->player_id = $player->id;
+        $round->save();
+
+        return $round->getAttributes();
+
     }
 
     /**
