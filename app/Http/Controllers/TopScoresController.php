@@ -8,8 +8,7 @@ use App\Round;
 class TopScoresController
 {
     public function index() {
-        return view('layout', [
-            "page" => "top-scores",
+        return view("top-scores", [
             "playersData" => Player::listTopPlayersByGame(),
             "listOfGames" => Round::getListOfGames()
         ]);

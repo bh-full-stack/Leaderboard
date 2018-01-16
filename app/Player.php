@@ -11,22 +11,23 @@ class Player extends Model
     protected $hidden = ["password_hash"];
 
     public function rounds() {
-        return $this->hasMany('Round');
+        return $this->hasMany("Round");
     }
 
     public static function getByNick($nick) {
-        return self::firstOrNew(['nick' => $nick]);
+        return self::firstOrNew(["nick" => $nick]);
     }
 
     public static function listTopPlayersByGame() {
         return DB::table("rounds")
             ->join("players", "rounds.player_id", "=", "players.id")
             ->select(
-                'rounds.game',
+                "players.nick",
+                "rounds.game",
                 DB::raw("count(rounds.id) as number_of_rounds"),
                 DB::raw("max(rounds.score) as top_score")
             )
             ->groupBy("rounds.player_id", "rounds.game")
-            ->toSql();
+            ->get();
     }
 }

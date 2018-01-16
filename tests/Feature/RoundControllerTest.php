@@ -2,12 +2,15 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RoundControllerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */
@@ -73,12 +76,5 @@ class RoundControllerTest extends TestCase
             ['Accept' => 'application/json']
         );
         $response->assertStatus(422);
-    }
-
-    /**
-     * @test
-     */
-    public function it_can_validate_round() {
-        $this->markTestIncomplete();
     }
 }

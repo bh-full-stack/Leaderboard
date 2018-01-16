@@ -1,3 +1,6 @@
+@extends('layouts/app')
+
+@section('content')
 <h3 class="pull-left">Top Scores</h3>
 <select class="form-control pull-right" id="game-list">
     <option value="">All</option>
@@ -18,11 +21,12 @@
     <tbody>
     <?php foreach ($playersData as $playerData): ?>
         <tr>
-            <td><?=$playerData["nick"]?></td>
-            <td><?=$playerData["game"]?></td>
-            <td><?=$playerData["top_score"]?></td>
-            <td><?=$playerData["number_of_rounds"]?></td>
+            <td><?=$playerData->nick?></td>
+            <td><?=$playerData->game?></td>
+            <td><?=$playerData->top_score?></td>
+            <td><?=$playerData->number_of_rounds?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>
 </table>
+@endsection

@@ -1,3 +1,6 @@
+@extends('layouts/app')
+
+@section('content')
 <h3>Sign Up</h3>
 
 <form class="sign-up-form" method="POST">
@@ -15,5 +18,4 @@
     </label>
     <input type="submit" class="btn">
 </form>
-
-
+@endsection
