@@ -13,6 +13,6 @@ class VerifyCsrfToken extends Middleware
      * @todo
      */
     protected $except = [
-        "*"
+        "rounds"
     ];
 }

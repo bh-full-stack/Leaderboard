@@ -4,6 +4,7 @@
 <h3>Sign Up</h3>
 
 <form class="sign-up-form" method="POST">
+    {{ csrf_field() }}
     <label>
         Nickname:
         <input name="nick" type="text" class="form-control">
