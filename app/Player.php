@@ -19,7 +19,8 @@ class Player extends Model
     }
 
     public static function listTopPlayersByGame() {
-        return DB::table("rounds")
+        return DB::connection(env("DB_CONNECTION"))
+            ->table("rounds")
             ->join("players", "rounds.player_id", "=", "players.id")
             ->select(
                 "players.nick",

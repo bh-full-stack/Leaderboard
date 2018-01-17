@@ -14,6 +14,7 @@ class RoundTest extends TestCase
     public function it_can_list_games() {
         $result = Round::getListOfGames();
         $this->assertInstanceOf(\Illuminate\Support\Collection::class, $result);
+        $this->assertCount(3, $result);
         foreach ($result as $key => $value) {
             $this->assertInternalType("integer", $key);
             $this->assertInternalType("string", $value);

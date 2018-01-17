@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Http\Controllers\SignUpController;
 use App\Player;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 class SignUpControllerTest extends TestCase
@@ -25,13 +27,16 @@ class SignUpControllerTest extends TestCase
      * @test
      */
     public function it_can_save_new_player() {
+        Session::start();
+
         $player = factory(Player::class)->make();
         $response = $this->post(
             "/sign-up",
             [
                 "nick" => $player->nick,
                 "email" => $player->email,
-                "password" => "secret"
+                "password" => "secret",
+                "_token" => csrf_token()
             ]
         );
         $response->assertStatus(200);

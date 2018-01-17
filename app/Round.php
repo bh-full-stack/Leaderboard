@@ -18,6 +18,9 @@ class Round extends Model
     }
 
     public static function getListOfGames() {
-        return DB::table('rounds')->distinct('game')->pluck('game');
+        return DB::connection(env("DB_CONNECTION"))
+            ->table('rounds')
+            ->distinct('game')
+            ->pluck('game');
     }
 }
