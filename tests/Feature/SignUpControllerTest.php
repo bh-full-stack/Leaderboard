@@ -46,5 +46,31 @@ class SignUpControllerTest extends TestCase
         $this->assertEquals($player->nick, $newPlayer->nick);
         $this->assertEquals($player->email, $newPlayer->email);
         $this->assertTrue(Hash::check("secret", $newPlayer->password_hash));
+        $this->assertNotEmpty($newPlayer->activation_code);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_activate_a_new_account() {
+        $player = factory(Player::class)->make();
+        $player->activation_code = 1234567;
+        $player->save();
+
+        $response = $this->get("/sign-up/activation/1234567");
+        $response->assertStatus(200);
+        $response->assertSeeText("your account has been activated!");
+
+        $newPlayer = Player::find($player->id);
+        $this->assertNotEmpty($newPlayer->activated_at);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_handle_an_invalid_activation_code() {
+        $response = $this->get("/sign-up/activation/1234567");
+        $response->assertStatus(200);
+        $response->assertSeeText("Invalid account!");
     }
 }

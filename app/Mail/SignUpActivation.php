@@ -13,6 +13,7 @@ class SignUpActivation extends Mailable
     use Queueable, SerializesModels;
 
     public $player;
+    public $appUrl;
 
     /**
      * Create a new message instance.
@@ -22,6 +23,7 @@ class SignUpActivation extends Mailable
     public function __construct(Player $player)
     {
         $this->player = $player;
+        $this->appUrl = env("APP_URL");
     }
 
     /**

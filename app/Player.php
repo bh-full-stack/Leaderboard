@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\DB;
 class Player extends Model
 {
     protected $fillable = ["nick", "email"];
-    protected $hidden = ["password_hash"];
+    protected $hidden = ["password_hash", "activation_code"];
+
 
     public function rounds() {
         return $this->hasMany("Round");
