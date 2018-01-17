@@ -16,7 +16,7 @@ class RoundControllerTest extends TestCase
      */
     public function it_can_save_round() {
         $response = $this->post(
-            '/rounds',
+            '/api/rounds',
             [
                 'nick' => 'Jancsi',
                 'game' => 'Yoyo',
@@ -38,7 +38,7 @@ class RoundControllerTest extends TestCase
      * @test
      */
     public function it_rejects_invalid_parameter_with_http_code_422() {
-        $response = $this->post('/rounds', [], ['Accept' => 'application/json']);
+        $response = $this->post('/api/rounds', [], ['Accept' => 'application/json']);
         $response->assertStatus(422);
     }
 
@@ -47,7 +47,7 @@ class RoundControllerTest extends TestCase
      */
     public function it_rejects_invalid_nick() {
         $response = $this->post(
-            '/rounds',
+            '/api/rounds',
             ['game' => 'Yoyo', 'score' => '521'],
             ['Accept' => 'application/json']
         );
@@ -59,7 +59,7 @@ class RoundControllerTest extends TestCase
      */
     public function it_rejects_invalid_game() {
         $response = $this->post(
-            '/rounds',
+            '/api/rounds',
             ['nick' => 'Jane', 'score' => '521'],
             ['Accept' => 'application/json']
         );
@@ -71,7 +71,7 @@ class RoundControllerTest extends TestCase
      */
     public function it_rejects_invalid_score() {
         $response = $this->post(
-            '/rounds',
+            '/api/rounds',
             ['game' => 'Yoyo', 'nick' => 'Jane'],
             ['Accept' => 'application/json']
         );

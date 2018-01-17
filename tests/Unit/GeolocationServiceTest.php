@@ -19,7 +19,7 @@ class GeolocationServiceTest extends TestCase
 
     /**
      * @test
-     * @expectedException \App\Exceptions\UserException
+     * @expectedException \Exception
      */
     public function it_throws_exception_on_invalid_client_ip()
     {
@@ -28,7 +28,7 @@ class GeolocationServiceTest extends TestCase
 
     /**
      * @test
-     * @expectedException \App\Exceptions\UserException
+     * @expectedException \Exception
      */
     public function it_throws_exception_on_failed_API_connection()
     {

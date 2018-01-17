@@ -13,12 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::middleware('rounds:api')->get('/rounds', function (Request $request) {
-   echo "qwer";
-});
-
-//Route::resource('rounds, 'RoundController');
+Route::resource('rounds', 'RoundController');

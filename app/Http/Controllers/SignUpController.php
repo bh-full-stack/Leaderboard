@@ -12,7 +12,7 @@ class SignUpController extends Controller
         return view('sign-up');
     }
 
-    public function create(Request $request) {
+    public function store(Request $request) {
         $request->validate([
             'nick' => 'required|unique:players',
             'email' => 'required|email',
