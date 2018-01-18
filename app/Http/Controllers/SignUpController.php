@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\SignUpActivation;
 use App\Player;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -40,10 +41,23 @@ class SignUpController extends Controller
         if ($player) {
             $player->activated_at = Carbon::now();
             $player->save();
+            $roundCount = $player->rounds()->count();
 
-            return view("activation-success", ["player" => $player]);
+            return view(
+                "activation-success",
+                [
+                    "player" => $player,
+                    "roundCount" => $roundCount
+                ]
+            );
         } else {
             return view("activation-failure");
+        }
+    }
+
+    public function handleOldScores(Request $request) {
+        if ($request->post("action") == "delete") {
+
         }
     }
 }
