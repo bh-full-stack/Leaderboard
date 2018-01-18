@@ -3,9 +3,11 @@
 namespace Tests\Feature;
 
 use App\Http\Controllers\SignUpController;
+use App\Mail\SignUpActivation;
 use App\Player;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
@@ -26,8 +28,9 @@ class SignUpControllerTest extends TestCase
     /**
      * @test
      */
-    public function it_can_save_new_player() {
+    public function it_can_sign_up_a_player() {
         Session::start();
+        Mail::fake();
 
         $player = factory(Player::class)->make();
         $response = $this->post(
@@ -47,6 +50,14 @@ class SignUpControllerTest extends TestCase
         $this->assertEquals($player->email, $newPlayer->email);
         $this->assertTrue(Hash::check("secret", $newPlayer->password_hash));
         $this->assertNotEmpty($newPlayer->activation_code);
+
+        Mail::assertSent(SignUpActivation::class, function ($mail) use ($player) {
+            return $mail->player->nick === $player->nick;
+        });
+
+        Mail::assertSent(SignUpActivation::class, function ($mail) use ($player) {
+            return $mail->hasTo($player->email);
+        });
     }
 
     /**

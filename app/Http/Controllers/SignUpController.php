@@ -29,7 +29,7 @@ class SignUpController extends Controller
         $player->activation_code = rand(1000000, 9999999);
         $player->save();
 
-        Mail::to(["email" => "leaderboard@mailinator.com"])
+        Mail::to(["email" => $player->email])
             ->send(new SignUpActivation($player));
 
         return view('sign-up');
