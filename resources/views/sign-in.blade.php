@@ -17,7 +17,7 @@
     {{ csrf_field() }}
     <label>
         Nickname or email:
-        <input name="nick-or-email" value="{{ old('nick-or-email') }}" type="text" class="form-control">
+        <input name="name-or-email" value="{{ old('name-or-email') }}" type="text" class="form-control">
     </label>
     <label>
         Password:

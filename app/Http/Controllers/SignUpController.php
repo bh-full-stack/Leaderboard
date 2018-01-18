@@ -13,18 +13,21 @@ use Illuminate\Support\Facades\Mail;
 class SignUpController extends Controller
 {
     public function index() {
+        dd('signuocont');
         return view('sign-up');
     }
 
     public function store(Request $request) {
+        dd('signuocont');
+
         $request->validate([
-            'nick' => 'required|unique:players',
-            'email' => 'required|email|unique:players',
-            'password' => 'required|min:6'
+            'name' => 'required|unique:players|max:255',
+            'email' => 'required|email|unique:players|max:255',
+            'password' => 'required|min:6|max:255'
         ]);
 
         $player = new Player();
-        $player->nick = $request->input('nick');
+        $player->name = $request->input('name');
         $player->email = $request->input('email');
         $player->password = bcrypt($request->input('password'));
         $player->activation_code = rand(1000000, 9999999);
@@ -37,6 +40,8 @@ class SignUpController extends Controller
     }
 
     public function activate($activation_code) {
+        dd('signuocont');
+
         $player = Player::where("activation_code", "=", $activation_code)->first();
         if ($player) {
             $player->activated_at = Carbon::now();
@@ -56,6 +61,8 @@ class SignUpController extends Controller
     }
 
     public function handleOldScores(Request $request) {
+        dd('signuocont');
+
         if ($request->post("action") == "delete") {
 
         }

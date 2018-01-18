@@ -10,7 +10,7 @@ class Player extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = ["nick", "email"];
+    protected $fillable = ["name", "email"];
     protected $hidden = ["password", "activation_code"];
 
 
@@ -18,8 +18,8 @@ class Player extends Authenticatable
         return $this->hasMany(Round::class);
     }
 
-    public static function getByNick($nick) {
-        return self::firstOrNew(["nick" => $nick]);
+    public static function getByname($name) {
+        return self::firstOrNew(["name" => $name]);
     }
 
     public static function listTopPlayersByGame() {
@@ -27,7 +27,7 @@ class Player extends Authenticatable
             ->table("rounds")
             ->join("players", "rounds.player_id", "=", "players.id")
             ->select(
-                "players.nick",
+                "players.name",
                 "rounds.game",
                 DB::raw("count(rounds.id) as number_of_rounds"),
                 DB::raw("max(rounds.score) as top_score")

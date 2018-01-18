@@ -12,7 +12,7 @@
     <table class="table table-hover" id="top-scores">
         <thead>
         <tr>
-            <th data-sort="string">Nick</th>
+            <th data-sort="string">name</th>
             <th data-sort="string">Game</th>
             <th data-sort="int">Top score</th>
             <th data-sort="int">Number of rounds</th>
@@ -21,7 +21,7 @@
         <tbody>
         @foreach ($playersData as $playerData)
             <tr>
-                <td>{{ $playerData->nick }}</td>
+                <td>{{ $playerData->name }}</td>
                 <td>{{ $playerData->game }}</td>
                 <td>{{ $playerData->top_score }}</td>
                 <td>{{ $playerData->number_of_rounds }}</td>

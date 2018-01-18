@@ -11,8 +11,8 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">Top Scores</a></li>
-                <li><a href="/sign-up">Sign Up</a></li>
-                <li><a href="/sign-in">Sign In</a></li>
+                <li><a href="{{ route('register') }}">Sign Up</a></li>
+                <li><a href="{{ route('login') }}">Sign In</a></li>
             </ul>
         </div>
     </div>

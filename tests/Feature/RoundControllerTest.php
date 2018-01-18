@@ -18,7 +18,7 @@ class RoundControllerTest extends TestCase
         $response = $this->post(
             '/api/rounds',
             [
-                'nick' => 'Jancsi',
+                'name' => 'Jancsi',
                 'game' => 'Yoyo',
                 'score' => '69'
             ]
@@ -45,7 +45,7 @@ class RoundControllerTest extends TestCase
     /**
      * @test
      */
-    public function it_rejects_invalid_nick() {
+    public function it_rejects_invalid_name() {
         $response = $this->post(
             '/api/rounds',
             ['game' => 'Yoyo', 'score' => '521'],
@@ -60,7 +60,7 @@ class RoundControllerTest extends TestCase
     public function it_rejects_invalid_game() {
         $response = $this->post(
             '/api/rounds',
-            ['nick' => 'Jane', 'score' => '521'],
+            ['name' => 'Jane', 'score' => '521'],
             ['Accept' => 'application/json']
         );
         $response->assertStatus(422);
@@ -72,7 +72,7 @@ class RoundControllerTest extends TestCase
     public function it_rejects_invalid_score() {
         $response = $this->post(
             '/api/rounds',
-            ['game' => 'Yoyo', 'nick' => 'Jane'],
+            ['game' => 'Yoyo', 'name' => 'Jane'],
             ['Accept' => 'application/json']
         );
         $response->assertStatus(422);

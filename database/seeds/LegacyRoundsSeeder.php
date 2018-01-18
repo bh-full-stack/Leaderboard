@@ -21,7 +21,7 @@ class LegacyRoundsSeeder extends Seeder
             $location->save();
 
             $player = new \App\Player();
-            $player->nick = $playerData->nick;
+            $player->name = $playerData->nick; //db has name
             $player->email = $playerData->email;
             $player->save();
 

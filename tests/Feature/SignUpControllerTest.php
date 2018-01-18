@@ -36,7 +36,7 @@ class SignUpControllerTest extends TestCase
         $response = $this->post(
             "/sign-up",
             [
-                "nick" => $player->nick,
+                "name" => $player->name,
                 "email" => $player->email,
                 "password" => "secret",
                 "_token" => csrf_token()
@@ -44,15 +44,15 @@ class SignUpControllerTest extends TestCase
         );
         $response->assertStatus(200);
 
-        $newPlayer = Player::where("nick", "=", $player->nick)->first();
+        $newPlayer = Player::where("name", "=", $player->name)->first();
         $this->assertNotEmpty($newPlayer->id);
-        $this->assertEquals($player->nick, $newPlayer->nick);
+        $this->assertEquals($player->name, $newPlayer->name);
         $this->assertEquals($player->email, $newPlayer->email);
-        $this->assertEquals(bcrypt("secret"), $newPlayer->password);
+        $this->assertTrue(Hash::check("secret", $newPlayer->password));
         $this->assertNotEmpty($newPlayer->activation_code);
 
         Mail::assertSent(SignUpActivation::class, function ($mail) use ($player) {
-            return $mail->player->nick === $player->nick;
+            return $mail->player->name === $player->name;
         });
 
         Mail::assertSent(SignUpActivation::class, function ($mail) use ($player) {

@@ -1,7 +1,7 @@
 @extends('layouts/app')
 
 @section('content')
-    Thanks {{ $player->nick }}, your account has been activated!
+    Thanks {{ $player->name }}, your account has been activated!
     @if ($roundCount)
         <form action="sign-up/handle-old-scores" method="post">
             {{ csrf_field() }}

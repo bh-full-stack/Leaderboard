@@ -40,7 +40,7 @@ class RoundController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nick' => 'required',
+            'name' => 'required',
             'game' => 'required',
             'score' => 'required|integer'
         ]);
@@ -52,7 +52,7 @@ class RoundController extends Controller
         $location = Location::getByIp($clientIp);
         $location->saveOrFail();
 
-        $player = Player::getByNick($request->post('nick'));
+        $player = Player::getByName($request->post('name'));
         $player->saveOrFail();
 
         $round = new Round();
