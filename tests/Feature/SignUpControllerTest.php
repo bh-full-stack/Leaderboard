@@ -48,7 +48,7 @@ class SignUpControllerTest extends TestCase
         $this->assertNotEmpty($newPlayer->id);
         $this->assertEquals($player->nick, $newPlayer->nick);
         $this->assertEquals($player->email, $newPlayer->email);
-        $this->assertTrue(Hash::check("secret", $newPlayer->password_hash));
+        $this->assertEquals(bcrypt("secret"), $newPlayer->password);
         $this->assertNotEmpty($newPlayer->activation_code);
 
         Mail::assertSent(SignUpActivation::class, function ($mail) use ($player) {

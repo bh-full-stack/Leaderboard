@@ -2,13 +2,16 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Player extends Model
+class Player extends Authenticatable
 {
+    use Notifiable;
+
     protected $fillable = ["nick", "email"];
-    protected $hidden = ["password_hash", "activation_code"];
+    protected $hidden = ["password", "activation_code"];
 
 
     public function rounds() {

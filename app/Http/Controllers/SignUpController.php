@@ -26,7 +26,7 @@ class SignUpController extends Controller
         $player = new Player();
         $player->nick = $request->input('nick');
         $player->email = $request->input('email');
-        $player->password_hash = Hash::make($request->input('password'));
+        $player->password = bcrypt($request->input('password'));
         $player->activation_code = rand(1000000, 9999999);
         $player->save();
 
