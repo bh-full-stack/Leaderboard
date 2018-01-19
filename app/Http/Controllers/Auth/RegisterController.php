@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Mail\SignUpActivation;
 use App\Player;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -36,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('guest');
     }
 
     /**
@@ -62,10 +64,41 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return Player::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $player = new Player();
+        $player->name = $data['name'];
+        $player->email = $data['email'];
+        $player->password = bcrypt($data['password']);
+        $player->activation_code = rand(1000000, 9999999);
+        $player->save();
+
+        Mail::to(["email" => $player->email])
+            ->send(new SignUpActivation($player));
+
+        return $player;
+    }
+
+    public function activate($activation_code) {
+        $player = Player::where("activation_code", "=", $activation_code)->first();
+        if ($player) {
+            $player->activated_at = Carbon::now();
+            $player->save();
+            $roundCount = $player->rounds()->count();
+
+            return view(
+                "activation-success",
+                [
+                    "player" => $player,
+                    "roundCount" => $roundCount
+                ]
+            );
+        } else {
+            return view("activation-failure");
+        }
+    }
+
+    public function handleOldScores(Request $request) {
+        if ($request->post("action") == "delete") {
+
+        }
     }
 }

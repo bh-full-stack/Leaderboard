@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
-class SignUpControllerTest extends TestCase
+class RegisterControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -19,30 +19,31 @@ class SignUpControllerTest extends TestCase
      * @test
      */
     public function it_can_show_sign_up_page() {
-        $response = $this->get("/sign-up");
+        $response = $this->get("/register");
         $response->assertStatus(200);
-        $response->assertSeeText("Sign Up");
-        $response->assertSeeText("Password");
+        $response->assertSeeText("Confirm password");
     }
 
     /**
      * @test
      */
-    public function it_can_sign_up_a_player() {
+    public function it_can_register_a_player() {
         Session::start();
         Mail::fake();
 
         $player = factory(Player::class)->make();
         $response = $this->post(
-            "/sign-up",
+            "/register",
             [
                 "name" => $player->name,
                 "email" => $player->email,
                 "password" => "secret",
+                "password_confirmation" => "secret",
                 "_token" => csrf_token()
             ]
         );
-        $response->assertStatus(200);
+        $response->assertStatus(302);
+
 
         $newPlayer = Player::where("name", "=", $player->name)->first();
         $this->assertNotEmpty($newPlayer->id);
@@ -68,7 +69,7 @@ class SignUpControllerTest extends TestCase
         $player->activation_code = 1234567;
         $player->save();
 
-        $response = $this->get("/sign-up/activation/1234567");
+        $response = $this->get("/register/activation/1234567");
         $response->assertStatus(200);
         $response->assertSeeText("your account has been activated!");
 
@@ -80,7 +81,7 @@ class SignUpControllerTest extends TestCase
      * @test
      */
     public function it_can_handle_an_invalid_activation_code() {
-        $response = $this->get("/sign-up/activation/1234567");
+        $response = $this->get("/register/activation/1234567");
         $response->assertStatus(200);
         $response->assertSeeText("Invalid account!");
     }

@@ -13,13 +13,10 @@
 
 Route::get('/', 'TopScoresController@index');
 
-/*Route::resource('/sign-up', 'SignUpController');
-Route::get('/sign-up/activation/{activation_code}', 'SignUpController@activate');
-Route::post('/sign-up/handle-old-scores', 'SignUpController@handleOldScores');*/
+//Route::get('/sign-up/activation/{activation_code}', 'SignUpController@activate');
+//Route::post('/sign-up/handle-old-scores', 'SignUpController@handleOldScores');
 
-/*Route::get('/login', 'SignInController@index');
-Route::post('/login', 'SignInController@authenticate');*/
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/profile', 'ProfileController@index')->name('profile');
 
 Auth::routes();
+Route::get('/logout', 'Auth\LoginController@logout');

@@ -11,8 +11,13 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">Top Scores</a></li>
+                @if (Auth::check())
+                    <li><a href="{{ route('profile') }}">Profile</a></li>
+                    <li><a href="{{ route('logout') }}">Sign Out</a></li>
+                @else
                 <li><a href="{{ route('register') }}">Sign Up</a></li>
                 <li><a href="{{ route('login') }}">Sign In</a></li>
+                @endif
             </ul>
         </div>
     </div>
