@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Mail\SignUpActivation;
 use App\Player;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -75,6 +78,16 @@ class RegisterController extends Controller
             ->send(new SignUpActivation($player));
 
         return $player;
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
     }
 
     public function activate($activation_code) {

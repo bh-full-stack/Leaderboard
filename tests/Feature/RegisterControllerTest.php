@@ -44,7 +44,6 @@ class RegisterControllerTest extends TestCase
         );
         $response->assertStatus(302);
 
-
         $newPlayer = Player::where("name", "=", $player->name)->first();
         $this->assertNotEmpty($newPlayer->id);
         $this->assertEquals($player->name, $newPlayer->name);

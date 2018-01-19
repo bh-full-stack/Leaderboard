@@ -7,6 +7,9 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/">Leaderboard</a>
+            @if (Auth::check())
+                <span class="navbar-brand">| {{ Auth::user()->name }}</span>
+            @endif
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">

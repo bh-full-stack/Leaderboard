@@ -13,7 +13,7 @@
 
 Route::get('/', 'TopScoresController@index');
 
-//Route::get('/sign-up/activation/{activation_code}', 'SignUpController@activate');
+Route::get('/register/activation/{activation_code}', 'Auth\RegisterController@activate');
 //Route::post('/sign-up/handle-old-scores', 'SignUpController@handleOldScores');
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
