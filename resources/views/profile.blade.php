@@ -1,23 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
+<div class="row">
+    <div class="col-sm-12">
+        <h1>Welcome, {{ Auth::user()->name }} </h1>
+        @if (true) <!--TODO -->
+        <p>Your account already has saved scores in our database.<br>
+            Would you like to keep them?</p>
+        <form method="post">
+            {{ csrf_field() }}
+            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                <label for="password" class="control-label">Password</label>
+                <div>
+                    <input id="password" type="password" name="password" required>
+                    @if ($errors->has('password'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
                     @endif
-
-                    You are logged in!
                 </div>
             </div>
-        </div>
+            <button name="old-scores-action" value="delete">Delete</button>
+            <button name="old-scores-action" value="keep">Keep</button>
+        </form>
+        @endif
     </div>
 </div>
 @endsection

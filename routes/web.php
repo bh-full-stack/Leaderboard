@@ -14,9 +14,9 @@
 Route::get('/', 'TopScoresController@index');
 
 Route::get('/register/activation/{activation_code}', 'Auth\RegisterController@activate');
-//Route::post('/sign-up/handle-old-scores', 'SignUpController@handleOldScores');
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
+Route::post('/profile', 'ProfileController@handleOldScores')->name('profile');
 
 Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout');

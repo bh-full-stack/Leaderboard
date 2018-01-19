@@ -108,10 +108,4 @@ class RegisterController extends Controller
             return view("activation-failure");
         }
     }
-
-    public function handleOldScores(Request $request) {
-        if ($request->post("action") == "delete") {
-
-        }
-    }
 }
