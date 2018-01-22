@@ -93,17 +93,8 @@ class RegisterController extends Controller
     public function activate($activation_code) {
         $player = Player::where("activation_code", "=", $activation_code)->first();
         if ($player) {
-            $player->activated_at = Carbon::now();
-            $player->save();
-            $roundCount = $player->rounds()->count();
-
-            return view(
-                "activation-success",
-                [
-                    "player" => $player,
-                    "roundCount" => $roundCount
-                ]
-            );
+            $player->activate();
+            return view("activation-success", ["player" => $player]);
         } else {
             return view("activation-failure");
         }

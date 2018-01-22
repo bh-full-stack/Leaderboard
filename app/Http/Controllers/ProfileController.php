@@ -26,20 +26,31 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('profile');
+        return view('profile', ["player" => Auth::user()]);
     }
 
     public function handleOldScores(Request $request) {
-        if (!Hash::check($request->post("password"), Auth::user()->password)) {
+        $player = Auth::user();
+
+        if (!Hash::check($request->post("password"), $player->password)) {
             throw ValidationException::withMessages([
                 'password' => ['Wrong password!'],
             ]);
         }
-        if ($request->post("old-scores-action") == "delete") {
-            $playerId = Auth::user()->id;
-            $playerActivatedAt = Auth::user()->activated_at;
-            Round::where("player_id", "=", $playerId)
-                ->where("created_at", "<", $playerActivatedAt)->delete();
+
+        switch ($request->post("old-scores-action")) {
+            case "delete":
+                Round::where("player_id", "=", $player->id)
+                    ->where("created_at", "<=", $player->activated_at)
+                    ->delete();
+                $message = "Old scores of this account have been deleted!";
+                break;
+            case "keep":
+                $message = "Old scores of this account have been kept!";
+                break;
         }
+        $player->has_deletable_rounds = false;
+        $player->save();
+        return view('profile', ["player" => $player, "message" => $message]);
     }
 }

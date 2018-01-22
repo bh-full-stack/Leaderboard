@@ -3,10 +3,15 @@
 @section('content')
 <div class="row">
     <div class="col-sm-12">
-        <h1>Welcome, {{ Auth::user()->name }} </h1>
-        @if (true) <!--TODO -->
-        <p>Your account already has saved scores in our database.<br>
-            Would you like to keep them?</p>
+        <h1>Welcome, {{ $player->name }} </h1>
+        @if (!empty($message))
+            <div class="alert alert-info">{{ $message }}</div>
+        @endif
+        @if ($player->has_deletable_rounds)
+        <p>
+            Your account already has saved scores in our database.<br>
+            Would you like to keep them?
+        </p>
         <form method="post">
             {{ csrf_field() }}
             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
