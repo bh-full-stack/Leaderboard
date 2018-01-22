@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Mail\SignUpActivation;
 use App\Player;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Validation\ValidationException;
 
 class RegisterController extends Controller
 {
@@ -53,8 +53,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|unique:players|max:255',
-            'email' => 'required|email|unique:players',
+            'name' => 'required|max:255',
+            'email' => 'required|email',
             'password' => 'required|min:6|confirmed'
         ]);
     }
@@ -83,11 +83,32 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
+        $player = Player::getByName($request->name);
+        $nameExists = $player->exists;
+        $emailMatches = ($player->email == $request->email);
+        $emailExists = Player::where("email", "=", $request->email)->count();
+        $emailIsNull = is_null($player->email);
 
-        event(new Registered($user = $this->create($request->all())));
+        if (!$emailExists && !$nameExists) {
+            $this->create($request->all());
+        } elseif ($emailIsNull && $nameExists) {
+            $player->email = $request->email;
+            $player->password = bcrypt($request->password);
+            $player->activation_code = rand(1000000, 9999999);
+            $player->save();
+        } elseif ($emailMatches) {
+            throw ValidationException::withMessages([
+                'email' => ['This email is already in use!'],
+            ]);
+        } else {
+            throw ValidationException::withMessages([
+                'name' => ['This name is already in use!'],
+            ]);
+        }
 
-        return $this->registered($request, $user)
-            ?: redirect($this->redirectPath());
+        event(new Registered($player));
+
+        return $this->registered($request, $player) ?: redirect($this->redirectPath());
     }
 
     public function activate($activation_code) {

@@ -57,4 +57,36 @@ class PlayerTest extends TestCase
         $this->assertNotEmpty($player->activated_at);
         $this->assertFalse($player->has_deletable_rounds);
     }
+
+    /**
+     * @test
+     * @expectedException \PDOException
+     */
+    public function its_name_is_case_insensitive() {
+        $player = new Player;
+        $player->name = "Nemecsek Ernő";
+        $player->email = "nemecsekerno@example.com";
+        $this->assertTrue($player->save());
+
+        $player = new Player;
+        $player->name = "nemecsek ernő";
+        $player->email = "nemecsekerno@example.com";
+        $this->assertFalse($player->save());
+    }
+
+    /**
+     * @test
+     * @expectedException \PDOException
+     */
+    public function its_email_is_case_insensitive() {
+        $player = new Player;
+        $player->name = "Nemecsek Ernő";
+        $player->email = "nemecsekerno@example.com";
+        $this->assertTrue($player->save());
+
+        $player = new Player;
+        $player->name = "Nemecsek Ernő";
+        $player->email = "NemecsekErno@example.com";
+        $this->assertFalse($player->save());
+    }
 }

@@ -46,11 +46,10 @@ class LoginController extends Controller
 
         $player = Player::where("email", "=", $request->email)->first();
         if (isset($player) && !isset($player->activated_at)) {
+            $this->incrementLoginAttempts($request);
             throw ValidationException::withMessages([
                 $this->username() => ['Account is not activated yet!'],
             ]);
-            $this->incrementLoginAttempts($request);
-            return $this->sendFailedLoginResponse($request);
         }
 
         if ($this->attemptLogin($request)) {
