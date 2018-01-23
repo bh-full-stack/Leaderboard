@@ -73,39 +73,56 @@ class RegisterController extends Controller
         $player->password = bcrypt($data['password']);
         $player->activation_code = rand(1000000, 9999999);
         $player->save();
+        return $player;
+    }
 
-        Mail::to(["email" => $player->email])
-            ->send(new SignUpActivation($player));
-
+    public function update($player, array $data) {
+        $player->email = $data["email"];
+        $player->password = bcrypt($data["password"]);
+        $player->activation_code = rand(1000000, 9999999);
+        $player->save();
         return $player;
     }
 
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
+
         $player = Player::getByName($request->name);
         $nameExists = $player->exists;
         $emailMatches = ($player->email == $request->email);
-        $emailExists = Player::where("email", "=", $request->email)->count();
+        $emailExists = (Player::where("email", "=", $request->email)->count() > 0);
         $emailIsNull = is_null($player->email);
 
-        if (!$emailExists && !$nameExists) {
-            $this->create($request->all());
-        } elseif ($emailIsNull && $nameExists) {
-            $player->email = $request->email;
-            $player->password = bcrypt($request->password);
-            $player->activation_code = rand(1000000, 9999999);
-            $player->save();
-        } elseif ($emailMatches) {
-            throw ValidationException::withMessages([
-                'email' => ['This email is already in use!'],
-            ]);
+        if ($nameExists) {
+            if ($emailMatches) {
+                $player = $this->update($player, $request->all());
+            } else {
+                if ($emailExists) {
+                    throw ValidationException::withMessages([
+                        'email' => ['This email is already in use!'],
+                    ]);
+                } else {
+                    if ($emailIsNull) {
+                        $player = $this->update($player, $request->all());
+                    } else {
+                        throw ValidationException::withMessages([
+                            'name' => ['This name is already in use!'],
+                        ]);
+                    }
+                }
+            }
         } else {
-            throw ValidationException::withMessages([
-                'name' => ['This name is already in use!'],
-            ]);
+            if ($emailExists) {
+                throw ValidationException::withMessages([
+                    'email' => ['This email is already in use!'],
+                ]);
+            } else {
+                $player = $this->create($request->all());
+            }
         }
 
+        Mail::to(["email" => $player->email])->send(new SignUpActivation($player));
         event(new Registered($player));
 
         return $this->registered($request, $player) ?: redirect($this->redirectPath());

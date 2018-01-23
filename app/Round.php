@@ -14,11 +14,11 @@ class Round extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     public function player() {
-        return $this->belongsTo('Player');
+        return $this->belongsTo(Player::class);
     }
 
     public function location() {
-        return $this->belongsTo('Location');
+        return $this->belongsTo(Location::class);
     }
 
     public static function getListOfGames() {

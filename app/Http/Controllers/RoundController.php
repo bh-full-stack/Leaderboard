@@ -45,8 +45,6 @@ class RoundController extends Controller
             'score' => 'required|integer'
         ]);
 
-        //header("Access-Control-Allow-Origin: *");
-
         $clientIp = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
         $clientIp = '89.135.190.25';
         $location = Location::getByIp($clientIp);
@@ -62,8 +60,7 @@ class RoundController extends Controller
         $round->player_id = $player->id;
         $round->save();
 
-        return $round->getAttributes();
-
+        return Round::with("player")->find($round->id);
     }
 
     /**

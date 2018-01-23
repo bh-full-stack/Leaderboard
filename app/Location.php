@@ -10,7 +10,7 @@ class Location extends Model
     protected $fillable = ['country', 'city'];
 
     public function rounds() {
-        return $this->hasMany('Round');
+        return $this->hasMany(Round::class);
     }
 
     public static function getByIp($clientIp) {
