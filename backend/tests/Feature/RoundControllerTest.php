@@ -14,6 +14,16 @@ class RoundControllerTest extends TestCase
     /**
      * @test
      */
+    public function it_can_list_top_scores() {
+        $response = $this->get('/api/rounds');
+
+        $response->assertStatus(200);
+        $this->assertNotNull(json_decode($response->content()));
+    }
+
+    /**
+     * @test
+     */
     public function it_can_save_round() {
         $response = $this->post(
             '/api/rounds',

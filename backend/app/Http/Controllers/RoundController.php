@@ -18,7 +18,7 @@ class RoundController extends Controller
      */
     public function index()
     {
-        echo "Index";
+       return Player::listTopPlayersByGame();
     }
 
     /**
