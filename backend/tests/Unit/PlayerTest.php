@@ -23,7 +23,7 @@ class PlayerTest extends TestCase
      * @test
      */
     public function it_can_list_top_players_by_game() {
-        $actual = Player::listTopPlayersByGame();
+        $actual = Player::listTopPlayersByGame("all", "top_score", "DESC");
         $this->assertCount(50, $actual);
         foreach ($actual as $actualItem) {
             $this->assertNotEmpty($actualItem->name);
