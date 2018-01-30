@@ -1,6 +1,6 @@
 <div class="container">
   <h3 class="pull-left">Top Scores</h3>
-  <select class="form-control pull-right" id="game-list" [(ngModel)]="filterBy">
+  <select class="form-control pull-right" id="game-list" (change)="filterScores()" [(ngModel)]="filter">
     <option [ngValue]="'all'">All</option>
     <option *ngFor="let game of games" [ngValue]="game">{{ game }}</option>
   </select>
@@ -15,7 +15,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let topScore of topScores">
+      <tr *ngFor="let topScore of filteredTopscores">
         <td>{{ topScore.name }}</td>
         <td>{{ topScore.game }}</td>
         <td>{{ topScore.top_score }}</td>
