@@ -1,17 +1,17 @@
 <div class="container">
   <h3 class="pull-left">Top Scores</h3>
-  <select class="form-control pull-right" id="game-list">
-    <option value="">All</option>
-    <option>game</option>
+  <select class="form-control pull-right" id="game-list" [(ngModel)]="filterBy">
+    <option [ngValue]="'all'">All</option>
+    <option *ngFor="let game of games" [ngValue]="game">{{ game }}</option>
   </select>
-
+  {{ filterBy | json }}
   <table class="table table-hover" id="top-scores">
     <thead>
       <tr>
-        <th data-sort="string">Name</th>
-        <th data-sort="string">Game</th>
-        <th data-sort="int">Top score</th>
-        <th data-sort="int">Number of rounds</th>
+        <th (click)="loadScores('name')">Name</th>
+        <th (click)="loadScores('game')">Game</th>
+        <th (click)="loadScores('top_score')">Top score</th>
+        <th (click)="loadScores('number_of_rounds')">Number of rounds</th>
       </tr>
     </thead>
     <tbody>

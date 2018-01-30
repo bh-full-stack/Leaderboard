@@ -11,15 +11,39 @@ import { error } from 'util';
 export class TopScoresComponent implements OnInit {
 
   public topScores: any[];
+  public sortDirection: string;
+  public sortBy: string;
+  public games: string[];
+  public filterBy: string = 'all';
 
   constructor(private _topScoresService: TopScoresService) { }
 
   ngOnInit() {
-    this.loadTopScores();
+    this.loadScores('top_score');
+    this.loadGames();
   }
 
-  public loadTopScores() {
-    this._topScoresService.list().subscribe(
+  public loadGames() {
+    this._topScoresService.listGames().subscribe(
+      response => this.games = response,
+      error => console.log(error)
+    );
+  }
+
+  public loadScores(sortBy: string) {
+    const defaultDirections = {
+      'name': 'ASC',
+      'game': 'ASC',
+      'top_score': 'DESC',
+      'number_of_rounds': 'DESC'
+    };
+
+    this.sortDirection = this.sortDirection == 'DESC' ? 'ASC' : 'DESC';
+    if (this.sortBy != sortBy) {
+      this.sortDirection = defaultDirections[sortBy];
+    }
+    this.sortBy = sortBy;
+    this._topScoresService.list(this.sortBy, this.sortDirection).subscribe(
       response => this.topScores = response,
       error => console.log(error)
     );

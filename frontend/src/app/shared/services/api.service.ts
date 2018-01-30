@@ -18,7 +18,6 @@ export class ApiService {
       method,
       environment.apiEndPoint + url,
       {
-        body: body,
         headers: this._getHeaders()
       }
     );

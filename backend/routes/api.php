@@ -13,4 +13,5 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('rounds/games', 'RoundController@listGames');
 Route::resource('rounds', 'RoundController');

@@ -36,7 +36,7 @@ class Player extends Authenticatable
         return self::firstOrNew(["name" => $name]);
     }
 
-    public static function listTopPlayersByGame() {
+    public static function listTopPlayersByGame($sortBy, $sortDirection) {
         return DB::connection(env("DB_CONNECTION"))
             ->table("rounds")
             ->join("players", "rounds.player_id", "=", "players.id")
@@ -47,6 +47,7 @@ class Player extends Authenticatable
                 DB::raw("max(rounds.score) as top_score")
             )
             ->groupBy("rounds.player_id", "rounds.game")
+            ->orderBy($sortBy, $sortDirection)
             ->get();
     }
 }

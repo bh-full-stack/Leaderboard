@@ -6,8 +6,14 @@ import { ApiService } from '../../shared/services/api.service';
 @Injectable()
 export class TopScoresService extends ApiService {
 
-  public list(): Observable<any[]> {
-    return this.request('GET', 'rounds');
+  public list(sortBy: string, sortDirection: string): Observable<any[]> {
+    return this.request(
+      'GET',
+      `rounds?sortBy=${sortBy}&sortDirection=${sortDirection}`
+    );  
   }
 
+  public listGames() {
+    return this.request('GET', 'rounds/games')
+  }
 }

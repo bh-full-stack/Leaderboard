@@ -14,11 +14,19 @@ class RoundController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-       return Player::listTopPlayersByGame();
+       return Player::listTopPlayersByGame(
+           $request->get('sortBy', 'top_score'),
+           $request->get('sortDirection', 'DESC')
+       );
+    }
+
+    public function listGames() {
+        return Round::getListOfGames();
     }
 
     /**
