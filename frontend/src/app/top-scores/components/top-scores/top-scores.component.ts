@@ -12,9 +12,9 @@ export class TopScoresComponent implements OnInit {
 
   public topScores: any[];
   public sortDirection: string;
-  public sortBy: string;
+  public sortBy: string = 'top_score';
   public games: string[];
-  public filterBy: string = 'all';
+  public game: string = 'all';
 
   constructor(private _topScoresService: TopScoresService) { }
 
@@ -30,7 +30,7 @@ export class TopScoresComponent implements OnInit {
     );
   }
 
-  public loadScores(sortBy: string) {
+  public loadScores(sortBy?: string) {
     const defaultDirections = {
       'name': 'ASC',
       'game': 'ASC',
@@ -38,12 +38,14 @@ export class TopScoresComponent implements OnInit {
       'number_of_rounds': 'DESC'
     };
 
-    this.sortDirection = this.sortDirection == 'DESC' ? 'ASC' : 'DESC';
-    if (this.sortBy != sortBy) {
-      this.sortDirection = defaultDirections[sortBy];
+    if (sortBy != undefined) {
+      this.sortDirection = this.sortDirection == 'DESC' ? 'ASC' : 'DESC';
+      if (this.sortBy != sortBy) {
+        this.sortDirection = defaultDirections[sortBy];
+      }    
+      this.sortBy = sortBy;
     }
-    this.sortBy = sortBy;
-    this._topScoresService.list(this.sortBy, this.sortDirection).subscribe(
+    this._topScoresService.list(this.game, this.sortBy, this.sortDirection).subscribe(
       response => this.topScores = response,
       error => console.log(error)
     );

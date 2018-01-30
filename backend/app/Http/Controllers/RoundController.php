@@ -20,6 +20,7 @@ class RoundController extends Controller
     public function index(Request $request)
     {
        return Player::listTopPlayersByGame(
+           $request->get('game', 'all'),
            $request->get('sortBy', 'top_score'),
            $request->get('sortDirection', 'DESC')
        );
