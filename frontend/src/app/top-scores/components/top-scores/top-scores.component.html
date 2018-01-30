@@ -16,10 +16,20 @@
     </thead>
     <tbody>
       <tr *ngFor="let topScore of topScores">
-        <td>{{ topScore.name }}</td>
-        <td>{{ topScore.game }}</td>
-        <td>{{ topScore.top_score }}</td>
-        <td>{{ topScore.number_of_rounds }}</td>
+        <ng-container *ngIf="topScore.game == filterBy || filterBy == 'all'">
+          <td>
+            {{ topScore.name }}
+          </td>
+          <td>
+            {{ topScore.game }}
+          </td>
+          <td>
+            {{ topScore.top_score }}
+          </td>
+          <td>
+            {{ topScore.number_of_rounds }}
+          </td>
+        </ng-container>
       </tr>
     </tbody>
   </table>
