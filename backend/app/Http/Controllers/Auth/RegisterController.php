@@ -55,7 +55,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6'
         ]);
     }
 
@@ -125,7 +125,7 @@ class RegisterController extends Controller
         Mail::to(["email" => $player->email])->send(new SignUpActivation($player));
         event(new Registered($player));
 
-        return $this->registered($request, $player) ?: redirect($this->redirectPath());
+        return $player;
     }
 
     public function activate($activation_code) {

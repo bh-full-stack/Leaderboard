@@ -6,11 +6,12 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">Leaderboard</a>
+          <a class="navbar-brand" [routerLink]="['/top-scores']">Leaderboard</a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
-              <li><a href="/">Top Scores</a></li>
+              <li><a [routerLink]="['/top-scores']">Top Scores</a></li>
+              <li><a [routerLink]="['/player/registration']">Registration</a></li>
           </ul>
       </div>
   </div>

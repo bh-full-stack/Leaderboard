@@ -18,5 +18,5 @@ Route::get('/register/activation/{activation_code}', 'Auth\RegisterController@ac
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::post('/profile', 'ProfileController@handleOldScores')->name('profile');
 
-Auth::routes();
+//Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout');
