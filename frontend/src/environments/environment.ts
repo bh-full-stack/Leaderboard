@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiEndPoint: 'http://leaderboard.local/api/'
+  apiEndPoint: 'http://api.leaderboard.local/api/'
 };

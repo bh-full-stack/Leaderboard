@@ -13,8 +13,6 @@
 
 Route::get('/', 'TopScoresController@index');
 
-Route::get('/register/activation/{activation_code}', 'Auth\RegisterController@activate');
-
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::post('/profile', 'ProfileController@handleOldScores')->name('profile');
 

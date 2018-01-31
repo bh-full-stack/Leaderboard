@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::post('register', 'Auth\RegisterController@register');
+Route::post('register/activate', 'Auth\RegisterController@activate');
 
 Route::get('rounds/games', 'RoundController@listGames');
 Route::resource('rounds', 'RoundController');

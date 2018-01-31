@@ -18,22 +18,13 @@ class RegisterControllerTest extends TestCase
     /**
      * @test
      */
-    public function it_can_show_sign_up_page() {
-        $response = $this->get("/register");
-        $response->assertStatus(200);
-        $response->assertSeeText("Confirm password");
-    }
-
-    /**
-     * @test
-     */
     public function it_can_register_a_player() {
         Session::start();
         Mail::fake();
 
         $player = factory(Player::class)->make();
         $response = $this->post(
-            "/register",
+            "/api/register",
             [
                 "name" => $player->name,
                 "email" => $player->email,
@@ -42,7 +33,7 @@ class RegisterControllerTest extends TestCase
                 "_token" => csrf_token()
             ]
         );
-        $response->assertStatus(302);
+        $response->assertStatus(200);
 
         $newPlayer = Player::where("name", "=", $player->name)->first();
         $this->assertNotEmpty($newPlayer->id);
@@ -68,9 +59,11 @@ class RegisterControllerTest extends TestCase
         $player->activation_code = 1234567;
         $player->save();
 
-        $response = $this->get("/register/activation/1234567");
+        $response = $this->post(
+            "/api/register/activate",
+            ["activation_code" => 1234567]
+        );
         $response->assertStatus(200);
-        $response->assertSeeText("your account has been activated!");
 
         $newPlayer = Player::find($player->id);
         $this->assertNotEmpty($newPlayer->activated_at);
@@ -80,8 +73,12 @@ class RegisterControllerTest extends TestCase
      * @test
      */
     public function it_can_handle_an_invalid_activation_code() {
-        $response = $this->get("/register/activation/1234567");
-        $response->assertStatus(200);
-        $response->assertSeeText("Invalid account!");
+        $response = $this->post(
+            "/api/register/activate",
+            ["activation_code" => 1234567],
+            ["Accept" => "application/json"]
+        );
+        $response->assertStatus(404);
+        $response->assertJson(["message" => "Activation failed: wrong activation code"]);
     }
 }

@@ -17,4 +17,13 @@ export class PlayerService {
     );
   }
 
+  public activate(activationCode: number): Observable<Player> {
+    return this._http.post<Player>(
+      environment.apiEndPoint + 'register/activate',
+      { 
+        activation_code: activationCode
+      }
+    );  
+  }
+
 }

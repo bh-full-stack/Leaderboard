@@ -1,25 +1,23 @@
-<div class="container">
-  <h3 class="pull-left">Top Scores</h3>
-  <select class="form-control pull-right" id="game-list" [(ngModel)]="game" (change)="loadScores()">
-    <option [ngValue]="'all'">All</option>
-    <option *ngFor="let game of games" [ngValue]="game">{{ game }}</option>
-  </select>
-  <table class="table table-hover" id="top-scores">
-    <thead>
-      <tr>
-        <th (click)="loadScores('name')">Name</th>
-        <th (click)="loadScores('game')">Game</th>
-        <th (click)="loadScores('top_score')">Top score</th>
-        <th (click)="loadScores('number_of_rounds')">Number of rounds</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let topScore of topScores">
-        <td>{{ topScore.name }}</td>
-        <td>{{ topScore.game }}</td>
-        <td>{{ topScore.top_score }}</td>
-        <td>{{ topScore.number_of_rounds }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<h3 class="pull-left">Top Scores</h3>
+<select class="form-control pull-right" id="game-list" [(ngModel)]="game" (change)="loadScores()">
+  <option [ngValue]="'all'">All</option>
+  <option *ngFor="let game of games" [ngValue]="game">{{ game }}</option>
+</select>
+<table class="table table-hover" id="top-scores">
+  <thead>
+    <tr>
+      <th (click)="loadScores('name')">Name</th>
+      <th (click)="loadScores('game')">Game</th>
+      <th (click)="loadScores('top_score')">Top score</th>
+      <th (click)="loadScores('number_of_rounds')">Number of rounds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let topScore of topScores">
+      <td>{{ topScore.name }}</td>
+      <td>{{ topScore.game }}</td>
+      <td>{{ topScore.top_score }}</td>
+      <td>{{ topScore.number_of_rounds }}</td>
+    </tr>
+  </tbody>
+</table>

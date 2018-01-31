@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RegisterController extends Controller
 {
@@ -128,13 +130,18 @@ class RegisterController extends Controller
         return $player;
     }
 
-    public function activate($activation_code) {
-        $player = Player::where("activation_code", "=", $activation_code)->first();
-        if ($player) {
-            $player->activate();
-            return view("activation-success", ["player" => $player]);
-        } else {
-            return view("activation-failure");
+    public function activate(Request $request) {
+        if (empty($request->activation_code)) {
+            throw new HttpException(400, "Activation failed: activation code is missing");
         }
+        $player = Player::where("activation_code", "=", $request->activation_code)->first();
+        if (!$player) {
+            throw new HttpException(404, "Activation failed: wrong activation code");
+        }
+        if ($player->activated_at) {
+            throw new HttpException(410, "Activation failed: already activated");
+        }
+        $player->activate();
+        return $player;
     }
 }

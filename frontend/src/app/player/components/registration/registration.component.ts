@@ -11,6 +11,7 @@ import { PlayerService } from '../../services/player.service';
 })
 export class RegistrationComponent implements OnInit {
   public player: Player = new Player;
+  public isRegistrationDone: boolean = false; 
   public errors: {[field: string]: string[]} = {};
   public form = new FormGroup(
     {
@@ -34,7 +35,10 @@ export class RegistrationComponent implements OnInit {
 
   public register() {
     this._playerService.register(this.player).subscribe(
-      response => { console.log(response) },
+      response => { 
+        this.isRegistrationDone = true;
+        console.log(response); 
+      },
       errorResponse => { 
         this.errors = errorResponse.error.errors;
       }
