@@ -6,6 +6,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PlayerService } from './services/player.service';
 import { ActivationComponent } from './components/activation/activation.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,7 @@ import { ActivationComponent } from './components/activation/activation.componen
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [RegistrationComponent, ActivationComponent],
+  declarations: [RegistrationComponent, ActivationComponent, LoginComponent],
   providers: [PlayerService]
 })
 export class PlayerModule { }

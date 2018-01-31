@@ -9,6 +9,11 @@ h3, h4 {
     font-size: 20px;
     color: #111;
 }
+
+form {
+    max-width: 600px;
+}
+
 .container {
     padding: 80px 120px;
 }

@@ -5,27 +5,27 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { environment } from '../../../environments/environment';
-//import { User } from '../../user/';
+import { Player } from '../../player/models/player';
 
 @Injectable()
 export class AuthService {
 
-  public user: any;
+  public player: Player;
   public token: string;
 
   constructor(private _http: HttpClient, private _router: Router) {
     this._loadFromStorage();
   }
 
-  public login(user: any): Observable<Response> {
+  public login(player: any): Observable<Response> {
     const observable: Observable<Response> = this._http.post<Response>(
       environment.apiEndPoint + 'auth',
-      user
+      player
     );
     const subject = new Subject<any>();
     observable.subscribe(
       (response: Response) => {
-        this.user = response['user'];
+        this.player = response['player'];
         this.token = response['token'];
         this._saveToStorage();
         subject.next(response);
@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   public logout(): void {
-    this.user = undefined;
+    this.player = undefined;
     this.token = undefined;
     this._saveToStorage();
     this._router.navigate(['/']);
@@ -51,17 +51,17 @@ export class AuthService {
     } else {
       localStorage.removeItem('token');
     }
-    if (this.user) {
-      localStorage.setItem('user', JSON.stringify(this.user));
+    if (this.player) {
+      localStorage.setItem('player', JSON.stringify(this.player));
     } else {
-      localStorage.removeItem('user');
+      localStorage.removeItem('player');
     }
   }
 
   private _loadFromStorage(): void {
     this.token = localStorage.getItem('token');
-    const userString: string = localStorage.getItem('user');
-    this.user = userString ? JSON.parse(userString) : undefined;
+    const playerString: string = localStorage.getItem('player');
+    this.player = playerString ? JSON.parse(playerString) : undefined;
   }
 
 }
