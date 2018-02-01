@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ProfileControllerTest extends TestCase
 {
@@ -24,8 +25,18 @@ class ProfileControllerTest extends TestCase
         $player->activate();
 
         $this->assertAuthenticatedAs($player);
+        $token = JWTAuth::fromUser($player);
 
-        $this->post("/profile", ["old-scores-action" => "delete", "password" => "secret"]);
+        $this->post(
+            "api/profile/handle-old-scores",
+            [
+                "old-scores-action" => "delete",
+                "password" => "secret"
+            ],
+            [
+                "Authorization" => "Bearer $token"
+            ]
+        );
 
         $this->assertEquals(0, $player->rounds()->count());
     }

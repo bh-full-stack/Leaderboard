@@ -18,6 +18,7 @@ export class ApiService {
       method,
       environment.apiEndPoint + url,
       {
+        body: body,
         headers: this._getHeaders()
       }
     );
@@ -25,11 +26,11 @@ export class ApiService {
     observable.subscribe(
       response => subject.next(response),
       errorResponse => {
-        const errorBody = (errorResponse as HttpErrorResponse).error;
-        if (['token_expired', 'token_invalid', 'token_not_provided'].indexOf(errorBody['error']) !== -1) {
-          this._authService.logout();
-        }
-        window.alert(errorBody['error'] ? errorBody['error'] : 'Unexpected system error.');
+        console.log(errorResponse);
+        if (errorResponse.status == 401) {
+          window.alert('Your session has expired!');
+          this._authService.logout('player/login');
+        }        
         subject.error(errorResponse);
       },
       () => subject.complete()

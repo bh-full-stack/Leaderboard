@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['middleware' => ['jwt.auth']], function () {
-     //
+    Route::post('profile/handle-old-scores', 'ProfileController@handleOldScores');
 });
 
 Route::get('rounds/games', 'RoundController@listGames');

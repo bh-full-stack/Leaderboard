@@ -16,6 +16,9 @@
         <li *ngIf="!authService.player">
           <a [routerLink]="['/player/registration']">Registration</a>
         </li>
+        <li *ngIf="!!authService.player">
+            <a [routerLink]="['/player/profile']"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>{{ authService.player.name }}</a>
+          </li>
         <li *ngIf="!authService.player">
           <a [routerLink]="['/player/login']">Login</a>
         </li>

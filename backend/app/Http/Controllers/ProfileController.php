@@ -17,7 +17,6 @@ class ProfileController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth');
     }
 
     /**
@@ -51,6 +50,6 @@ class ProfileController extends Controller
         }
         $player->has_deletable_rounds = false;
         $player->save();
-        return view('profile', ["player" => $player, "message" => $message]);
+        return ["player" => $player, "message" => $message];
     }
 }

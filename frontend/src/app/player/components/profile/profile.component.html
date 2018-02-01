@@ -1,0 +1,33 @@
+<h1>Welcome, {{ player.name }} </h1>
+
+<ng-template #errorTemplate let-formControlName="formControlName">
+  <ng-container *ngIf="errors[formControlName]">
+    <div *ngFor="let error of errors[formControlName]" class="alert alert-danger">
+      {{ error }}
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-container *ngIf="player.has_deletable_rounds">
+  <p>
+    Your account already has saved scores in our database.
+    <br> Would you like to keep them?
+  </p>
+  <form [formGroup]="form">
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input formControlName="password" type="password" class="form-control" [(ngModel)]="player.password">
+      <div *ngIf="!form.controls.password.valid && !form.controls.password.pristine" class="alert alert-danger">
+        Password is required and should be at least 6 characters long!
+      </div>
+      <ng-container *ngTemplateOutlet="errorTemplate;context:{formControlName: 'password'}"></ng-container>
+    </div>
+    <button name="old-scores-action" (click)="handleOldScores('delete')">Delete</button>
+    <button name="old-scores-action" (click)="handleOldScores('keep')">Keep</button>
+  </form>
+</ng-container>
+<ng-container *ngIf="message">
+  <div class="alert alert-info">
+    {{ message }}
+  </div>
+</ng-container>

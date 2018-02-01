@@ -18,18 +18,15 @@ class LoginControllerTest extends TestCase
      */
     public function it_can_log_in_a_user()
     {
-        Session::start();
         Mail::fake();
 
         $player = factory(Player::class)->make();
         $this->post(
-            "/register",
+            "api/register",
             [
                 "name" => $player->name,
                 "email" => $player->email,
-                "password" => "secret",
-                "password_confirmation" => "secret",
-                "_token" => csrf_token()
+                "password" => "secret"
             ]
         );
 
@@ -37,17 +34,17 @@ class LoginControllerTest extends TestCase
         $player->activation_code = 1234567;
         $player->save();
 
-        $this->get("/register/activation/1234567");
+        $this->post("api/register/activate", ["activation_code" => $player->activation_code]);
 
         $player = $player->fresh();
         $this->post(
-            "/login",
+            "api/login",
             [
                 "email" => $player->email,
                 "password" => "secret"
             ]
         );
-        $this->assertEquals(Auth::user(), $player);
+        $this->assertEquals($player, Auth::user());
     }
 
     /**

@@ -3,4 +3,5 @@ export class Player {
     public name: string;
     public email: string;
     public password: string;
+    public has_deletable_rounds: boolean;
 }

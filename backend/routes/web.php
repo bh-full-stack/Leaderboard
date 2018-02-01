@@ -10,11 +10,3 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', 'TopScoresController@index');
-
-Route::get('/profile', 'ProfileController@index')->name('profile');
-Route::post('/profile', 'ProfileController@handleOldScores')->name('profile');
-
-//Auth::routes();
-Route::get('/logout', 'Auth\LoginController@logout');
