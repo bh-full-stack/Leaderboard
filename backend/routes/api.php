@@ -20,5 +20,6 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 Route::get('rounds/games', 'RoundController@listGames');
 Route::resource('rounds', 'RoundController');
 
+Route::post('login', 'Auth\LoginController@login');
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('register/activate', 'Auth\RegisterController@activate');
