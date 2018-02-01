@@ -19,7 +19,7 @@ export class AuthService {
 
   public login(player: any): Observable<Response> {
     const observable: Observable<Response> = this._http.post<Response>(
-      environment.apiEndPoint + 'auth',
+      environment.apiEndPoint + 'login',
       player
     );
     const subject = new Subject<any>();

@@ -2,14 +2,14 @@
 <form [formGroup]="form" (ngSubmit)="login()">
   <div class="form-group">
     <label for="email">Email</label>
-    <input formControlName="email" type="text" class="form-control" [(ngModel)]="user.email">
+    <input formControlName="email" type="text" class="form-control" [(ngModel)]="player.email">
     <div *ngIf="!form.controls.email.valid && !form.controls.email.pristine " class="alert alert-danger">
       Valid email is required!
     </div>
   </div>
   <div class="form-group">
     <label for="password">Password</label>
-    <input formControlName="password" type="password" class="form-control" [(ngModel)]="user.password">
+    <input formControlName="password" type="password" class="form-control" [(ngModel)]="player.password">
     <div *ngIf="!form.controls.password.valid && !form.controls.password.pristine " class="alert alert-danger">
       Password is required and should be at least 6 characters long!
     </div>
