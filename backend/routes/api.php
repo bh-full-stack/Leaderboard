@@ -17,6 +17,8 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::post('profile/handle-old-scores', 'ProfileController@handleOldScores');
 });
 
+Route::get('profile/{name}', 'ProfileController@getPlayerByName');
+
 Route::get('rounds/games', 'RoundController@listGames');
 Route::resource('rounds', 'RoundController');
 

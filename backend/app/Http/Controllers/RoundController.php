@@ -8,6 +8,7 @@ use App\Location;
 use App\Player;
 use App\Round;
 use App\Providers\HttpService;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class RoundController extends Controller
 {

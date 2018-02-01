@@ -52,4 +52,8 @@ class ProfileController extends Controller
         $player->save();
         return ["player" => $player, "message" => $message];
     }
+
+    public function getPlayerByName(Request $request) {
+        return Player::getByName($request->name);
+    }
 }
