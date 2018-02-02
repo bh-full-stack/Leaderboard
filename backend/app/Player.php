@@ -20,6 +20,12 @@ class Player extends Authenticatable implements JWTSubject
         return $this->hasMany(Round::class);
     }
 
+    public function profile() {
+        return $this->belongsTo(Profile::class);
+    }
+
+
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
