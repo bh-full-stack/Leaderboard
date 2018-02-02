@@ -1,4 +1,3 @@
-import { Player } from './../models/player';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';

@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       (response: Response) => {
         this.player = new Player();
         this.form.reset();
-        this._router.navigate(['/player/profile']);
+        this._router.navigate(['/player/profile/' + response['player'].id]);
       },
       (error: any) => {
         console.log(error);

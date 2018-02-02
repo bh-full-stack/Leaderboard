@@ -8,17 +8,16 @@ import { PlayerService } from './services/player.service';
 import { ActivationComponent } from './components/activation/activation.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { SharedModule } from '../shared/shared.module';
+import { TinyEditorComponent } from './components/tiny-editor/tiny-editor.component';
 
 @NgModule({
   imports: [
     CommonModule,
     PlayerRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
-    SharedModule
+    ReactiveFormsModule
   ],
-  declarations: [RegistrationComponent, ActivationComponent, LoginComponent, ProfileComponent],
+  declarations: [RegistrationComponent, ActivationComponent, LoginComponent, ProfileComponent, TinyEditorComponent],
   providers: [PlayerService]
 })
 export class PlayerModule { }

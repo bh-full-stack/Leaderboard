@@ -7,7 +7,6 @@ import { ApiService } from './services/api.service';
 import { AuthService } from './services/auth.service';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { TinyEditorComponent } from './components/tiny-editor/tiny-editor.component';
 
 @NgModule({
   imports: [
@@ -15,11 +14,10 @@ import { TinyEditorComponent } from './components/tiny-editor/tiny-editor.compon
     HttpClientModule,
     RouterModule
   ],
-  declarations: [NavigationComponent, NotFoundComponent, TinyEditorComponent],
+  declarations: [NavigationComponent, NotFoundComponent],
   providers: [AuthService],
   exports: [
-    NavigationComponent,
-    TinyEditorComponent
+    NavigationComponent
   ]
 })
 export class SharedModule { }
