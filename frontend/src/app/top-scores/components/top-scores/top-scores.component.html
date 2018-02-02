@@ -14,7 +14,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let topScore of topScores">
-      <td>{{ topScore.name }}</td>
+      <td><a [routerLink]="['/player/profile/' + topScore.player_id]">{{ topScore.name }}</a></td>
       <td>{{ topScore.game }}</td>
       <td>{{ topScore.top_score }}</td>
       <td>{{ topScore.number_of_rounds }}</td>

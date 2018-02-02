@@ -1,3 +1,4 @@
+import { Player } from './../models/player';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -35,6 +36,13 @@ export class PlayerService  extends ApiService {
         'old-scores-action': action
       }
     );  
+  }
+
+  public showProfile(player_id: number): Player{
+    let player = new Player
+    player.id = player_id
+    player.introduction = 'asdasdm ohiasdj ijasdouoai'
+    return player;
   }
 
 }

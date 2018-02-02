@@ -70,6 +70,7 @@ class Player extends Authenticatable implements JWTSubject
             ->select(
                 "players.name",
                 "rounds.game",
+                "rounds.player_id",
                 DB::raw("count(rounds.id) as number_of_rounds"),
                 DB::raw("max(rounds.score) as top_score")
             );

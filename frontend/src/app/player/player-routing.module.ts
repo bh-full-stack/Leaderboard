@@ -9,7 +9,7 @@ const routes: Routes = [
   {path: 'registration', component: RegistrationComponent},
   {path: 'activation/:activation_code', component: ActivationComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'profile', component: ProfileComponent}
+  {path: 'profile/:player_id', component: ProfileComponent}
 ];
 
 @NgModule({

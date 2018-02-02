@@ -15,6 +15,7 @@ export class TopScoresComponent implements OnInit {
   public sortBy: string = 'top_score';
   public games: string[];
   public game: string = 'all';
+  public linkToProfile:string;
 
   constructor(private _topScoresService: TopScoresService) { }
 
@@ -46,7 +47,10 @@ export class TopScoresComponent implements OnInit {
       this.sortBy = sortBy;
     }
     this._topScoresService.list(this.game, this.sortBy, this.sortDirection).subscribe(
-      response => this.topScores = response,
+      response => {
+        this.topScores = response;
+        console.log(this.topScores);
+      },
       error => console.log(error)
     );
   }

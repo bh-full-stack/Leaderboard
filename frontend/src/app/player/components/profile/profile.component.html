@@ -1,4 +1,10 @@
-<h1>Welcome, {{ player.name }} </h1>
+<h1 *ngIf="isAuthenticatedPlayer()">Welcome, {{ _authService.player.name }} </h1>
+
+<h1 *ngIf="!isAuthenticatedPlayer()">{{ player.name }} </h1>
+
+<p class="introduction">
+  {{ player.introduction }}
+</p>
 
 <ng-template #errorTemplate let-formControlName="formControlName">
   <ng-container *ngIf="errors[formControlName]">
@@ -8,7 +14,7 @@
   </ng-container>
 </ng-template>
 
-<ng-container *ngIf="player.has_deletable_rounds">
+<ng-container *ngIf="isAuthenticatedPlayer() && player.has_deletable_rounds">
   <p>
     Your account already has saved scores in our database.
     <br> Would you like to keep them?
@@ -31,3 +37,4 @@
     {{ message }}
   </div>
 </ng-container>
+

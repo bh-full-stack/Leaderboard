@@ -5,6 +5,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Player } from '../../models/player';
 import { PlayerService } from '../../services/player.service';
 import { AuthService } from '../../../shared/services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -24,12 +25,24 @@ export class ProfileComponent implements OnInit {
  
   constructor(
     private _playerService: PlayerService,
-    private _authService: AuthService,
-    private _ref: ChangeDetectorRef
+    public _authService: AuthService,
+    private _ref: ChangeDetectorRef,
+    private _activatedRoute: ActivatedRoute, 
   ) { }
 
   ngOnInit() {
-    this.player = this._authService.player;
+    //this.player = this._authService.player;
+    this._activatedRoute.params.subscribe(
+      params => {
+        this.player = this._playerService.showProfile(params.player_id);
+        console.log(this._authService.player);
+        console.log(this.player);
+      }
+    )
+  }
+
+  public isAuthenticatedPlayer() {
+    return this.player.id == this._authService.player.id
   }
 
   public handleOldScores(action: string) {
