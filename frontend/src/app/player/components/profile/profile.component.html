@@ -1,40 +1,50 @@
-<h1 *ngIf="isAuthenticatedPlayer()">Welcome, {{ _authService.player.name }} </h1>
+<ng-container *ngIf="loading">
+  <h1>Loading...</h1>
+</ng-container>
 
-<h1 *ngIf="!isAuthenticatedPlayer()">{{ player.name }} </h1>
+<ng-container *ngIf="!loading">
+  <h1 *ngIf="isAuthenticatedPlayer()">Welcome, {{ player.name }} </h1>
 
-<p class="introduction">
-  {{ player.introduction }}
-</p>
+  <h1 *ngIf="!isAuthenticatedPlayer()">{{ player.name }} </h1>
 
-<ng-template #errorTemplate let-formControlName="formControlName">
-  <ng-container *ngIf="errors[formControlName]">
-    <div *ngFor="let error of errors[formControlName]" class="alert alert-danger">
-      {{ error }}
+  <div *ngIf="player.profile && !isBeingEdited" class="introduction" [innerHTML]="player.profile.introduction"></div>
+  <div *ngIf="isBeingEdited" class="form-group">
+    <app-tiny-editor [elementId]="'introduction'" [startingTextValue]="player.profile.introduction" (onEditorContentChange)="setIntroduction($event)"></app-tiny-editor>
+  </div>
+  <button class="btn btn-primary" *ngIf="player.profile && isAuthenticatedPlayer() && !isBeingEdited" (click)="toggleEdit()">Edit Introduction</button>
+  <button class="btn btn-primary" *ngIf="player.profile && isAuthenticatedPlayer() && isBeingEdited" (click)="saveIntroduction()">Save</button>
+
+  <ng-template #errorTemplate let-formControlName="formControlName">
+    <ng-container *ngIf="errors[formControlName]">
+      <div *ngFor="let error of errors[formControlName]" class="alert alert-danger">
+        {{ error }}
+      </div>
+    </ng-container>
+  </ng-template>
+
+  <ng-container *ngIf="isAuthenticatedPlayer() && player.has_deletable_rounds">
+    <p>
+      Your account already has saved scores in our database.
+      <br> Would you like to keep them?
+    </p>
+    <form [formGroup]="form">
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input formControlName="password" type="password" class="form-control" [(ngModel)]="player.password">
+        <div *ngIf="!form.controls.password.valid && !form.controls.password.pristine" class="alert alert-danger">
+          Password is required and should be at least 6 characters long!
+        </div>
+        <ng-container *ngTemplateOutlet="errorTemplate;context:{formControlName: 'password'}"></ng-container>
+      </div>
+      <button name="old-scores-action" (click)="handleOldScores('delete')">Delete</button>
+      <button name="old-scores-action" (click)="handleOldScores('keep')">Keep</button>
+    </form>
+  </ng-container>
+
+  <ng-container *ngIf="message">
+    <div class="alert alert-info">
+      {{ message }}
     </div>
   </ng-container>
-</ng-template>
 
-<ng-container *ngIf="isAuthenticatedPlayer() && player.has_deletable_rounds">
-  <p>
-    Your account already has saved scores in our database.
-    <br> Would you like to keep them?
-  </p>
-  <form [formGroup]="form">
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input formControlName="password" type="password" class="form-control" [(ngModel)]="player.password">
-      <div *ngIf="!form.controls.password.valid && !form.controls.password.pristine" class="alert alert-danger">
-        Password is required and should be at least 6 characters long!
-      </div>
-      <ng-container *ngTemplateOutlet="errorTemplate;context:{formControlName: 'password'}"></ng-container>
-    </div>
-    <button name="old-scores-action" (click)="handleOldScores('delete')">Delete</button>
-    <button name="old-scores-action" (click)="handleOldScores('keep')">Keep</button>
-  </form>
 </ng-container>
-<ng-container *ngIf="message">
-  <div class="alert alert-info">
-    {{ message }}
-  </div>
-</ng-container>
-

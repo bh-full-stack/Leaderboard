@@ -84,4 +84,8 @@ class Player extends Authenticatable implements JWTSubject
             ->orderBy($sortBy, $sortDirection)
             ->get();
     }
+
+    public static function getPlayerWithProfile($id) {
+        return Player::with("profile")->find($id);
+    }
 }

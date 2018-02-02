@@ -40,11 +40,21 @@ export class PlayerService  extends ApiService {
     );  
   }
 
-  public showProfile(player_id: number): Player{
-    let player = new Player
-    player.id = player_id
-    player.introduction = 'asdasdm ohiasdj ijasdouoai'
-    return player;
+  public showProfile(player_id: number): Observable<Player> {
+    return this.request(
+      'GET',
+      'profile/' + player_id
+    );  
+  }
+
+  public updateIntroduction(player_id: number, introduction: string): Observable<Response> {
+    return this.request(
+      'PUT',
+      'profile/' + player_id,
+      {
+        'introduction': introduction
+      }
+    ); 
   }
 
 }

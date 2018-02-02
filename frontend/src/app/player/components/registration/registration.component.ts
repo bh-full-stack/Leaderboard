@@ -43,7 +43,7 @@ export class RegistrationComponent implements OnInit {
   public register() {
     this._playerService.register(this.player, this.introduction).subscribe(
       response => { 
-        this.isRegistrationDone = true;    SharedModule
+        this.isRegistrationDone = true;
         console.log(response); 
       },
       errorResponse => { 

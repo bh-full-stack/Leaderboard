@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Player;
+use App\Profile;
 use App\Round;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,23 @@ class ProfileController extends Controller
      */
     public function index() {
         return view('profile', ["player" => Auth::user()]);
+    }
+
+    public function getProfile($id) {
+        return Player::getPlayerWithProfile($id);
+    }
+
+    public function updateProfile($id, Request $request) {
+        $player = Player::find($id);
+        $profile = Profile::findOrNew($player->profile_id);
+
+        $profile->introduction = $request['introduction'];
+        $profile->save();
+
+        $player->profile_id = $profile->id;
+        $player->save();
+
+        return $player;
     }
 
     public function handleOldScores(Request $request) {

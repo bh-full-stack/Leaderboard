@@ -17,32 +17,65 @@ export class ProfileComponent implements OnInit {
   public player: Player;
   public errors: {[field: string]: string[]} = {};
   public message: string;
+  public loading: boolean;
+  public isBeingEdited: boolean;
   public form = new FormGroup(
     {
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      introduction: new FormControl('')
     },
   );
  
   constructor(
     private _playerService: PlayerService,
-    public _authService: AuthService,
+    private _authService: AuthService,
     private _ref: ChangeDetectorRef,
     private _activatedRoute: ActivatedRoute, 
   ) { }
 
   ngOnInit() {
-    //this.player = this._authService.player;
+    this.loading = true;
     this._activatedRoute.params.subscribe(
-      params => {
-        this.player = this._playerService.showProfile(params.player_id);
-        console.log(this._authService.player);
-        console.log(this.player);
-      }
+      params => this._playerService.showProfile(params.player_id).subscribe(
+        player => {
+          this.player = player;
+          this.loading = false;
+        },
+        error => {
+          console.log(error);
+          this.loading = false;
+        }
+          
+      )
     )
   }
 
+  public setIntroduction(text) {
+    this.player.profile.introduction = text;
+  }
+
+  public saveIntroduction() {
+    this.isBeingEdited = !this.isBeingEdited;
+    this._playerService.updateIntroduction(this.player.id, this.player.profile.introduction).subscribe(
+      player => {
+        console.log(player);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  public toggleEdit() {
+    this.isBeingEdited = !this.isBeingEdited;
+  }
+
   public isAuthenticatedPlayer() {
-    return this.player.id == this._authService.player.id
+    if (this._authService.player) {
+      return this.player.id == this._authService.player.id;
+    } else {
+      return false;
+    }
   }
 
   public handleOldScores(action: string) {

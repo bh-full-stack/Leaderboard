@@ -17,7 +17,8 @@ declare var tinymce: any;
 
 export class TinyEditorComponent implements AfterViewInit, OnDestroy {
 
-  @Input() elementId: String;
+  @Input() elementId: string;
+  @Input() startingTextValue: string;
   @Output() onEditorContentChange = new EventEmitter();
  
   editor;
@@ -27,9 +28,12 @@ export class TinyEditorComponent implements AfterViewInit, OnDestroy {
       selector: '#' + this.elementId,
       plugins: ['link'],
       menu: {},
-      skin_url: '../assets/skins/lightgray',
+      skin_url: '../../assets/skins/lightgray',
       setup: editor => {
         this.editor = editor;
+        editor.on('init', () => {
+          editor.setContent(this.startingTextValue);
+        });
         editor.on('keyup change', () => {
           const content = editor.getContent();
           this.onEditorContentChange.emit(content);
