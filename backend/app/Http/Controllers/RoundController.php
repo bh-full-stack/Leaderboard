@@ -8,6 +8,8 @@ use App\Location;
 use App\Player;
 use App\Round;
 use App\Providers\HttpService;
+use Illuminate\Support\Facades\Auth;
+use Mockery\Exception;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class RoundController extends Controller
@@ -15,19 +17,20 @@ class RoundController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-       return Player::listTopPlayersByGame(
-           $request->get('game', 'all'),
-           $request->get('sortBy', 'top_score'),
-           $request->get('sortDirection', 'DESC')
-       );
+        return Player::listTopPlayersByGame(
+            $request->get('game', 'all'),
+            $request->get('sortBy', 'top_score'),
+            $request->get('sortDirection', 'DESC')
+        );
     }
 
-    public function listGames() {
+    public function listGames()
+    {
         return Round::getListOfGames();
     }
 
@@ -44,24 +47,30 @@ class RoundController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $request->validate([
             'name' => 'required',
             'game' => 'required',
             'score' => 'required|integer'
         ]);
 
+        $player = Player::getByName($request->post('name'));
+
+        if ($player->activated_at && !JWTAuth::user()) {
+            return response()->json([
+                'message' => 'You have to be logged in!',
+            ], 401);
+        }
+
+        $player->saveOrFail();
+
         $clientIp = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
         $clientIp = '89.135.190.25';
         $location = Location::getByIp($clientIp);
         $location->saveOrFail();
-
-        $player = Player::getByName($request->post('name'));
-        $player->saveOrFail();
 
         $round = new Round();
         $round->game = $request->post('game');
