@@ -10,7 +10,9 @@ import { PlayerService } from '../../services/player.service';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
+
   public player: Player = new Player;
+  public introduction: string;
   public isRegistrationDone: boolean = false; 
   public errors: {[field: string]: string[]} = {};
   public form = new FormGroup(
@@ -19,6 +21,7 @@ export class RegistrationComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       passwordConfirm: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      introduction: new FormControl('')
     },
     RegistrationComponent.passwordMatchValidator
   );
@@ -27,14 +30,18 @@ export class RegistrationComponent implements OnInit {
     return g.get('password').value === g.get('passwordConfirm').value ? null : { 'mismatch': true };
   }   
 
+  public setIntroduction(text) {
+    this.introduction = text;
+  }
+
   public constructor(private _playerService: PlayerService) { }
 
   public ngOnInit() {
-
+    //
   }
 
   public register() {
-    this._playerService.register(this.player).subscribe(
+    this._playerService.register(this.player, this.introduction).subscribe(
       response => { 
         this.isRegistrationDone = true;
         console.log(response); 

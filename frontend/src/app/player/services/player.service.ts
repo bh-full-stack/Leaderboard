@@ -9,11 +9,14 @@ import { ApiService } from '../../shared/services/api.service';
 @Injectable()
 export class PlayerService  extends ApiService {
 
-  public register(player: Player): Observable<Response> {
+  public register(player: Player, introduction: string): Observable<Response> {
     return this.request(
       'POST',
       'register',
-      player
+      {
+        'player': player,
+        'introduction': introduction
+      }
     );
   }
 
