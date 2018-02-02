@@ -48,7 +48,12 @@
 
   <div class="form-group">
     <label for="introduction">Introduction</label>
-    <app-tiny-editor [elementId]="'introduction'" [startingTextValue]="''" (onEditorContentChange)="setIntroduction($event)"></app-tiny-editor>
+    <app-tiny-editor
+      ngDefaultControl
+      formControlName="introduction"
+      [id]="'introduction'"
+      [(ngModel)]="introduction"
+    ></app-tiny-editor>
   </div>
 
   <div *ngIf="!form.valid && !form.pristine" class="alert alert-warning">

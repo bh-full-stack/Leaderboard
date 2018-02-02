@@ -9,7 +9,11 @@
 
   <div *ngIf="player.profile && !isBeingEdited" class="introduction" [innerHTML]="player.profile.introduction"></div>
   <div *ngIf="isBeingEdited" class="form-group">
-    <app-tiny-editor [elementId]="'introduction'" [startingTextValue]="player.profile.introduction" (onEditorContentChange)="setIntroduction($event)"></app-tiny-editor>
+    <app-tiny-editor
+      ngDefaultControl
+      [id]="'introduction'"
+      [(ngModel)]="player.profile.introduction"
+    ></app-tiny-editor>
   </div>
   <button class="btn btn-primary" *ngIf="player.profile && isAuthenticatedPlayer() && !isBeingEdited" (click)="toggleEdit()">Edit Introduction</button>
   <button class="btn btn-primary" *ngIf="player.profile && isAuthenticatedPlayer() && isBeingEdited" (click)="saveIntroduction()">Save</button>

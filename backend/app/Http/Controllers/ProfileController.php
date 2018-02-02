@@ -26,15 +26,15 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('profile', ["player" => Auth::user()]);
+        return view('profile', ['player' => Auth::user()]);
     }
 
-    public function getProfile($id) {
-        return Player::getPlayerWithProfile($id);
+    public function getProfile($playerId) {
+        return Player::getPlayerWithProfile($playerId);
     }
 
-    public function updateProfile($id, Request $request) {
-        $player = Player::find($id);
+    public function updateProfile($playerId, Request $request) {
+        $player = Player::find($playerId);
         $profile = Profile::findOrNew($player->profile_id);
 
         $profile->introduction = $request['introduction'];

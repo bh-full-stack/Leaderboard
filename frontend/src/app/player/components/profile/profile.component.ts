@@ -19,12 +19,9 @@ export class ProfileComponent implements OnInit {
   public message: string;
   public loading: boolean;
   public isBeingEdited: boolean;
-  public form = new FormGroup(
-    {
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      introduction: new FormControl('')
-    },
-  );
+  public form = new FormGroup({
+    password: new FormControl('', [Validators.required, Validators.minLength(6)])
+  });
  
   constructor(
     private _playerService: PlayerService,
@@ -50,10 +47,6 @@ export class ProfileComponent implements OnInit {
     )
   }
 
-  public setIntroduction(text) {
-    this.player.profile.introduction = text;
-  }
-
   public saveIntroduction() {
     this.isBeingEdited = !this.isBeingEdited;
     this._playerService.updateIntroduction(this.player.id, this.player.profile.introduction).subscribe(
@@ -71,7 +64,7 @@ export class ProfileComponent implements OnInit {
   }
 
   public isAuthenticatedPlayer() {
-    if (this._authService.player) {
+    if (this._authService.player && this.player) {
       return this.player.id == this._authService.player.id;
     } else {
       return false;

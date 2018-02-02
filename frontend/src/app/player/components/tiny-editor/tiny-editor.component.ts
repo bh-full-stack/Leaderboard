@@ -10,40 +10,44 @@ declare var tinymce: any;
 
 @Component({
   selector: 'app-tiny-editor',
-  template: `<textarea id="{{elementId}}"></textarea>`,
-  //templateUrl: './tiny-editor.component.html',
+  template: `<textarea id="{{id}}"></textarea>`,
   styleUrls: ['./tiny-editor.component.css']
 })
 
 export class TinyEditorComponent implements AfterViewInit, OnDestroy {
 
-  @Input() elementId: string;
-  @Input() startingTextValue: string;
-  @Output() onEditorContentChange = new EventEmitter();
+  @Input() id: string;
+  @Input() ngModel: string;
+  @Output() ngModelChange = new EventEmitter<string>();
  
-  editor;
+  private _editor: any;
  
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     tinymce.init({
-      selector: '#' + this.elementId,
+      selector: '#' + this.id,
       plugins: ['link'],
       menu: {},
       skin_url: '../../assets/skins/lightgray',
       setup: editor => {
-        this.editor = editor;
+        this._editor = editor;
         editor.on('init', () => {
-          editor.setContent(this.startingTextValue);
+          editor.setContent(this.ngModel);
         });
         editor.on('keyup change', () => {
-          const content = editor.getContent();
-          this.onEditorContentChange.emit(content);
+          this.ngModelChange.emit(editor.getContent());
         });
       }
     });
   }
 
-  ngOnDestroy() {
-    tinymce.remove(this.editor);
+  public ngOnChanges() {
+    if (this._editor) {
+      this._editor.setContent(this.ngModel);
+    }
+  }
+
+  public ngOnDestroy() {
+    tinymce.remove(this._editor);
   }
 
 }

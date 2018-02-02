@@ -12,7 +12,7 @@ import { PlayerService } from '../../services/player.service';
 export class RegistrationComponent implements OnInit {
 
   public player: Player = new Player;
-  public introduction: string;
+  public introduction: string = '';
   public isRegistrationDone: boolean = false; 
   public errors: {[field: string]: string[]} = {};
   public form = new FormGroup(
@@ -26,15 +26,9 @@ export class RegistrationComponent implements OnInit {
     RegistrationComponent.passwordMatchValidator
   );
 
-  public static passwordMatchValidator(g: FormGroup) {
-    return g.get('password').value === g.get('passwordConfirm').value ? null : { 'mismatch': true };
-  }   
-
-  public setIntroduction(text) {
-    this.introduction = text;
+  public constructor(private _playerService: PlayerService) {
+    //
   }
-
-  public constructor(private _playerService: PlayerService) { }
 
   public ngOnInit() {
     //
@@ -50,6 +44,10 @@ export class RegistrationComponent implements OnInit {
         this.errors = errorResponse.error.errors;
       }
     );
+  }
+
+  public static passwordMatchValidator(g: FormGroup) {
+    return g.get('password').value === g.get('passwordConfirm').value ? null : { 'mismatch': true };
   }
 
 }
