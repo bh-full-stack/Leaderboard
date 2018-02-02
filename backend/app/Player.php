@@ -12,7 +12,7 @@ class Player extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
-    protected $fillable = ["name", "email", "has_deletable_rounds"];
+    protected $fillable = ["name", "email", "has_deletable_rounds", "profile_id"];
     protected $hidden = ["password", "activation_code"];
 
 
