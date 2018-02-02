@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Mail\SignUpActivation;
 use App\Player;
 use App\Http\Controllers\Controller;
+use App\Profile;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -88,9 +89,9 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        $this->validator($request->all())->validate();
+        $this->validator($request['player'])->validate();
 
-        $player = Player::getByName($request->name);
+        $player = Player::getByName($request['player']['name']);
         $nameExists = $player->exists;
         $emailMatches = ($player->email == $request->email);
         $emailExists = (Player::where("email", "=", $request->email)->count() > 0);
@@ -98,7 +99,7 @@ class RegisterController extends Controller
 
         if ($nameExists) {
             if ($emailMatches) {
-                $player = $this->update($player, $request->all());
+                $player = $this->update($player, $request['player']);
             } else {
                 if ($emailExists) {
                     throw ValidationException::withMessages([
@@ -106,7 +107,7 @@ class RegisterController extends Controller
                     ]);
                 } else {
                     if ($emailIsNull) {
-                        $player = $this->update($player, $request->all());
+                        $player = $this->update($player, $request['player']);
                     } else {
                         throw ValidationException::withMessages([
                             'name' => ['This name is already in use!'],
@@ -120,8 +121,16 @@ class RegisterController extends Controller
                     'email' => ['This email is already in use!'],
                 ]);
             } else {
-                $player = $this->create($request->all());
+                $player = $this->create($request['player']);
             }
+        }
+
+        if (!is_null($request['introduction'])) {
+            $profile = new Profile();
+            $profile->introduction = $request['introduction'];
+            $profile->save();
+            $player->profile_id = $profile->id;
+            $player->save();
         }
 
         Mail::to(["email" => $player->email])->send(new SignUpActivation($player));
