@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { Player } from '../../models/player';
 import { PlayerService } from '../../services/player.service';
 import { AuthService } from '../../../shared/services/auth.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -27,7 +28,8 @@ export class ProfileComponent implements OnInit {
     private _playerService: PlayerService,
     private _authService: AuthService,
     private _ref: ChangeDetectorRef,
-    private _activatedRoute: ActivatedRoute, 
+    private _activatedRoute: ActivatedRoute,
+    private _domSanitizer: DomSanitizer,
   ) { }
 
   ngOnInit() {
@@ -45,6 +47,10 @@ export class ProfileComponent implements OnInit {
           
       )
     )
+  }
+
+  private trustHtml(html) {
+    return this._domSanitizer.bypassSecurityTrustHtml(html);
   }
 
   public saveIntroduction() {

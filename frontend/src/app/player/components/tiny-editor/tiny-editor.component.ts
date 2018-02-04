@@ -27,7 +27,8 @@ export class TinyEditorComponent implements AfterViewInit, OnDestroy {
       selector: '#' + this.id,
       plugins: ['link'],
       menu: {},
-      skin_url: '../../assets/skins/lightgray',
+      skin_url: '/assets/skins/lightgray',
+      content_css: '/assets/styles.css',
       setup: editor => {
         this._editor = editor;
         editor.on('init', () => {
