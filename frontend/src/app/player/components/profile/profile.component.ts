@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
   public form = new FormGroup({
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
+  public introduction: string;
  
   constructor(
     private _playerService: PlayerService,
@@ -38,6 +39,7 @@ export class ProfileComponent implements OnInit {
       params => this._playerService.showProfile(params.player_id).subscribe(
         player => {
           this.player = player;
+          this.introduction = this.player.profile.introduction;
           this.loading = false;
         },
         error => {
@@ -55,6 +57,7 @@ export class ProfileComponent implements OnInit {
 
   public saveIntroduction() {
     this.isBeingEdited = !this.isBeingEdited;
+    this.player.profile.introduction = this.introduction;
     this._playerService.updateIntroduction(this.player.id, this.player.profile.introduction).subscribe(
       player => {
         console.log(player);
@@ -63,6 +66,11 @@ export class ProfileComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  public discardIntroductionChange() {
+    this.isBeingEdited = !this.isBeingEdited;
+    this.introduction = this.player.profile.introduction;
   }
 
   public toggleEdit() {

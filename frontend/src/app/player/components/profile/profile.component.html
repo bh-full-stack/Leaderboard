@@ -7,16 +7,30 @@
 
   <h1 *ngIf="!isAuthenticatedPlayer()">{{ player.name }} </h1>
 
-  <div *ngIf="player.profile && !isBeingEdited" class="introduction" [innerHTML]="trustHtml(player.profile.introduction)"></div>
+  <div *ngIf="player.profile && !isBeingEdited" class="introduction" [innerHTML]="trustHtml(introduction)"></div>
   <div *ngIf="isBeingEdited" class="form-group">
     <app-tiny-editor
       ngDefaultControl
       [id]="'introduction'"
-      [(ngModel)]="player.profile.introduction"
+      [(ngModel)]="introduction"
     ></app-tiny-editor>
   </div>
-  <button class="btn btn-primary" *ngIf="player.profile && isAuthenticatedPlayer() && !isBeingEdited" (click)="toggleEdit()">Edit Introduction</button>
-  <button class="btn btn-primary" *ngIf="player.profile && isAuthenticatedPlayer() && isBeingEdited" (click)="saveIntroduction()">Save</button>
+  <button 
+    class="btn btn-primary" *ngIf="player.profile && isAuthenticatedPlayer() && !isBeingEdited"
+    (click)="toggleEdit()"
+    >
+    Edit Introduction
+  </button>
+  <button class="btn btn-primary" *ngIf="player.profile && isAuthenticatedPlayer() && isBeingEdited"
+    (click)="saveIntroduction()"
+    >
+    Save
+  </button>
+  <button class="btn btn-primary" *ngIf="player.profile && isAuthenticatedPlayer() && isBeingEdited"
+    (click)="discardIntroductionChange()"
+    >
+    Discard
+  </button>
 
   <ng-template #errorTemplate let-formControlName="formControlName">
     <ng-container *ngIf="errors[formControlName]">
