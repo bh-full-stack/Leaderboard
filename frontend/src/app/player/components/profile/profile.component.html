@@ -3,33 +3,38 @@
 </ng-container>
 
 <ng-container *ngIf="!loading">
-  <h1 *ngIf="isAuthenticatedPlayer()">Welcome, {{ player.name }} </h1>
+  <img class="pull-right" src="http://via.placeholder.com/100x100">
 
-  <h1 *ngIf="!isAuthenticatedPlayer()">{{ player.name }} </h1>
+  <h1 class="clearfix">
+    <ng-container *ngIf="isAuthenticatedPlayer()">Welcome, {{ player.name }}</ng-container>
+    <ng-container *ngIf="!isAuthenticatedPlayer()">{{ player.name }}</ng-container>
+  </h1>
 
-  <div *ngIf="player.profile && !isBeingEdited" class="introduction" [innerHTML]="introduction | trustHtml"></div>
-  <div *ngIf="isBeingEdited" class="form-group">
+  <div 
+    *ngIf="player.profile && !isBeingEdited" 
+    class="introduction" 
+    [innerHTML]="player.profile.introduction | trustHtml"
+  ></div>
+  <form *ngIf="isBeingEdited" class="form-group">
     <app-tiny-editor
       ngDefaultControl
       [id]="'introduction'"
-      [(ngModel)]="introduction"
+      [name]="'introduction'"
+      [(ngModel)]="profile.introduction"
     ></app-tiny-editor>
-  </div>
+    <input name="picture" [(ngModel)]="profile.picture" type="file" accept="image/jpeg, image/gif, image/x-png">
+    <button class="btn btn-primary" (click)="saveProfile()">
+      Save
+    </button>
+    <button class="btn btn-primary" (click)="discardIntroductionChange()">
+      Discard
+    </button>
+  </form>
   <button 
     class="btn btn-primary" *ngIf="player.profile && isAuthenticatedPlayer() && !isBeingEdited"
     (click)="toggleEdit()"
     >
-    Edit Introduction
-  </button>
-  <button class="btn btn-primary" *ngIf="player.profile && isAuthenticatedPlayer() && isBeingEdited"
-    (click)="saveIntroduction()"
-    >
-    Save
-  </button>
-  <button class="btn btn-primary" *ngIf="player.profile && isAuthenticatedPlayer() && isBeingEdited"
-    (click)="discardIntroductionChange()"
-    >
-    Discard
+    Edit Profile
   </button>
 
   <ng-template #errorTemplate let-formControlName="formControlName">

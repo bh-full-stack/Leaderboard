@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Player } from '../../models/player';
 import { PlayerService } from '../../services/player.service';
 import { AuthService } from '../../../api/services/auth.service';
+import { Profile } from '../../models/profile';
 
 @Component({
   selector: 'app-profile',
@@ -23,7 +24,7 @@ export class ProfileComponent implements OnInit {
   public form = new FormGroup({
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
-  public introduction: string = '';
+  public profile: Profile;
  
   constructor(
     private _playerService: PlayerService,
@@ -40,7 +41,7 @@ export class ProfileComponent implements OnInit {
         player => {
           this.player = player;
           if (this.player.profile) {
-            this.introduction = this.player.profile.introduction;
+            this.profile = Object.assign(new Profile, this.player.profile);
           }
           this.loading = false;
         },
@@ -53,10 +54,10 @@ export class ProfileComponent implements OnInit {
     )
   }
 
-  public saveIntroduction() {
+  public saveProfile() {
+    console.log(this.profile.picture);
     this.isBeingEdited = !this.isBeingEdited;
-    this.player.profile.introduction = this.introduction;
-    this._playerService.updateIntroduction(this.player.id, this.player.profile.introduction).subscribe(
+    this._playerService.updateProfile(this.player.id, this.profile).subscribe(
       player => {
         console.log(player);
       },
@@ -68,7 +69,7 @@ export class ProfileComponent implements OnInit {
 
   public discardIntroductionChange() {
     this.isBeingEdited = !this.isBeingEdited;
-    this.introduction = this.player.profile.introduction;
+    this.profile = Object.assign(new Profile, this.player.profile);
   }
 
   public toggleEdit() {

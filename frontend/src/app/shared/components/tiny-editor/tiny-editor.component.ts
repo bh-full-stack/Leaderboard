@@ -10,13 +10,14 @@ declare var tinymce: any;
 
 @Component({
   selector: 'app-tiny-editor',
-  template: `<textarea id="{{id}}"></textarea>`,
+  template: `<textarea id="{{ id }}" name="{{ name }}"></textarea>`,
   styleUrls: ['./tiny-editor.component.css']
 })
 
 export class TinyEditorComponent implements AfterViewInit, OnDestroy {
 
   @Input() id: string;
+  @Input() name: string;
   @Input() ngModel: string;
   @Output() ngModelChange = new EventEmitter<string>();
  

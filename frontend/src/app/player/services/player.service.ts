@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Player } from '../models/player';
 import { ApiService } from '../../api/services/api.service';
+import { Profile } from '../models/profile';
 
 @Injectable()
 export class PlayerService  extends ApiService {
@@ -47,13 +48,11 @@ export class PlayerService  extends ApiService {
     );  
   }
 
-  public updateIntroduction(player_id: number, introduction: string): Observable<Response> {
+  public updateProfile(player_id: number, profile: Profile): Observable<Response> {
     return this.request(
       'PUT',
       'profile/' + player_id,
-      {
-        'introduction': introduction
-      }
+      profile
     ); 
   }
 
