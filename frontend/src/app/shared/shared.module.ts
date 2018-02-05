@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-import { ApiService } from './services/api.service';
-import { AuthService } from './services/auth.service';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { TinyEditorComponent } from './components/tiny-editor/tiny-editor.component';
+import { TrustHtmlPipe } from './pipes/trust-html.pipe';
 
 @NgModule({
   imports: [
@@ -14,10 +14,11 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     HttpClientModule,
     RouterModule
   ],
-  declarations: [NavigationComponent, NotFoundComponent],
-  providers: [AuthService],
+  declarations: [NavigationComponent, NotFoundComponent, TrustHtmlPipe, TinyEditorComponent],
   exports: [
-    NavigationComponent
+    NavigationComponent,
+    TrustHtmlPipe,
+    TinyEditorComponent
   ]
 })
 export class SharedModule { }

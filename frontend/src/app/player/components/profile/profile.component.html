@@ -7,7 +7,7 @@
 
   <h1 *ngIf="!isAuthenticatedPlayer()">{{ player.name }} </h1>
 
-  <div *ngIf="player.profile && !isBeingEdited" class="introduction" [innerHTML]="trustHtml(introduction)"></div>
+  <div *ngIf="player.profile && !isBeingEdited" class="introduction" [innerHTML]="introduction | trustHtml"></div>
   <div *ngIf="isBeingEdited" class="form-group">
     <app-tiny-editor
       ngDefaultControl

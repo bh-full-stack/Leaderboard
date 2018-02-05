@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Player } from '../../models/player';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService } from '../../../shared/services/auth.service';
+import { AuthService } from '../../../api/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({

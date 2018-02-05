@@ -6,7 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { Player } from '../../models/player';
 import { PlayerService } from '../../services/player.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import { AuthService } from '../../../api/services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -49,10 +49,6 @@ export class ProfileComponent implements OnInit {
           
       )
     )
-  }
-
-  private trustHtml(html) {
-    return this._domSanitizer.bypassSecurityTrustHtml(html);
   }
 
   public saveIntroduction() {

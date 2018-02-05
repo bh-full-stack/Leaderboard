@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Player } from '../../models/player';
-import { ApiService } from '../../../shared/services/api.service';
+import { ApiService } from '../../../api/services/api.service';
 import { PlayerService } from '../../services/player.service';
 
 @Component({

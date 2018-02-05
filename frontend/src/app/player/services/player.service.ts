@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Player } from '../models/player';
-import { ApiService } from '../../shared/services/api.service';
+import { ApiService } from '../../api/services/api.service';
 
 @Injectable()
 export class PlayerService  extends ApiService {
