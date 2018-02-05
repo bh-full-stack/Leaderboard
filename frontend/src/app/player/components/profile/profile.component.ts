@@ -3,11 +3,13 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FileUploader } from 'ng2-file-upload';
 
 import { Player } from '../../models/player';
 import { PlayerService } from '../../services/player.service';
 import { AuthService } from '../../../api/services/auth.service';
 import { Profile } from '../../models/profile';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -25,6 +27,9 @@ export class ProfileComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
   public profile: Profile;
+  public uploader: FileUploader = new FileUploader({
+    url: environment.apiEndPoint + 'upload'
+  });
  
   constructor(
     private _playerService: PlayerService,

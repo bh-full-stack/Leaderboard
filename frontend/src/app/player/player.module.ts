@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FileUploadModule } from 'ng2-file-upload/file-upload/file-upload.module';
 
 import { PlayerRoutingModule } from './player-routing.module';
 import { RegistrationComponent } from './components/registration/registration.component';
@@ -16,7 +17,8 @@ import { SharedModule } from './../shared/shared.module';
     PlayerRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    FileUploadModule
   ],
   declarations: [RegistrationComponent, ActivationComponent, LoginComponent, ProfileComponent],
   providers: [PlayerService]

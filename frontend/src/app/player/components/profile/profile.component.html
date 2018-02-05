@@ -22,7 +22,10 @@
       [name]="'introduction'"
       [(ngModel)]="profile.introduction"
     ></app-tiny-editor>
-    <input name="picture" [(ngModel)]="profile.picture" type="file" accept="image/jpeg, image/gif, image/x-png">
+    <input type="file" ng2FileSelect [uploader]="uploader">
+    <button (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+      Upload
+    </button>
     <button class="btn btn-primary" (click)="saveProfile()">
       Save
     </button>

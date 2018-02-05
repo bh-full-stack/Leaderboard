@@ -21,8 +21,8 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 });
 
 Route::get('player/{name}', 'PlayerController@getPlayerByName');
-
 Route::get('profile/{playerId}', 'ProfileController@getProfile');
+Route::post('upload', 'UploadController@upload');
 
 Route::post('rounds/save-without-account', 'RoundController@store');
 Route::get('rounds/games', 'RoundController@listGames');
