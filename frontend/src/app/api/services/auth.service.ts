@@ -26,7 +26,6 @@ export class AuthService {
     observable.subscribe(
       (response: Response) => {
         this.player = response['player'];
-        console.log("This is auth:" + this.player);
         this.token = response['token'];
         this._saveToStorage();
         subject.next(response);

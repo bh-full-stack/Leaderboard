@@ -24,9 +24,11 @@ class LoginControllerTest extends TestCase
         $this->post(
             "api/register",
             [
-                "name" => $player->name,
-                "email" => $player->email,
-                "password" => "secret"
+                "player" => [
+                    "name" => $player->name,
+                    "email" => $player->email,
+                    "password" => "secret"
+                ]
             ]
         );
 

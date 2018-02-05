@@ -26,11 +26,11 @@ class RegisterControllerTest extends TestCase
         $response = $this->post(
             "/api/register",
             [
-                "name" => $player->name,
-                "email" => $player->email,
-                "password" => "secret",
-                "password_confirmation" => "secret",
-                "_token" => csrf_token()
+                "player" => [
+                    "name" => $player->name,
+                    "email" => $player->email,
+                    "password" => "secret"
+                ]
             ]
         );
         $response->assertStatus(200);

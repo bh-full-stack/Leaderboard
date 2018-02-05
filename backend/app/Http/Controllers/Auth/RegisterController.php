@@ -93,8 +93,8 @@ class RegisterController extends Controller
 
         $player = Player::getByName($request['player']['name']);
         $nameExists = $player->exists;
-        $emailMatches = ($player->email == $request->email);
-        $emailExists = (Player::where("email", "=", $request->email)->count() > 0);
+        $emailMatches = ($player->email == $request['player']['email']);
+        $emailExists = (Player::where("email", "=", $request['player']['email'])->count() > 0);
         $emailIsNull = is_null($player->email);
 
         if ($nameExists) {

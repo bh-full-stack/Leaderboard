@@ -49,7 +49,6 @@ export class TopScoresComponent implements OnInit {
     this._topScoresService.list(this.game, this.sortBy, this.sortDirection).subscribe(
       response => {
         this.topScores = response;
-        console.log(this.topScores);
       },
       error => console.log(error)
     );
