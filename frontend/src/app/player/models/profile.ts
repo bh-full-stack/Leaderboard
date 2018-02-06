@@ -1,5 +1,8 @@
+import { Picture } from "./picture";
+
 export class Profile {
     public id: number;
     public introduction: string;
-    public picture: any;
+    public picture: Picture;
+    public picture_id: number;
 }

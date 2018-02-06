@@ -125,13 +125,14 @@ class RegisterController extends Controller
             }
         }
 
+        $profile = new Profile();
         if (!is_null($request['introduction'])) {
-            $profile = new Profile();
             $profile->introduction = $request['introduction'];
-            $profile->save();
-            $player->profile_id = $profile->id;
-            $player->save();
         }
+        $profile->save();
+        $player->profile_id = $profile->id;
+        $player->save();
+
 
         Mail::to(["email" => $player->email])->send(new SignUpActivation($player));
         event(new Registered($player));

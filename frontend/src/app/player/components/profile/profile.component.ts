@@ -59,6 +59,16 @@ export class ProfileComponent implements OnInit {
     )
   }
 
+  ngAfterViewInit() {
+    this.uploader.onAfterAddingFile = item => {
+      item.withCredentials = false;
+    };
+    this.uploader.onSuccessItem = (item, response, status, headers) => {
+      this.profile.picture = JSON.parse(response);
+      this.profile.picture_id = this.profile.picture.id;
+    };    
+  }
+
   public saveProfile() {
     console.log(this.profile.picture);
     this.isBeingEdited = !this.isBeingEdited;

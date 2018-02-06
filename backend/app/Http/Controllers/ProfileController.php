@@ -38,6 +38,7 @@ class ProfileController extends Controller
         $profile = Profile::findOrNew($player->profile_id);
 
         $profile->introduction = $request['introduction'];
+        $profile->picture_id = $request['picture_id'];
         $profile->save();
 
         $player->profile_id = $profile->id;

@@ -41,7 +41,11 @@ export class RegistrationComponent implements OnInit {
         console.log(response); 
       },
       errorResponse => { 
-        this.errors = errorResponse.error.errors;
+        if (errorResponse.error.errors) {
+          this.errors = errorResponse.error.errors;
+        } else {
+          this.errors = {};
+        }
       }
     );
   }
