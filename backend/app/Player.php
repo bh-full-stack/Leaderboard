@@ -21,10 +21,8 @@ class Player extends Authenticatable implements JWTSubject
     }
 
     public function profile() {
-        return $this->belongsTo(Profile::class);
+        return $this->belongsTo(Profile::class)->with("picture");
     }
-
-
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

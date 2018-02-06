@@ -9,11 +9,13 @@ import { environment } from '../../../environments/environment';
 @Injectable()
 export class ApiService {
 
+  protected _modelClass: any;
+
   public constructor(protected _http: HttpClient, protected _authService: AuthService) {
     //
   }
 
-  public request(method: string, url: string, body?: any): Observable<any> {
+  public request<T>(method: string, url: string, body?: any): Observable<T> {
     const observable = this._http.request(
       method,
       environment.apiEndPoint + url,
@@ -24,7 +26,12 @@ export class ApiService {
     );
     const subject = new Subject<any>();
     observable.subscribe(
-      response => subject.next(response),
+      response => {
+        if (this._modelClass) {
+          response = new this._modelClass().fill(response);
+        }
+        subject.next(response);
+      },
       errorResponse => {
         console.log(errorResponse);
         if (errorResponse.status == 401) {

@@ -21,6 +21,6 @@ class Profile extends Model
     }
 
     public function picture() {
-        return $this->hasOne(Picture::class);
+        return $this->belongsTo(Picture::class);
     }
 }

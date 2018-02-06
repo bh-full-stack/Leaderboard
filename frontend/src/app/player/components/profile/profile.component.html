@@ -3,7 +3,7 @@
 </ng-container>
 
 <ng-container *ngIf="!loading">
-  <img class="pull-right" src="http://via.placeholder.com/100x100">
+  <img *ngIf="!isBeingEdited" class="pull-right" src="{{ player.profile.picture.getUrl() }}">
 
   <h1 class="clearfix">
     <ng-container *ngIf="isAuthenticatedPlayer()">Welcome, {{ player.name }}</ng-container>

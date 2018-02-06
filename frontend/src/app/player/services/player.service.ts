@@ -9,6 +9,8 @@ import { Profile } from '../models/profile';
 @Injectable()
 export class PlayerService  extends ApiService {
 
+  protected _modelClass = Player;
+
   public register(player: Player, introduction: string): Observable<Response> {
     return this.request(
       'POST',
@@ -42,7 +44,7 @@ export class PlayerService  extends ApiService {
   }
 
   public showProfile(player_id: number): Observable<Player> {
-    return this.request(
+    return this.request<Player>(
       'GET',
       'profile/' + player_id
     );  
