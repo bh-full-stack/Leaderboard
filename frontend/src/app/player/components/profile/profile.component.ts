@@ -22,6 +22,7 @@ export class ProfileComponent implements OnInit {
   public errors: {[field: string]: string[]} = {};
   public message: string;
   public loading: boolean;
+  public isUploading: boolean = false;
   public isBeingEdited: boolean;
   public form = new FormGroup({
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
@@ -61,20 +62,25 @@ export class ProfileComponent implements OnInit {
 
   ngAfterViewInit() {
     this.uploader.onAfterAddingFile = item => {
+      this.isUploading = true;
       item.withCredentials = false;
+      this.uploader.uploadAll();
     };
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       this.profile.picture = JSON.parse(response);
       this.profile.picture_id = this.profile.picture.id;
+      this.isUploading = false;
     };    
   }
 
   public saveProfile() {
     console.log(this.profile.picture);
-    this.isBeingEdited = !this.isBeingEdited;
     this._playerService.updateProfile(this.player.id, this.profile).subscribe(
       player => {
         console.log(player);
+        this.player = player;
+        this._authService.player = player;
+        this.isBeingEdited = false;
       },
       error => {
         console.log(error);
@@ -83,7 +89,7 @@ export class ProfileComponent implements OnInit {
   }
 
   public discardIntroductionChange() {
-    this.isBeingEdited = !this.isBeingEdited;
+    this.isBeingEdited = false;
     this.profile = Object.assign(new Profile, this.player.profile);
   }
 

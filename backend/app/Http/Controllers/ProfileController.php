@@ -44,7 +44,7 @@ class ProfileController extends Controller
         $player->profile_id = $profile->id;
         $player->save();
 
-        return $player;
+        return $player->load('profile');
     }
 
     public function handleOldScores(Request $request) {

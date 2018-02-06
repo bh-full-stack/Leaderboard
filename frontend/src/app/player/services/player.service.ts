@@ -50,8 +50,8 @@ export class PlayerService  extends ApiService {
     );  
   }
 
-  public updateProfile(player_id: number, profile: Profile): Observable<Response> {
-    return this.request(
+  public updateProfile(player_id: number, profile: Profile): Observable<Player> {
+    return this.request<Player>(
       'PUT',
       'profile/' + player_id,
       profile

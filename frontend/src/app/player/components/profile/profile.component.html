@@ -22,11 +22,9 @@
       [name]="'introduction'"
       [(ngModel)]="profile.introduction"
     ></app-tiny-editor>
-    <input type="file" ng2FileSelect [uploader]="uploader">
-    <button (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-      Upload
-    </button>
-    <button class="btn btn-primary" (click)="saveProfile()">
+    <span *ngIf="isUploading" class="pull-right">Loading...</span>
+    <input type="file" ng2FileSelect [uploader]="uploader" [disabled]="isUploading">
+    <button class="btn btn-primary" (click)="saveProfile()" [disabled]="isUploading">
       Save
     </button>
     <button class="btn btn-primary" (click)="discardIntroductionChange()">
