@@ -14,6 +14,6 @@ export class TopScoresService extends ApiService {
   }
 
   public listGames() {
-    return this.request('GET', 'rounds/games')
+    return this.request<string[]>('GET', 'rounds/games')
   }
 }
