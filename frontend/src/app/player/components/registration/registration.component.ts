@@ -38,7 +38,6 @@ export class RegistrationComponent implements OnInit {
     this._playerService.register(this.player, this.introduction).subscribe(
       response => { 
         this.isRegistrationDone = true;
-        console.log(response); 
       },
       errorResponse => { 
         if (errorResponse.error.errors) {

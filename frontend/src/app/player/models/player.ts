@@ -11,7 +11,9 @@ export class Player extends Model {
 
     public fill(data: Object) {
         super.fill(data);
-        this.profile = new Profile().fill(data['profile']);
+        if (data['profile']) {
+            this.profile = new Profile().fill(data['profile']);
+        }
         return this;
     }
 }

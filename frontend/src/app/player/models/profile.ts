@@ -9,7 +9,9 @@ export class Profile extends Model {
 
     public fill(data: Object) {
         super.fill(data);
-        this.picture = new Picture().fill(data['picture']);
+        if (data['picture']) {
+            this.picture = new Picture().fill(data['picture']);
+        }
         return this;
     }
 }

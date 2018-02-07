@@ -3,7 +3,7 @@
 </ng-container>
 
 <ng-container *ngIf="!loading">
-  <img *ngIf="!isBeingEdited" class="pull-right" src="{{ player.profile.picture.getUrl() }}">
+  <img *ngIf="!isBeingEdited && player.profile && player.profile.picture" class="pull-right" src="{{ player.profile.picture.getUrl() }}">
 
   <h1 class="clearfix">
     <ng-container *ngIf="isAuthenticatedPlayer()">Welcome, {{ player.name }}</ng-container>

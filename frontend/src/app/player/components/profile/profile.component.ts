@@ -74,10 +74,8 @@ export class ProfileComponent implements OnInit {
   }
 
   public saveProfile() {
-    console.log(this.profile.picture);
     this._playerService.updateProfile(this.player.id, this.profile).subscribe(
       player => {
-        console.log(player);
         this.player = player;
         this._authService.player = player;
         this.isBeingEdited = false;

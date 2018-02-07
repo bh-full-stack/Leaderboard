@@ -11,8 +11,8 @@ export class PlayerService  extends ApiService {
 
   protected _modelClass = Player;
 
-  public register(player: Player, introduction: string): Observable<Response> {
-    return this.request(
+  public register(player: Player, introduction: string): Observable<Player> {
+    return this.request<Player>(
       'POST',
       'register',
       {
