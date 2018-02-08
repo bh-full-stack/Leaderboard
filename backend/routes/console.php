@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Foundation\Inspiring;
-use App\Http\Controllers\SeedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +17,6 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
 
-//todo
-//Artisan::command('seed', "SeedController@seed");
+Artisan::command('garbage:collect', function () {
+    \App\Picture::garbageCollection();
+});
