@@ -20,9 +20,13 @@ class LegacyRoundsSeeder extends Seeder
             $location->city = $playerData->city;
             $location->save();
 
+            $profile = new \App\Profile();
+            $profile->save();
+
             $player = new \App\Player();
-            $player->name = $playerData->nick; //db has name
+            $player->name = $playerData->nick; //db has name, while json has nick
             $player->email = $playerData->email;
+            $player->profile_id = $profile->id;
             $player->save();
 
             $round = new \App\Round();

@@ -8,8 +8,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PlayerService } from './services/player.service';
 import { ActivationComponent } from './components/activation/activation.component';
 import { LoginComponent } from './components/login/login.component';
-import { ProfileComponent } from './components/profile/profile.component';
+import { ProfilePublicComponent } from './components/profile-public/profile-public.component';
 import { SharedModule } from './../shared/shared.module';
+import { ProfileAdminComponent } from './components/profile-admin/profile-admin.component';
+import { OldScoresHandlerComponent } from './components/old-scores-handler/old-scores-handler.component';
 
 @NgModule({
   imports: [
@@ -20,7 +22,14 @@ import { SharedModule } from './../shared/shared.module';
     SharedModule,
     FileUploadModule
   ],
-  declarations: [RegistrationComponent, ActivationComponent, LoginComponent, ProfileComponent],
+  declarations: [
+    RegistrationComponent,
+    ActivationComponent,
+    LoginComponent,
+    ProfilePublicComponent,
+    ProfileAdminComponent,
+    OldScoresHandlerComponent
+  ],
   providers: [PlayerService]
 })
 export class PlayerModule { }

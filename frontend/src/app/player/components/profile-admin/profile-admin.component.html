@@ -1,0 +1,18 @@
+<form *ngIf="!loading" class="form-group">
+  <app-tiny-editor
+    ngDefaultControl
+    [id]="'introduction'"
+    [name]="'introduction'"
+    [(ngModel)]="profile.introduction"
+  ></app-tiny-editor>
+  <span *ngIf="isUploading" class="pull-right">Loading...</span>
+  <input type="file" ng2FileSelect [uploader]="uploader" [disabled]="isUploading">
+  <button class="btn btn-primary" (click)="saveProfile()" [disabled]="isUploading">
+    Save
+  </button>
+  <a class="btn btn-primary" [routerLink]="['../']">
+    Discard
+  </a>
+</form>
+
+<h1 *ngIf="loading">Loading...</h1>

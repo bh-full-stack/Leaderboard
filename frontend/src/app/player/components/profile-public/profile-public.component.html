@@ -1,0 +1,31 @@
+<ng-container *ngIf="loading">
+  <h1>Loading...</h1>
+</ng-container>
+
+<ng-container *ngIf="!loading">
+  <img *ngIf="!isBeingEdited && player.profile && player.profile.picture" class="pull-right" src="{{ player.profile.picture.getUrl() }}">
+
+  <h1 class="clearfix">
+    <ng-container *ngIf="isAuthenticatedPlayer()">Welcome, {{ player.name }}</ng-container>
+    <ng-container *ngIf="!isAuthenticatedPlayer()">{{ player.name }}</ng-container>
+  </h1>
+
+  <div 
+    *ngIf="player.profile && !isBeingEdited" 
+    class="introduction" 
+    [innerHTML]="player.profile.introduction | trustHtml"
+  ></div>
+
+  <a 
+    class="btn btn-primary" *ngIf="player.profile && isAuthenticatedPlayer() && !isBeingEdited"
+    [routerLink]="['edit']"
+  >
+    Edit Profile
+  </a>
+
+  <app-old-scores-handler
+    *ngIf="isAuthenticatedPlayer()"
+    [player]="player"
+  ></app-old-scores-handler>
+
+</ng-container>
