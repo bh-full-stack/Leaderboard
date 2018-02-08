@@ -18,9 +18,7 @@ export class ProfilePublicComponent implements OnInit {
   public player: Player;
   public message: string;
   public loading: boolean;
-  public isBeingEdited: boolean;
   public profile: Profile;
-  
  
   constructor(
     private _playerService: PlayerService,
@@ -48,12 +46,6 @@ export class ProfilePublicComponent implements OnInit {
           
       )
     )
-  }
-
-  
-
-  public toggleEdit() {
-    this.isBeingEdited = !this.isBeingEdited;
   }
 
   public isAuthenticatedPlayer() {

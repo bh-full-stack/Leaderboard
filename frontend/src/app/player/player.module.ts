@@ -12,6 +12,7 @@ import { ProfilePublicComponent } from './components/profile-public/profile-publ
 import { SharedModule } from './../shared/shared.module';
 import { ProfileAdminComponent } from './components/profile-admin/profile-admin.component';
 import { OldScoresHandlerComponent } from './components/old-scores-handler/old-scores-handler.component';
+import { PasswordChangerComponent } from './components/password-changer/password-changer.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { OldScoresHandlerComponent } from './components/old-scores-handler/old-s
     LoginComponent,
     ProfilePublicComponent,
     ProfileAdminComponent,
-    OldScoresHandlerComponent
+    OldScoresHandlerComponent,
+    PasswordChangerComponent
   ],
   providers: [PlayerService]
 })

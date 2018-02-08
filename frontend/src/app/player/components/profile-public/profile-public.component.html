@@ -3,7 +3,7 @@
 </ng-container>
 
 <ng-container *ngIf="!loading">
-  <img *ngIf="!isBeingEdited && player.profile && player.profile.picture" class="pull-right" src="{{ player.profile.picture.getUrl() }}">
+  <img *ngIf="player.profile.picture" class="pull-right" src="{{ player.profile.picture.getUrl() }}">
 
   <h1 class="clearfix">
     <ng-container *ngIf="isAuthenticatedPlayer()">Welcome, {{ player.name }}</ng-container>
@@ -11,16 +11,23 @@
   </h1>
 
   <div 
-    *ngIf="player.profile && !isBeingEdited" 
+    *ngIf="player.profile" 
     class="introduction" 
     [innerHTML]="player.profile.introduction | trustHtml"
   ></div>
 
   <a 
-    class="btn btn-primary" *ngIf="player.profile && isAuthenticatedPlayer() && !isBeingEdited"
+    class="btn btn-primary" *ngIf="isAuthenticatedPlayer()"
     [routerLink]="['edit']"
   >
     Edit Profile
+  </a>
+
+  <a 
+    class="btn btn-primary" *ngIf="isAuthenticatedPlayer()"
+    [routerLink]="['/player/password-change']"
+  >
+    Change password
   </a>
 
   <app-old-scores-handler
