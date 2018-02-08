@@ -19,6 +19,7 @@ export class NavigationComponent implements OnInit {
   }
 
   public hideNavbar() {
+    // Timeout is necessary because the click event fires after blur
     window.setTimeout(() => jQuery('#myNavbar').collapse('hide'), 150);
   }
 
