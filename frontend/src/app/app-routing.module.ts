@@ -19,6 +19,10 @@ const routes: Routes = [
     loadChildren: 'app/player/player.module#PlayerModule'
   },
   {
+    path: 'squad',
+    loadChildren: 'app/squad/squad.module#SquadModule'
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }
