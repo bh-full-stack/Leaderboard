@@ -58,4 +58,15 @@ export class PlayerService  extends ApiService {
     ); 
   }
 
+  public changePassword(player: Player, currentPassword: string): Observable<Player> {
+    return this.request<Player>(
+      'PUT',
+      'password-change',
+      {
+        'player': player,
+        'currentPassword': currentPassword
+      }
+    );
+  }
+
 }
