@@ -38,11 +38,15 @@ export class AuthService {
     return subject.asObservable();
   }
 
-  public logout(navigateToPath: string = '/'): void {
+  public logout(): void {
     this.player = undefined;
     this.token = undefined;
     this._saveToStorage();
-    this._router.navigate([navigateToPath]);
+  }
+
+  public logoutAndNavigateTo(path: string = '/'): void {
+    this.logout();
+    this._router.navigate([path]);
   }
 
   public setPlayer(player: Player) {

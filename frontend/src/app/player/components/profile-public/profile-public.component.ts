@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { Player } from '../../models/player';
@@ -26,6 +26,7 @@ export class ProfilePublicComponent implements OnInit {
     private _ref: ChangeDetectorRef,
     private _activatedRoute: ActivatedRoute,
     private _domSanitizer: DomSanitizer,
+    private _router: Router
   ) { }
 
   ngOnInit() {
@@ -41,6 +42,9 @@ export class ProfilePublicComponent implements OnInit {
         },
         error => {
           console.log(error);
+          if (error.status == 404) {
+            this._router.navigate('')
+          }
           this.loading = false;
         }
           

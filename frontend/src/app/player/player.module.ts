@@ -13,6 +13,7 @@ import { SharedModule } from './../shared/shared.module';
 import { ProfileAdminComponent } from './components/profile-admin/profile-admin.component';
 import { OldScoresHandlerComponent } from './components/old-scores-handler/old-scores-handler.component';
 import { PasswordChangerComponent } from './components/password-changer/password-changer.component';
+import { PlayerDeleteComponent } from './components/player-delete/player-delete.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { PasswordChangerComponent } from './components/password-changer/password
     ProfilePublicComponent,
     ProfileAdminComponent,
     OldScoresHandlerComponent,
-    PasswordChangerComponent
+    PasswordChangerComponent,
+    PlayerDeleteComponent
   ],
   providers: [PlayerService]
 })

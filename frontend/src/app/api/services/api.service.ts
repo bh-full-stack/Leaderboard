@@ -36,7 +36,7 @@ export class ApiService {
         console.log(errorResponse);
         if (errorResponse.status == 401) {
           window.alert('Your session has expired!');
-          this._authService.logout('player/login');
+          this._authService.logoutAndNavigateTo('player/login');
         }        
         subject.error(errorResponse);
       },

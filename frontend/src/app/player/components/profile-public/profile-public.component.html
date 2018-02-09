@@ -2,7 +2,9 @@
   <h1>Loading...</h1>
 </ng-container>
 
-<ng-container *ngIf="!loading">
+<app-not-found *ngIf="!loading && !player"></app-not-found>
+
+<ng-container *ngIf="!loading && player">
   <img *ngIf="player.profile.picture" class="pull-right" src="{{ player.profile.picture.getUrl() }}">
 
   <h1 class="clearfix">
@@ -27,7 +29,14 @@
     class="btn btn-primary" *ngIf="isAuthenticatedPlayer()"
     [routerLink]="['/player/password-change']"
   >
-    Change password
+    Change Password
+  </a>
+
+  <a 
+    class="btn btn-primary" *ngIf="isAuthenticatedPlayer()"
+    [routerLink]="['/player/delete']"
+  >
+    Delete Account
   </a>
 
   <app-old-scores-handler

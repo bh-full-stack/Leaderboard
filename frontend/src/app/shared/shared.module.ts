@@ -18,7 +18,8 @@ import { TrustHtmlPipe } from './pipes/trust-html.pipe';
   exports: [
     NavigationComponent,
     TrustHtmlPipe,
-    TinyEditorComponent
+    TinyEditorComponent,
+    NotFoundComponent
   ]
 })
 export class SharedModule { }

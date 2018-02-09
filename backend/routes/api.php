@@ -17,6 +17,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::post('profile/handle-old-scores', 'ProfileController@handleOldScores');
     Route::put('profile/{playerId}', 'ProfileController@updateProfile');
     Route::put('password-change', 'Auth\PasswordChangeController@changePassword');
+    Route::delete('player/delete', 'Auth\PlayerDeleteController@deletePlayer');
 
     Route::post('rounds/save-with-account', 'RoundController@store');
 });

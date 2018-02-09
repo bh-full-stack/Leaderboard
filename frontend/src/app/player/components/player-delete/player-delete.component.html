@@ -1,0 +1,29 @@
+<ng-template #errorTemplate let-formControlName="formControlName">
+  <ng-container *ngIf="errors[formControlName]">
+    <div *ngFor="let error of errors[formControlName]" class="alert alert-danger">
+      {{ error }}
+    </div>
+  </ng-container>
+</ng-template>
+
+<form *ngIf="!message" [formGroup]="form" (ngSubmit)="deletePlayer()">
+ 
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input formControlName="password" type="password" class="form-control" [(ngModel)]="player.password">
+    <div *ngIf="!form.controls.password.valid && !form.controls.password.pristine" class="alert alert-danger">
+      Password is required and should be at least 6 characters long!
+    </div>
+    <ng-container *ngTemplateOutlet="errorTemplate;context:{formControlName: 'password'}"></ng-container>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Delete</button>
+  <button type="reset" class="btn btn-default">Cancel</button>
+</form>
+
+<ng-container *ngIf="message">
+  <div class="alert alert-info">
+    {{ message }}
+  </div>
+  <a class="btn btn-default" [routerLink]="['/']">OK</a>
+</ng-container>

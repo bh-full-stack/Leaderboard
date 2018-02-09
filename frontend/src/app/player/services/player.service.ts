@@ -69,4 +69,14 @@ export class PlayerService  extends ApiService {
     );
   }
 
+  public deletePlayer(player: Player): Observable<string> {
+    return this.request<string>(
+      'DELETE',
+      'player/delete',
+       {
+          'player': player
+       }
+    ); 
+  }
+
 }
