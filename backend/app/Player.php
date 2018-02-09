@@ -86,4 +86,8 @@ class Player extends Authenticatable implements JWTSubject
     public static function getPlayerWithProfile($id) {
         return Player::with("profile")->findOrFail($id);
     }
+
+    public static function getLegacyPlayers() {
+        return Player::whereNull("activation_code")->whereNotNull("email")->get();
+    }
 }

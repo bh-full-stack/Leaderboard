@@ -7,7 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SignUpActivation extends Mailable
+class LegacyPlayersNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -34,6 +34,6 @@ class SignUpActivation extends Mailable
     {
         return $this
             ->from("mob@stylersonline.com")
-            ->text("emails/sign-up-activation");
+            ->text("emails/legacy-players-notification");
     }
 }

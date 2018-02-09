@@ -1,4 +1,4 @@
-Welcome to Leaderboard, {{ $player->name }}
+Welcome to Leaderboard {{ $player->name }}
 
 Thanks for signing up. To activate your registration,
 please verify your email address by clicking the button below.

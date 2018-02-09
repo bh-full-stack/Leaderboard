@@ -19,4 +19,8 @@ Artisan::command('inspire', function () {
 
 Artisan::command('garbage:collect', function () {
     \App\Picture::garbageCollection();
-});
+})->describe('Find and delete unused pictures');
+
+Artisan::command('players:notify', function () {
+    (new \App\Http\Controllers\PlayerController())->sendNotification();
+})->describe('Send notification email to legacy players');
