@@ -22,6 +22,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::post('rounds/save-with-account', 'RoundController@store');
 
     Route::post('squad', 'SquadController@create');
+    Route::post('squad/join', 'SquadController@join');
 });
 
 Route::get('player/{name}', 'PlayerController@getPlayerByName');
@@ -35,3 +36,5 @@ Route::resource('rounds', 'RoundController');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('register/activate', 'Auth\RegisterController@activate');
+
+Route::get('squad', 'SquadController@index');

@@ -11,4 +11,8 @@ class Squad extends Model
     public function players() {
         return $this->belongsToMany(Player::class)->withTimestamps();
     }
+
+    public static function listSquads() {
+        return self::all();
+    }
 }

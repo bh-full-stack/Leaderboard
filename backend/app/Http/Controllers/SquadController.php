@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class SquadController extends Controller
 {
+
+    public function index() {
+        return Squad::listSquads();
+    }
+
     public function create(Request $request) {
         $squad = new Squad();
         $squad->name = $request['squad']['name'];
@@ -19,5 +24,11 @@ class SquadController extends Controller
         $squad->players()->attach($player->id);
 
         return $squad;
+    }
+
+    public function join(Request $request) {
+        $player = Auth::user();
+
+        $player->squads()->attach($request['squad']['id']);
     }
 }

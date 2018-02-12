@@ -1,6 +1,10 @@
+ul {
+    padding: 0;
+}
 li {
     color: #f1f1f1;
     text-shadow: 0 0 2px black;
     margin-top: 4px;
     padding: 5px 10px;
+    list-style: none;
 }

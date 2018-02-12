@@ -1,1 +1,16 @@
-<a class="btn btn-primary" [routerLink]="'../create'">Create New Squad</a>
+<a class="btn btn-primary pull-right" [routerLink]="'../create'">Create New Squad</a>
+<h3>Squads</h3>
+<div class="clearfix"></div>
+
+<table class="table table-hover" id="squads">
+    <tbody>
+        <tr *ngFor="let squad of squads">
+            <td (click)="join(squad)" [ngStyle]="{'background': squad.color}">
+                {{ squad.name }}
+            </td>
+            <td>
+                <button class="pull-right btn btn-primary" (click)="join(squad)">Join</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
