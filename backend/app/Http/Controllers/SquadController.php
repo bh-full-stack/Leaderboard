@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Player;
 use App\Squad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,5 +31,9 @@ class SquadController extends Controller
         $player = Auth::user();
 
         $player->squads()->attach($request['squad']['id']);
+    }
+
+    public function getSquadsOfPlayer($playerId) {
+        return Player::with("squads")->find($playerId);
     }
 }
