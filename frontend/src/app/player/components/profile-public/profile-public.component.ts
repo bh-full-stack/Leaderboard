@@ -43,7 +43,7 @@ export class ProfilePublicComponent implements OnInit {
         error => {
           console.log(error);
           if (error.status == 404) {
-            this._router.navigate('')
+            this._router.navigate(['']);
           }
           this.loading = false;
         }

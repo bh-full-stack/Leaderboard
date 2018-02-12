@@ -65,15 +65,22 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  Request $request
      * @return \App\Player
      */
-    protected function create(array $data)
+    protected function create(Request $request)
     {
+        $profile = new Profile();
+        if (!empty($request['introduction'])) {
+            $profile->introduction = $request['introduction'];
+        }
+        $profile->save();
+
         $player = new Player();
-        $player->name = $data['name'];
-        $player->email = $data['email'];
-        $player->password = bcrypt($data['password']);
+        $player->profile_id = $profile->id;
+        $player->name = $request['player']['name'];
+        $player->email = $request['player']['email'];
+        $player->password = bcrypt($request['player']['password']);
         $player->activation_code = rand(1000000, 9999999);
         $player->save();
         return $player;
@@ -121,17 +128,11 @@ class RegisterController extends Controller
                     'email' => ['This email is already in use!'],
                 ]);
             } else {
-                $player = $this->create($request['player']);
+                $player = $this->create($request);
             }
         }
 
-        $profile = new Profile();
-        if (!is_null($request['introduction'])) {
-            $profile->introduction = $request['introduction'];
-        }
-        $profile->save();
-        $player->profile_id = $profile->id;
-        $player->save();
+
 
 
         Mail::to(["email" => $player->email])->send(new SignUpActivation($player));
