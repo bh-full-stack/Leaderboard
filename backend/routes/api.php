@@ -20,6 +20,8 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::delete('player/delete', 'Auth\PlayerDeleteController@deletePlayer');
 
     Route::post('rounds/save-with-account', 'RoundController@store');
+
+    Route::post('squad', 'SquadController@create');
 });
 
 Route::get('player/{name}', 'PlayerController@getPlayerByName');

@@ -9,6 +9,6 @@ class Squad extends Model
     public $fillable = ['name', 'color'];
 
     public function players() {
-        return $this->belongsToMany(Player::class);
+        return $this->belongsToMany(Player::class)->withTimestamps();
     }
 }

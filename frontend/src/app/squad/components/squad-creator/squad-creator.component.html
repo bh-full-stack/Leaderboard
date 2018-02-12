@@ -1,3 +1,26 @@
-<p>
-  squad-creator works!
-</p>
+<h3>Create Squad</h3>
+<form *ngIf="!isCreated" [formGroup]="form" (ngSubmit)="create()">
+  <div class="form-group">
+    <label for="name">Squad Name</label>
+    <input formControlName="name" type="text" class="form-control" [(ngModel)]="squad.name">
+    <div *ngIf="!form.controls.name.valid && !form.controls.name.pristine " class="alert alert-danger">
+      Valid name is required!
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="color">Color</label>
+    <input formControlName="color" type="text" class="form-control" [(ngModel)]="squad.color">
+    <div *ngIf="!form.controls.color.valid && !form.controls.color.pristine " class="alert alert-danger">
+      Color is required!
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Create</button>
+  <a [routerLink]="'../list'" class="btn btn-primary">Back</a>
+</form>
+
+<ng-container *ngIf="isCreated">
+  <div class="alert alert-success">
+    Squad successfully created.
+  </div>
+  <a [routerLink]="'../list'" class="btn btn-primary">Back</a>
+</ng-container>

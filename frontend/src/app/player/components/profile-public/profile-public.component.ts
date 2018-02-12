@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NgStyle } from '@angular/common';
 
 import { Player } from '../../models/player';
 import { PlayerService } from '../../services/player.service';
 import { AuthService } from '../../../api/services/auth.service';
 import { Profile } from '../../models/profile';
+import { Squad } from '../../../squad/models/Squad';
 
 @Component({
   selector: 'app-profile-public',
@@ -19,6 +21,7 @@ export class ProfilePublicComponent implements OnInit {
   public message: string;
   public loading: boolean;
   public profile: Profile;
+  public squads: Squad[];
  
   constructor(
     private _playerService: PlayerService,
@@ -35,6 +38,7 @@ export class ProfilePublicComponent implements OnInit {
       params => this._playerService.showProfile(params.player_id).subscribe(
         player => {
           this.player = player;
+          this.squads = player['squads'];
           if (this.player.profile) {
             this.profile = Object.assign(new Profile, this.player.profile);
           }

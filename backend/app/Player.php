@@ -25,7 +25,7 @@ class Player extends Authenticatable implements JWTSubject
     }
 
     public function squads() {
-        return $this->belongsToMany(Squad::class);
+        return $this->belongsToMany(Squad::class)->withTimestamps();
     }
 
     /**
@@ -88,7 +88,7 @@ class Player extends Authenticatable implements JWTSubject
     }
 
     public static function getPlayerWithProfile($id) {
-        return Player::with("profile")->findOrFail($id);
+        return Player::with(["profile", "squads"])->findOrFail($id);
     }
 
     public static function getLegacyPlayers() {
