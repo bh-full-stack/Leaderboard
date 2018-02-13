@@ -1,3 +1,4 @@
+import { SquadPageComponent } from './components/squad-page/squad-page.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SquadListComponent } from './components/squad-list/squad-list.component';
@@ -5,7 +6,8 @@ import { SquadCreatorComponent } from './components/squad-creator/squad-creator.
 
 const routes: Routes = [
   { path: 'list', component: SquadListComponent },
-  { path: 'create', component: SquadCreatorComponent }
+  { path: 'create', component: SquadCreatorComponent },
+  { path: ':squadId', component: SquadPageComponent }
 ];
 
 @NgModule({

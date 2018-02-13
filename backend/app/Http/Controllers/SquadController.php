@@ -16,10 +16,18 @@ class SquadController extends Controller
         return Squad::listSquadsWithAuth();
     }
 
+    public function show($id) {
+        return Squad::with('players')->findOrFail($id);
+    }
+
     public function create(Request $request) {
+        $request->validate([
+            'name' => 'unique:squads'
+        ]);
+
         $squad = new Squad();
-        $squad->name = $request['squad']['name'];
-        $squad->color = $request['squad']['color'];
+        $squad->name = $request['name'];
+        $squad->color = $request['color'];
         $squad->save();
 
         $player = Auth::user();
@@ -32,12 +40,12 @@ class SquadController extends Controller
     public function join(Request $request) {
         $player = Auth::user();
 
-        $player->squads()->attach($request['squad']['id']);
+        $player->squads()->attach($request['id']);
     }
 
     public function leave(Request $request) {
         $player = Auth::user();
-        $squad_id = $request['squad']['id'];
+        $squad_id = $request['id'];
 
         $player->squads()->detach($squad_id);
 
@@ -46,7 +54,4 @@ class SquadController extends Controller
         }
     }
 
-    public function getSquadsOfPlayer($playerId) {
-        return Player::with("squads")->find($playerId);
-    }
 }

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../../api/services/auth.service';
 import { SquadService } from '../../services/squad.service';
-import { Squad } from '../../models/Squad';
+import { Squad } from '../../models/squad';
 
 @Component({
   selector: 'app-squad-creator',
@@ -15,6 +15,7 @@ export class SquadCreatorComponent implements OnInit {
 
   public squad: Squad = new Squad;
   public isCreated: boolean = false;
+  public errors: {[field: string]: string[]} = {};
   public form = new FormGroup(
     {
       name: new FormControl('', [Validators.required])
@@ -32,12 +33,10 @@ export class SquadCreatorComponent implements OnInit {
   public create() {
     this._squadService.create(this.squad).subscribe(
       response => {
-        console.log(response);
         this.isCreated = true;
-
       },
-      error => {
-        console.log(error);
+      errorResponse => {
+        this.errors = errorResponse.error.errors;
       }
     );
   }

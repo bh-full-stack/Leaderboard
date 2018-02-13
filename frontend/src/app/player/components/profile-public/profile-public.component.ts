@@ -8,7 +8,7 @@ import { Player } from '../../models/player';
 import { PlayerService } from '../../services/player.service';
 import { AuthService } from '../../../api/services/auth.service';
 import { Profile } from '../../models/profile';
-import { Squad } from '../../../squad/models/Squad';
+import { Squad } from '../../../squad/models/squad';
 
 @Component({
   selector: 'app-profile-public',

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { ApiService } from '../../api/services/api.service';
-import { Squad } from '../models/Squad';
+import { Squad } from '../models/squad';
 
 @Injectable()
 export class SquadService extends ApiService {
@@ -11,9 +11,7 @@ export class SquadService extends ApiService {
     return this.request<Squad>(
       'POST',
       'squad',
-      {
-        'squad': squad
-      }
+      squad
     );
   }
 
@@ -35,9 +33,7 @@ export class SquadService extends ApiService {
     return this.request<void>(
       'POST',
       'squad/join',
-      {
-        'squad': squad
-      }
+      squad
     );
   }
   
@@ -45,9 +41,14 @@ export class SquadService extends ApiService {
     return this.request<void>(
       'POST',
       'squad/leave',
-      {
-        'squad': squad
-      }
+      squad
+    );
+  }
+
+  public show(squadId): Observable<Squad> {
+    return this.request<Squad>(
+      'GET',
+      `squad/${squadId}`
     );
   }
 

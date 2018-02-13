@@ -40,4 +40,4 @@ Route::post('register', 'Auth\RegisterController@register');
 Route::post('register/activate', 'Auth\RegisterController@activate');
 
 Route::get('squad', 'SquadController@index');
-Route::get('squad/{playerId}', 'SquadController@getSquadsOfPlayer');
+Route::get('squad/{id}', 'SquadController@show');

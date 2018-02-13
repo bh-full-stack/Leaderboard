@@ -1,7 +1,8 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { SquadService } from '../../services/squad.service';
-import { Squad } from '../../models/Squad';
+import { Squad } from '../../models/squad';
 import { AuthService } from '../../../api/services/auth.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class SquadListComponent implements OnInit {
 
   public constructor(
     private _squadService: SquadService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _router: Router
   ) {
     //
   }
@@ -66,6 +68,10 @@ export class SquadListComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  public navigateTo(squadId) {
+    this._router.navigate([`/squad/${squadId}`]);
   }
 
 }

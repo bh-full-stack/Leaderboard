@@ -5,7 +5,7 @@
 <table class="table table-hover" id="squads">
     <tbody>
         <tr *ngFor="let squad of squads">
-            <td [ngStyle]="{'background': squad.color}">
+            <td [ngStyle]="{'background': squad.color}" (click)="navigateTo(squad.id)">
                 {{ squad.name }}
             </td>
             <td>

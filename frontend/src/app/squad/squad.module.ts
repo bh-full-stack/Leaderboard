@@ -7,6 +7,7 @@ import { SquadCreatorComponent } from './components/squad-creator/squad-creator.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SquadService } from './services/squad.service';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { SquadPageComponent } from './components/squad-page/squad-page.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     ReactiveFormsModule,
     ColorPickerModule
   ],
-  declarations: [SquadListComponent, SquadCreatorComponent],
+  declarations: [SquadListComponent, SquadCreatorComponent, SquadPageComponent],
   providers: [
     SquadService
   ]
