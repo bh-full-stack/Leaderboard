@@ -5,11 +5,12 @@
 <table class="table table-hover" id="squads">
     <tbody>
         <tr *ngFor="let squad of squads">
-            <td (click)="join(squad)" [ngStyle]="{'background': squad.color}">
+            <td [ngStyle]="{'background': squad.color}">
                 {{ squad.name }}
             </td>
             <td>
-                <button class="pull-right btn btn-primary" (click)="join(squad)">Join</button>
+                <button *ngIf="!squad.player_id" class="pull-right btn btn-primary" (click)="join(squad)">Join</button>
+                <button *ngIf="squad.player_id" class="pull-right btn btn-primary" (click)="leave(squad)">Leave</button>
             </td>
         </tr>
     </tbody>

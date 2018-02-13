@@ -4,3 +4,7 @@ td:first-child {
     color: #f1f1f1;
     text-shadow: 1px 1px 2px black;
 }
+
+td button {
+    width: 80px;
+}

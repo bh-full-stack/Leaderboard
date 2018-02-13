@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { SquadService } from '../../services/squad.service';
 import { Squad } from '../../models/Squad';
+import { AuthService } from '../../../api/services/auth.service';
 
 @Component({
   selector: 'app-squad-list',
@@ -12,12 +13,43 @@ export class SquadListComponent implements OnInit {
 
   public squads: Squad[];
 
-  constructor(private _squadService: SquadService) { }
+  public constructor(
+    private _squadService: SquadService,
+    private _authService: AuthService
+  ) {
+    //
+  }
 
-  ngOnInit() {
-    this._squadService.list().subscribe(
-      squads => {
-        this.squads = squads;
+  public ngOnInit() {
+    this.listSquads();
+  }
+
+  public listSquads() {
+    if (this._authService.player) {
+      this._squadService.listWithAuth().subscribe(
+        squads => {
+          this.squads = squads;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    } else {
+      this._squadService.list().subscribe(
+        squads => {
+          this.squads = squads;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  public join(squad) {
+    this._squadService.join(squad).subscribe(
+      success => {
+        this.listSquads();
       },
       error => {
         console.log(error);
@@ -25,10 +57,10 @@ export class SquadListComponent implements OnInit {
     );
   }
 
-  public join(squad) {
-    this._squadService.join(squad).subscribe(
+  public leave(squad) {
+    this._squadService.leave(squad).subscribe(
       success => {
-        console.log(success);
+        this.listSquads();
       },
       error => {
         console.log(error);

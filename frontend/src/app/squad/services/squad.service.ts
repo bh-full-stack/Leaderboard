@@ -24,10 +24,27 @@ export class SquadService extends ApiService {
     );
   }
 
+  public listWithAuth(): Observable<Squad[]> {
+    return this.request<Squad[]>(
+      'GET',
+      'squad/auth'
+    );
+  }
+
   public join(squad): Observable<void> {
     return this.request<void>(
       'POST',
       'squad/join',
+      {
+        'squad': squad
+      }
+    );
+  }
+  
+  public leave(squad): Observable<void> {
+    return this.request<void>(
+      'POST',
+      'squad/leave',
       {
         'squad': squad
       }
