@@ -17,8 +17,7 @@ export class SquadCreatorComponent implements OnInit {
   public isCreated: boolean = false;
   public form = new FormGroup(
     {
-      name: new FormControl('', [Validators.required]),
-      color: new FormControl('', [Validators.required])
+      name: new FormControl('', [Validators.required])
     }
   );
 
@@ -27,7 +26,7 @@ export class SquadCreatorComponent implements OnInit {
   }
 
   public ngOnInit() {
-    //
+    this.squad.color = '#fff';
   }
 
   public create() {
