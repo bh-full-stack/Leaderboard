@@ -1,0 +1,18 @@
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/html/dist;
+
+        index index.html;
+
+        server_name [servername];
+
+        location / {
+                try_files $uri /index.html;
+        }
+
+        location ~ /\.ht {
+                deny all;
+        }
+}

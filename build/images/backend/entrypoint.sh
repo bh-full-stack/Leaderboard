@@ -11,9 +11,8 @@ php artisan key:generate
 php artisan jwt:secret
 php artisan migrate:fresh --seed
 
-if ! [ -h "public/storage" ]
-then
-    php artisan storage:link
-fi
+rm -f public/storage
+php artisan storage:link
+
 
 tail -f /var/log/nginx/error.log
