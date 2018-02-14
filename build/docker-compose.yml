@@ -1,0 +1,23 @@
+version: '3'
+services:
+  database:
+    image: mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: mob
+      MYSQL_DATABASE: leaderboard_development
+    volumes:
+      - "./database_data:/var/lib/mysql"
+  backend:
+    build:
+      context: "./images/backend"
+      args:
+        - API_HOST=${API_HOST}
+    ports:
+      - "81:80"
+    networks:
+      default:
+        aliases:
+          - ${API_HOST}
+    volumes:
+      - "../backend:/var/www/html"
+      - "./.env_laravel:/var/www/html/.env"
