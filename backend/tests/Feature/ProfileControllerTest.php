@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Player;
+use App\Profile;
 use App\Round;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -20,6 +21,7 @@ class ProfileControllerTest extends TestCase
     public function it_can_delete_old_scores()
     {
         $player = factory(Player::class)->create();
+
         $this->actingAs($player);
         factory(Round::class, 5)->create(["player_id" => $player->id]);
         $player->activate();

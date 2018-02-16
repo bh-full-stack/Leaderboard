@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Player;
+use App\Profile;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -69,8 +70,12 @@ class LoginControllerTest extends TestCase
             ]
         );
 
+        $profile = new Profile();
+        $profile->save();
+
         $player = Player::getByName($player->name);
         $player->activation_code = 1234567;
+        $player->profile_id = $profile->id;
         $player->save();
 
         $this->get("/register/activation/1234567");
@@ -105,9 +110,12 @@ class LoginControllerTest extends TestCase
                 "_token" => csrf_token()
             ]
         );
+        $profile = new Profile();
+        $profile->save();
 
         $player = Player::getByName($player->name);
         $player->activation_code = 1234567;
+        $player->profile_id = $profile->id;
         $player->save();
 
         $this->post(

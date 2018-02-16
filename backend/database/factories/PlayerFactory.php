@@ -18,5 +18,6 @@ $factory->define(App\Player::class, function (Faker $faker) {
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'password' => bcrypt("secret"),
+        'profile_id' => 1
     ];
 });
