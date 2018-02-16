@@ -49,7 +49,11 @@
 <ng-container>
   <h3>Squads</h3>
   <ul>
-    <li *ngFor="let squad of squads" [ngStyle]="{'background': squad.color}">{{ squad.name }}</li>
+    <li 
+      *ngFor="let squad of squads"
+      (click)="navigateTo(squad.id)"
+      [ngStyle]="{'background': squad.color}"
+      >{{ squad.name }}</li>
   </ul>
 </ng-container>
 

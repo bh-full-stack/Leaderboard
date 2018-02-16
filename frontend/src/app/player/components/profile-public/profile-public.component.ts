@@ -64,4 +64,8 @@ export class ProfilePublicComponent implements OnInit {
     }
   }
 
+  public navigateTo(squadId) {
+    this._router.navigate([`/squad/${squadId}`]);
+  }
+
 }

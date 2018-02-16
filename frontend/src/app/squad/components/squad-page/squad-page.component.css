@@ -4,3 +4,7 @@ span {
     height: 20px;
     border-radius: 2px;
 }
+
+a {
+    color: inherit;
+}

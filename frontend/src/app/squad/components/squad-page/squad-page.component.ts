@@ -1,7 +1,9 @@
-import { Squad } from './../../models/squad';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SquadService } from './../../services/squad.service';
 import { Component, OnInit } from '@angular/core';
+
+import { SquadService } from './../../services/squad.service';
+import { Squad } from './../../models/squad';
+import { Player } from '../../../player/models/player';
 
 @Component({
   selector: 'app-squad-page',
@@ -12,6 +14,7 @@ export class SquadPageComponent implements OnInit {
 
   public squad: Squad;
   public loading: boolean = true;
+  public players: Player[];
 
   public constructor(
     private _squadService: SquadService,
@@ -26,7 +29,8 @@ export class SquadPageComponent implements OnInit {
       params => this._squadService.show(params.squadId).subscribe(
         squad => {
           this.squad = squad;
-          console.log(this.squad);
+          this.players = this.squad.players;
+          console.log(this.players);
           this.loading = false;
         },
         error => {

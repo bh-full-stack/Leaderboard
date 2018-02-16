@@ -7,4 +7,5 @@ li {
     margin-top: 4px;
     padding: 5px 10px;
     list-style: none;
+    cursor: pointer;
 }

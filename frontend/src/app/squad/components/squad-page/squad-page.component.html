@@ -1,3 +1,8 @@
 <ng-container *ngIf="!loading">
   <h3><span [ngStyle]="{'background': squad.color}"></span> {{ squad.name }}</h3>
+  <ul>
+    <li *ngFor="let player of players">
+      <a [routerLink]="['/player/profile/', player.id]">{{ player.name }}</a>
+    </li>
+  </ul>
 </ng-container>
