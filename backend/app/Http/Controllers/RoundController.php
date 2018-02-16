@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Profile;
 use Illuminate\Http\Request;
 use App\Exceptions\UserException;
 use App\Location;
@@ -63,6 +64,12 @@ class RoundController extends Controller
             return response()->json([
                 'message' => 'You have to be logged in!',
             ], 401);
+        }
+
+        if (!$player->profile_id) {
+            $profile = new Profile();
+            $profile->save();
+            $player->profile_id = $profile->id;
         }
 
         $player->saveOrFail();
